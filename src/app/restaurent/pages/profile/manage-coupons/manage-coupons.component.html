@@ -1,0 +1,23 @@
+<div class="coupon-list" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between">
+  <div *ngIf="!couponList.length" class="text-center no-address">
+    <img src="assets/images/sad-face.png" alt="" width="10%">
+    <h5 >No coupons yet.</h5>
+  </div>
+  <div *ngFor="let item of couponList; let i = index" class="coupon">
+    <div class="coupon-head mb-2" fxFlex="50%">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="left">
+          <h6 class="coupon-title">{{item.CouponCode}} <span>{{item.CouponCode}}</span></h6>
+        </div>
+    
+      </div>
+    </div>
+    <div class="coupon-body">
+      <p class="font-weight-bold mb-0">{{item.Type == '%'?item.Discount * 100 + '%':currency + item.Discount}} off<span *ngIf="item.MaxCap > 0"> up to {{item.MaxCap}}</span>.</p>
+      <p *ngIf="item.MinOrderAmt > 0" class="font-weight-bold mb-0">On orders of {{currency}}{{item.MinOrderAmt}} and above.</p>
+      <p class="text-gray mb-0"><a href="javascript:void(0);" class="text-orange">View More <nb-icon icon="arrow-forward-outline"></nb-icon></a></p>
+    </div>
+  </div>
+
+
+</div>

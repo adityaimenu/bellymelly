@@ -1,0 +1,19 @@
+
+
+
+
+
+<div class="categories " data-spy="scroll" data-target=".categories-list" data-offset="50">
+  <div class="title m-2">
+     
+    <h5 class="title-heading">Categories</h5>
+    
+  </div>
+  <ul class="categories-list" id="cat-list">
+    <li *ngFor="let item of catList; let i = index" class="sidebar-cat" [ngClass]="{'active': selectedIndex == i}">
+      <a href="javascript:void(0)" (click)="goToByScroll(item.customId, i)" [ngClass]="{'cat-active': selectedIndex == i}">
+        {{item.CatName}}
+      </a>
+    </li>
+  </ul>
+</div> 

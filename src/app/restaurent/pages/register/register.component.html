@@ -1,0 +1,59 @@
+<div style="display: none;" id="registerModal" class="animated-modal">
+  <div class="modal-customization">
+    <div class="login-box" fxLayout="row" fxLayoutAlign="start center">
+      <div class="left" fxFlexOrder="2">
+        <img src="assets/images/choose-order.svg" class="img-fluid">
+      </div>
+      <div class="right" fxFlexOrder="1">
+        <div class="login-form-box">
+          <div class="title">
+            <h6 class="title-heading">
+              {{flags.isOtpSent?'Verify Otp':'Sign Up'}}
+            </h6>
+          </div>
+          <form *ngIf="flags.isOtpSent">
+            <div class="form-group">
+              <label>Please Enter One Time Password Sent to {{signUpBody.data.customerData.eMail}}</label>
+              <input type="text" class="form-control" name="otp" autocomplete="off" [(ngModel)]="signUpBody.data.customerData.otp" appOnlyNumber maxlength="6" #otp="ngModel" required />
+            </div>
+         
+                <button class="btn btn-default btn-block rounded-0 mt-3" [disabled]="otp.invalid || flags.isOtpVerified" (click)="verify()">{{flags.isOtpVerified?'Hold On...':'Verify Otp'}}</button>
+                <button class="btn btn-default btn-block rounded-0 mt-3"  (click)="goback()">Go Back</button>
+                <button class="btn btn-default btn-block rounded-0 mt-3"  (click)="ResendsendOtp()">Resend Otp</button>
+           
+          </form>
+          <form *ngIf="!flags.isOtpSent" #userRegisterForm="ngForm">
+            <div class="form-group">
+              <label>Enter First Name</label>
+              <input type="text" class="form-control" name="name" autocomplete="off" [(ngModel)]="signUpBody.data.customerData.fName" maxlength="50" required />
+              <span class="errormsg" *ngIf="!signUpBody.data.customerData.fName">{{fnameError}}</span>
+            </div>
+            <div class="form-group">
+              <label>Enter Last Name</label>
+              <input type="text" class="form-control" name="name" autocomplete="off" [(ngModel)]="signUpBody.data.customerData.lName" maxlength="50" required />
+              <span class="errormsg" *ngIf="!signUpBody.data.customerData.lName">{{fnameError}}</span>
+            </div>
+            <div class="form-group">
+              <label>Enter Email</label>
+              <input type="email" class="form-control" name="email" autocomplete="off" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="50" [(ngModel)]="signUpBody.data.customerData.eMail" required />
+              <span class="errormsg" *ngIf="!signUpBody.data.customerData.eMail">{{emailError}}</span>
+            </div>
+            <div class="form-group">
+              <label>Enter Mobile No.</label>
+              <input type="text" class="form-control enterOnlyNumber" autocomplete="off"  name="phoneNumbers" appOnlyNumber [(ngModel)]="signUpBody.data.customerData.tel"  maxlength="10" required />
+              <span class="errormsg" *ngIf="!signUpBody.data.customerData.tel">{{tellError}}</span>
+            </div>
+            <div class="form-group">
+              <label>Enter Password</label>
+              <input type="password" class="form-control" name="password" autocomplete="off" maxlength="20" [(ngModel)]="password" required />
+              <span class="errormsg" *ngIf="!password">{{passwordError}}</span>
+            </div>
+            <button *ngIf="!flags.isOtpSent" class="btn btn-default btn-block rounded-0 mt-3"  (click)="sendOtp()">{{flags.isRegister?'Hold On...':'Sign Up'}}</button>
+          </form>
+        </div>
+        <p>Already have account, <a href="javascript:void(0)" (click)="signIn()">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="btn btn-site rounded-0 d-none" data-fancybox data-animation-duration="700" id="openSignUpModal" data-src="#registerModal">New User?<br><b>Sign Up</b></button>

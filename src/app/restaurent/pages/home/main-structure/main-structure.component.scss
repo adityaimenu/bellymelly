@@ -1,0 +1,29 @@
+@import "../../../../../assets/css/variables";
+.wrapper, .wrapper-content{
+  width: 100%;
+  float: left;
+  @media (max-width: 767px){
+    background: #F0F5F9;
+    .p-sm-0{
+      padding: 0;
+    }
+  }
+  .main-view{
+    float: left;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    padding: 1rem;
+  }
+  @media (max-width: 767px) {
+    .main-view{
+      border: none;
+      padding: 0;
+    }
+    .sidebar{
+      display: none;
+    }
+  }
+}
+// .main-view{
+//   margin-bottom: 730px;
+// }

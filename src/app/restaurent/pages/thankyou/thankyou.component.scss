@@ -1,0 +1,109 @@
+.modal-body{
+  background: url(../../../../assets/images/thanku-bg.png)no-repeat center center;
+  background-size: cover;
+  .thank-you-pop{
+    width:100%;
+    padding:0px;
+    text-align:center;
+    ul{
+      list-style: none;
+      padding: 0;
+      width: 250px;
+      margin: 0 auto;
+      li{
+        color: #fff;
+      }
+    }
+    h1{
+      font-size: 42px;
+      margin-bottom: 25px;
+      color: #fff;
+    }
+    h2{
+      &.big-check{
+        font-size: 50px;
+        margin-bottom: 0;
+        color: #fff;
+      }
+    }
+
+    h5{
+      margin: 0;
+      text-transform: uppercase;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      line-height: normal;
+    }
+    h6{
+      color: #fff;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: normal;
+    }
+    p{
+      span{
+        font-size: 11px;
+        border: 1px solid #fff;
+        padding: 5px;
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        i{
+          background: #fff;
+          color: red;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 30px;
+          width: 30px;
+          border-radius: 30px;
+          margin-left: 10px
+        }
+      }
+    }
+    h3{
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 0;
+      text-transform: uppercase;
+      color: #fff;
+      &.cupon-pop{
+        font-size: 25px;
+        margin-bottom: 40px;
+        color: #fff;
+        display:inline-block;
+        text-align:center;
+        padding:10px 20px;
+        border:2px dashed #222;
+        clear:both;
+        font-weight:normal;
+        span{
+          color: #fff;
+        }
+      }
+    }
+    a{
+      display: inline-block;
+      margin: 0 auto;
+      padding: 9px 20px;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 14px;
+      background-color: #8BC34A;
+      border-radius: 17px;
+      i{
+        margin-right:5px;
+        color:#fff;
+      }
+    }
+  }
+}
+
+/*--thank you pop starts here--*/
+  #ignismyModal .modal-header{
+    border:0px;
+  }
+  /*--thank you pop ends here--*/
+  

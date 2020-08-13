@@ -1,0 +1,30 @@
+<div class="address-detail mt-3" fxLayout="row wrap" fxLayoutAlign="space-between start">
+  <div *ngIf="!addressList.length" class="text-center no-address">
+    <img src="assets/images/sad-face.png" alt="" width="10%">
+    <h5 >No address added yet.</h5>
+  </div>
+  <div *ngFor="let item of addressList; let i = index" class="have-details home">
+    <div class="detail-head mb-2" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+      <span *ngIf="item.CustAddressName == 'Home'">
+        <img src="assets/images/home-address.svg">
+      </span>
+      <span *ngIf="item.CustAddressName == 'Office'">
+        <img src="assets/images/office-address.svg">
+      </span>
+      <span *ngIf="item.CustAddressName == 'Other'">
+        <img src="assets/images/other-address.svg">
+      </span>
+      <span>
+        <strong class="heading">{{item.FName}} | {{item.Telephone}}</strong>
+        <p>{{item.CustAddressName}}</p>
+      </span>
+    </div>
+    <span>
+      <p>{{item.Addr2}}</p>
+      <div class="separator"></div>
+      <h6 class="title-heading m-0">Special Instruction <a href="javascript:void(0)" data-toggle="modal" data-target="#editLocation" (click)="selectedAddress.emit(item)" class="font-weight-bold" style="color:#f03f37;">Edit</a></h6>
+      <p>{{item.Instructions}}</p>
+    </span>
+  </div>
+  
+</div>

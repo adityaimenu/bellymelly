@@ -1,0 +1,127 @@
+@import "../../../../assets/css/variables";
+.wrapper {
+  float: left;
+  width: 100%;
+  background: #edf1f7;
+  padding: 2.25rem 2.25rem .75rem;
+  .left{
+    // max-width: calc(100% - 340px);
+    max-width: 100%;
+    .info{
+      h6{
+        font-weight: 600;
+      }
+      ul{
+        list-style: none;
+        padding: 0;
+        li{
+          display: inline-block;
+          margin-right: 10px;
+        }
+        p{
+          margin-bottom: 0;
+          span{
+            display: inline-block;
+            min-width: 100px;
+          }
+        }
+      }
+    }
+  }
+  .right, .left{
+    .extra-info{
+      width: 340px;
+      display: inline-block;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: linear-gradient(168.4deg, #354EC3 0%, #5739B6 64.02%, #9652D1 94.85%);
+      box-shadow: 0px 5px 23px rgba(0, 0, 0, 0.25);
+      @media (max-width: 991px){
+        display: block;
+        margin: 0 auto;
+      }
+      @media (max-width: 767px){
+        width: 100%;
+      }
+      .item{
+        border: 1px solid #B7AEC4;
+        padding: 15px;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        .item-left{
+          figure{
+            min-width: 50px;
+          }
+          p{
+            color: $orange;
+            margin-bottom: 0;
+          }
+          button{
+            font-size: 12px;
+            width: 100px;
+            padding: 0;
+            min-height: 25px;
+            border-radius: 18px
+          }
+        }
+        .item-right{
+          h4{
+            font-weight: 400;
+            font-size: 22px;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 767px){
+    padding: 2.25rem 0 .75rem;
+    .left{
+      max-width: 100%;
+    }
+  }
+}
+input[readonly] {
+  background-color: #ffffff;
+}
+::ng-deep .tabset{
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.web-back{
+  display: block !important;
+}
+@media (max-width:575px){
+  .web-back{
+    display: none !important;
+  }
+}
+nb-tab {
+  background-color: transparent;
+  color: #222b45;
+  font-family: Open Sans, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  padding: .1rem !important;
+}
+@media (max-width:991px){
+  .wrapper .main-col{
+    flex-direction: column !important;
+  }
+  .right{
+    margin-top: 10px;
+    display: flex;
+  }
+  // .extra-info{
+  //   flex: 1;
+  // }
+  .refer-col{
+    flex: 1;
+  }
+}
+@media (max-width:767px){
+  .right{
+    margin-top: 10px;
+    display: unset;
+  }
+}

@@ -1,0 +1,148 @@
+
+<div *ngIf="locationDetails && bannerImg" class="col-md-12 top-restaurent-banner" [ngStyle]="{'background-image': 'url(' + bannerImg + ')'}">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="web-view">
+      <div class="row" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="left" fxFlex="62">
+          <div class="col-sm-12" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="brand-info" fxLayout="row" fxLayoutAlign="start center">
+              <div class="brand mr-3" *ngIf="country == 'us'">
+                <img *ngIf="locationDetails && locationDetails.LogoImg" src="{{imageUrl}}{{locationDetails.LogoImg}}" class="img-fluid" alt="Restaurent Logo" width="180" height="180">
+                <img *ngIf="locationDetails && !locationDetails.LogoImg" src="assets/images/icon1.png" class="img-fluid" alt="Restaurent Logo" width="170" height="170">
+              </div>
+              <div class="brand mr-3" *ngIf="country == 'au'">
+                <img *ngIf="locationDetails && locationDetails.LogoImg" src="{{imageUrl}}{{locationDetails.LogoImg}}" class="img-fluid" alt="Restaurent Logo" width="180" height="180">
+                <img *ngIf="locationDetails && !locationDetails.LogoImg" src="assets/img/imageAU.png" class="img-fluid" alt="Restaurent Logo" width="170" height="170">
+              </div>
+              <div>
+                <h2 class="title-heading">{{locationDetails?locationDetails.Name:''}} </h2>
+                <p *ngIf="locationDetails">{{locationDetails.Cuisines}}</p>
+                <p *ngIf="country == 'us'"><i class="fa fa-phone" aria-hidden="true"></i> {{locationDetails?locationDetails.Tel:''}}</p>
+                <p *ngIf="locationDetails"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                  {{locationDetails.Address.AddressLine1}},
+                  {{locationDetails.Address.City}},
+                  {{locationDetails.Address.State}},
+                  {{locationDetails.Address.Country}},
+                  {{locationDetails.Address.Zip}}
+                </p>
+                <span class="web-icon"><i class="fa fa-clock-o mr-1 text-white"
+                  aria-hidden="true"></i>Open Time
+                </span>
+                   <span *ngIf="locationDetails && locationDetails.Menus.length && !openCloseTime" [innerHTML]="locationDetails.OpenCloseTime" class="web-icon"></span>
+                   <span *ngIf="locationDetails && locationDetails.Menus.length && openCloseTime" class="web-icon">{{openCloseTime}}</span>
+                <div class="btm-area mt-1" fxLayout="row" fxLayoutAlign="start center">
+                  <span *ngIf="locationDetails.Rating > 0">
+                    <h6 class="text-white"><i aria-hidden="true"
+                        class="fa fa-star"></i>{{locationDetails?locationDetails.Rating?locationDetails.Rating:'0':'0'}}
+                    </h6>
+                    <p>Ratings</p>
+                  </span>
+                  <span  *ngIf="deliveryExistHere == false">
+                    <h6 class="text-white m-0">
+                      <span *ngIf="deliveryAmount > 0 && isDeliveryFree">{{currency}}{{deliveryAmount}} Delivery Charges </span>
+                      <span *ngIf="deliveryAmount > 0 && !isDeliveryFree">{{currency}}{{deliveryAmount}} Delivery Charges </span>
+                      <span *ngIf="deliveryAmount == 0 && deliveryExist == true"> 
+                        {{isDeliveryFree?'Free Delivery':withoutDliveryZone?'Delivery Available':''}}
+                      </span>
+                    </h6>
+                    <!-- <p *ngIf="isDeliveryFree == false && deliveryAmount > 0">Delivery Charges</p> -->
+                  </span>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right text-white" fxFlex *ngIf="!dineinExist">
+          <div class="" style="max-height: 200px; min-height: 200px; overflow: auto;">
+          <div *ngIf="locationDetails" class="col-sm-12 text-center m-0 p-0">
+            <figure *ngFor="let item of locationDetails.Alert; let i = index" class="p-3 mb-0 mt-0" fxLayout
+              fxLayoutAlign="center center">
+              <small class="mr-3">Today<br>Alert</small>
+              <p class="text-white mb-2 mr-2" [innerHTML]="item.Text" style="font-size: 15px !important;     font-weight: 500;"></p>
+            </figure>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-view">
+    <!-- <div class="top-banner" [ngStyle]="{'background-image': 'url(' + bannerImg + ')'}">
+    
+    </div> -->
+    <div class="brandinfo">
+      <div class="top-details" fxFlex="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+        <div class="brand" *ngIf="country == 'us'">
+
+          <img *ngIf="locationDetails && locationDetails.LogoImg" src="{{imageUrl}}{{locationDetails.LogoImg}}"
+            alt="Brand Logo" width="80px">
+          <img *ngIf="locationDetails && !locationDetails.LogoImg" src="assets/images/defaultRest.png" alt="Brand Logo"
+            width="80px">
+        </div>
+        <div class="brand" *ngIf="country == 'au'">
+
+          <img *ngIf="locationDetails && locationDetails.LogoImg" src="{{imageUrl}}{{locationDetails.LogoImg}}"
+            alt="Brand Logo" width="80px">
+          <img *ngIf="locationDetails && !locationDetails.LogoImg" src="assets/img/imageAU.png" alt="Brand Logo"
+            width="80px">
+        </div>
+        <div class="brand-detail">
+          <h6  class="m-0 text-purple">{{locationDetails?locationDetails.Name:''}} 
+            <span *ngIf="locationDetails.Rating > 0" class="badge badge-warning">{{locationDetails?locationDetails.Rating?locationDetails.Rating:'0':'0'}} <i
+                class="fa fa-star"></i></span></h6>
+       
+          <span><i class="fa fa-clock-o mr-1"
+            aria-hidden="true"></i>Open Time
+          </span>
+             <span  *ngIf="!openCloseTime" [innerHTML]="locationDetails.OpenCloseTime"></span>
+             <span *ngIf="openCloseTime">{{openCloseTime}}</span>
+        
+          <p class="m-0">
+            <small *ngIf="locationDetails">{{locationDetails.Cuisines}}</small>
+          </p>
+        </div>
+      </div>
+      <div class="btm-details" >
+        <ul class="m-0 p-0 row" fxFlex="row" fxLayoutAlign="center center">
+          <li class="col" *ngIf="locationDetails.Price">
+            <div class="text-center" >
+              <img src="assets/images/users.svg"><br><p class="m-0">2
+              people<br>{{currency}}{{locationDetails?locationDetails.Price?locationDetails.Price*50:0:0}}</p>
+            </div>
+          </li>
+          <li class="col">
+            <div class="text-center" *ngIf="deliveryExistHere == false && !dineinExist">
+              <img src="assets/images/deliveryGuy.svg"><br>
+              <p class="m-0">We Deliver</p>
+              <p class="m-0" *ngIf="deliveryAmount > 0 && isDeliveryFree">{{currency}}{{deliveryAmount}}</p>
+              <p class="m-0" *ngIf="deliveryAmount > 0 && !isDeliveryFree">{{currency}}{{deliveryAmount}}</p>
+              <!-- <span *ngIf="deliveryAmount == 0"> {{isDeliveryFree?'Free Delivery':deliveryAmount>0?deliveryAmount:''}}</span> -->
+              <p class="m-0" *ngIf="deliveryAmount == 0 && deliveryExist == true"> 
+                {{isDeliveryFree?'Free Delivery':withoutDliveryZone?'Delivery Available':''}}
+              </p>
+            </div>
+          </li>
+          <li class="col">
+            <div class="text-center" *ngIf="!dineinExist">
+              <img src="assets/images/distance.svg"> <p class="m-0">{{distance}}KMS</p> 
+            </div>
+          </li>
+        </ul>
+        
+        
+        
+      </div>
+      <div *ngIf="locationDetails && locationDetails.Alert.length > 0 && !dineinExist" class="col-sm-12 text-center m-0 p-0">
+          <div class="" style="max-height: 165px; min-height: 165px; overflow: auto;">
+        <figure *ngFor="let item of locationDetails.Alert; let i = index" class="p-3 mb-0 mt-0" fxLayout
+          fxLayoutAlign="center center">
+          <small class="mr-3">Today's<br>Alert</small>
+          <p class="text-white mb-2 mr-2" [innerHTML]="item.Text" style="font-size: 15px;"></p>
+        </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

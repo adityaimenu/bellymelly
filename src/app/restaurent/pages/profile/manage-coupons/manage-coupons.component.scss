@@ -1,0 +1,49 @@
+@import "../../../../../assets/css/variables";
+.coupon-list{
+  .coupon{
+    padding: 20px 0;
+    border: 1px solid $border-color;
+    flex: 1;
+    max-width: 49%;
+    min-width: 49%;
+    margin-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    .coupon-head{
+      .left{
+        .coupon-title{
+          font-size: .9rem;
+          font-weight: 500;
+          color: $purple;
+          margin-bottom: 0;
+          span{
+            margin-left: 15px;
+            font-size: 11px;
+            text-transform: uppercase;
+            background: #FFF8E6;
+            color: #9C9C9C;
+            border: 1px dashed #F9CC5D;
+            padding: 4px;
+            border-radius: 16px;
+          }
+        }
+      }
+      .right{
+        a{
+          font-size: .9rem;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+      }
+    }
+    @media (max-width: 767px){
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+.no-address {
+  padding: 5px;
+  border: 1px solid #cccccc;
+  border-style: dashed;
+}

@@ -1,0 +1,24 @@
+@import "../../../../assets/css/variables";
+header{
+  width: 100%;
+  float: left;
+  background: #ffffff;
+  &.stick{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    animation: stickySlideDown .7s;
+  }
+  @keyframes stickySlideDown {
+    0% {
+      opacity: 0.7;
+      transform: translateY(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

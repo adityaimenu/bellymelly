@@ -1,0 +1,87 @@
+@import "../../../../../assets/css/variables";
+.address-detail{
+  .have-details{
+    border: 1px solid $border-color;
+    padding: 1rem;
+    margin-bottom: 10px;
+    width: 49%;
+    transition: all ease-in-out .3s;
+    @media (max-width: 767px){
+      width: 100%;
+    }
+    &:hover{
+      box-shadow: 0 2px 8px #d4d5d9;
+    }
+    span{
+      h6{
+        a{
+          color: $dark-black;
+          font-weight: 400;
+        }
+      }
+    }
+    &.home{
+      span{
+        h6{
+          color: $orange;
+        }
+      }
+      p{
+        .heading{
+          color: $orange;
+        }
+      }
+    }
+    &.office{
+      span{
+        h6{
+          color: $green;
+        }
+      }
+      p{
+        .heading{
+          color: $green;
+        }
+      }
+    }
+    &.other{
+      span{
+        h6{
+          color: $purple;
+        }
+      }
+      p{
+        .heading{
+          color: $purple;
+        }
+      }
+    }
+    span{
+      h6{
+        font-size: .9rem;
+      }
+    }
+    nb-icon{
+      font-size: 28px;
+    }
+    p{
+      margin-bottom: 0;
+      color: $gray;
+      font-size: 12px;
+      .heading{
+        font-weight: 600;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+.no-address {
+  padding: 5px;
+  border: 1px solid #cccccc;
+  border-style: dashed;
+}
+.title-heading{
+  display: flex;
+  justify-content: space-between;
+}

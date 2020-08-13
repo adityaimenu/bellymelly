@@ -1,0 +1,27 @@
+.payment-wrapper{
+  .tabs{
+    ul{
+      list-style: none;
+      padding: 0;
+      background: #ffffff;
+      li{
+        padding: 30px 20px;
+      }
+    }
+  }
+  .pills{
+    padding: 30px 15px;
+  }
+}
+
+button:disabled {
+  background: gray;
+  border: none;
+}
+button:disabled:hover {
+  background: gray;
+  border: none;
+}
+.nav-active {
+  background: #edf1f7;
+}

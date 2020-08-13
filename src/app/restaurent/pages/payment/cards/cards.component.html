@@ -1,0 +1,201 @@
+<div class="col-sm-12">
+  <form *ngIf="locationDetails.PaymentProviderMiMenu == 'T' &&  PaymentTypes == true" #paymentFormOne="ngForm">
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="ZIP" name="CCZIP" [(ngModel)]="cardBody.CCZIP" required />
+        </div>
+    <div class="form-group">
+      <input class="form-control " type="text" name="cardNumber"  [(ngModel)]="cardBody.CCNumber" placeholder="Card Number" appOnlyNumber required />
+    </div>
+    <div class="row no-gutters">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <input type="text" class="form-control" name="month" [(ngModel)]="expDate.month" appOnlyNumber maxlength="2" placeholder="MM" required />
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="form-group">
+          <input type="text" class="form-control" name="year" [(ngModel)]="expDate.year" appOnlyNumber maxlength="2" placeholder="YY" required />
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <input type="password" class="form-control border-left-0" name="cvv" [(ngModel)]="cardBody.CCCVV" appOnlyNumber maxlength="3" placeholder="CVV" required />
+        </div>
+      </div>
+    </div>
+    <div class="link pt-3" >
+      <button class="btn btn-primary btn-site btn-block rounded-0" (click)="placeOrder()"  [disabled]="!paymentFormOne.valid">Place Order</button>
+    </div>
+  </form>
+
+  <form *ngIf="locationDetails.PaymentProviderStripe == 'T' &&  PaymentTypes == true" #paymentFormOne1="ngForm">
+      <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error1 = $event"></ngx-stripe-card>
+      <div class="error1">
+        {{error1?.message}}
+      </div>
+  <div class="link pt-3">
+    <button class="btn btn-primary btn-site btn-block rounded-0" (click)="getCardToken()"  [disabled]="flags.placeorderButton == true">Place Order</button>
+  </div>
+</form>
+
+
+ 
+  <form  *ngIf="locationDetails.PaymentProviderStripe == 'F' && locationDetails.PaymentProviderMiMenu == 'F' &&  PaymentTypes == true"  #paymentFormTwo="ngForm">
+      
+    <div class="row no-gutters">
+      <div class="col-sm-6">
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="First Name" name="firstname" [(ngModel)]="cardBody.CCFName" required />
+        </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Last Name" name="lastName" [(ngModel)]="cardBody.CCLName" required />
+          </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" appOnlyNumber maxlength="15" name="phone" [(ngModel)]="cardBody.Telephone" placeholder="Telephone" required />
+    </div>
+  
+    <div class="form-group">
+      <input type="text" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" class="form-control"  name="addLineTwo53453534" [(ngModel)]="cardBody.CCAddr1" autocomplete="off" required />
+    </div>
+    <div class="row no-gutters">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="City" name="city" [(ngModel)]="cardBody.CCCity" required />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="State" name="state" [(ngModel)]="cardBody.CCState" required />
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="ZIP" [(ngModel)]="cardBody.CCZIP" name="zip" required />
+        </div>
+      </div>
+    </div> 
+  
+    <div class="form-group"  >
+      <input class="form-control" type="text" id="cc_cardNumber" placeholder="Card Number" appOnlyNumber name="cardNumber" [(ngModel)]="cardBody.CCNumber" required />
+    </div>
+    <div class="row no-gutters" >
+        <div class="col-sm-4">
+            <div class="form-group">
+              <input type="password" class="form-control" appOnlyNumber maxlength="3" placeholder="CVV" name="cvv" [(ngModel)]="cardBody.CCCVV" required />
+            </div>
+          </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <input type="text" class="form-control" appOnlyNumber maxlength="2" placeholder="MM" name="month" [(ngModel)]="expDate.month" required />
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="form-group">
+          <input type="text" class="form-control" appOnlyNumber maxlength="2" minlength="2" placeholder="YY" name="year" [(ngModel)]="expDate.year" required />
+        </div>
+      </div>
+     
+    </div>
+
+    <!-- <span *ngIf="locationDetails.PaymentProviderStripe == 'T'">
+    <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error1 = $event"></ngx-stripe-card>
+    <div class="error1">
+      {{error1?.message}}
+    </div>
+  </span> -->
+
+    <div class="link pt-3">
+      <!-- <button *ngIf="locationDetails.PaymentProviderStripe == 'T'" class="btn btn-primary btn-site btn-block rounded-0" (click)="getCardToken()" [disabled]="flags.placeorderButton == true" >Place Order</button> -->
+      <button *ngIf="locationDetails.PaymentProviderStripe == 'F'" class="btn btn-primary btn-site btn-block rounded-0" (click)="placeOrder()" [disabled]="!paymentFormTwo.valid" >Place Order</button>
+    </div>
+  </form>
+ 
+</div>
+  
+      <!-- <form  *ngIf="country.toUpperCase() == 'AU' && locationDetails.PaymentProviderStripe == 'F' && locationDetails.PaymentProviderMiMenu == 'F' &&  PaymentTypes == true"  #paymentFormTwo2="ngForm">
+      
+      <div class="row no-gutters">
+          <div class="col-sm-6">
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="First Name" name="firstname" [(ngModel)]="cardBody.CCFName" required />
+            </div>
+          </div>
+          <div class="col-sm-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Last Name" name="lastName" [(ngModel)]="cardBody.CCLName" required />
+              </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" appOnlyNumber maxlength="15" name="phone" [(ngModel)]="cardBody.Telephone" placeholder="Telephone" required />
+        </div>
+      
+        <div class="form-group">
+          <input type="text" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" class="form-control"  name="addLineTwo645454" [(ngModel)]="cardBody.CCAddr1" autocomplete="off" required />
+        </div>
+        <div class="row no-gutters">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="City" name="city" [(ngModel)]="cardBody.CCCity" required />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="State" name="state" [(ngModel)]="cardBody.CCState" required />
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="ZIP" [(ngModel)]="cardBody.CCZIP" name="zip" required />
+            </div>
+          </div>
+        </div> 
+       
+        <div class="form-group" >
+          <input class="form-control" type="text" id="cc_cardNumber" placeholder="Card Number" appOnlyNumber name="cardNumber" [(ngModel)]="cardBody.CCNumber" required />
+        </div>
+        <div class="row no-gutters" >
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <input type="password" class="form-control" appOnlyNumber maxlength="3" placeholder="CVV" name="cvv" [(ngModel)]="cardBody.CCCVV" required />
+                </div>
+              </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <input type="text" class="form-control" appOnlyNumber maxlength="2" placeholder="MM" name="month" [(ngModel)]="expDate.month" required />
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="form-group">
+              <input type="text" class="form-control" appOnlyNumber maxlength="2" minlength="2" placeholder="YY" name="year" [(ngModel)]="expDate.year" required />
+            </div>
+          </div>
+         
+        </div>
+
+       
+        <div class="link pt-3">
+          <button *ngIf="locationDetails.PaymentProviderStripe == 'T'" class="btn btn-primary btn-site btn-block rounded-0" (click)="getCardToken()" [disabled]="flags.placeorderButton == true" >Place Order</button>
+      <button *ngIf="locationDetails.PaymentProviderStripe == 'F'" class="btn btn-primary btn-site btn-block rounded-0" (click)="placeOrder()" [disabled]="!paymentFormTwo2.valid" >Place Order</button>
+        </div>
+      </form>
+  <button style="display: none" type="hidden" id="stripeButton" (click)="placeOrder()" ></button>
+</div>
+
+<form *ngIf="country.toUpperCase() == 'AU' && locationDetails.PaymentProviderStripe == 'T' &&  PaymentTypes == true" #paymentFormOne1="ngForm">
+
+
+  <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error1 = $event"></ngx-stripe-card>
+  <div class="error1">
+    {{error1?.message}}
+  </div>
+
+
+<div class="link pt-3">
+<button class="btn btn-primary btn-site btn-block rounded-0" (click)="getCardToken()"  [disabled]="flags.placeorderButton == true">Place Order</button>
+</div>
+</form> -->

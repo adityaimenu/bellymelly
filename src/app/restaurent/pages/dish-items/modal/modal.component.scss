@@ -1,0 +1,267 @@
+@import "../../../../../assets/css/variables";
+.fancybox-slide{
+  .animated-modal {
+    max-width: 550px;
+    border-radius: 4px;
+    overflow: hidden;
+    transform: translateY(-50px);
+    transition: all .7s;
+    h2, p{
+      transform: translateY(-50px);
+      opacity: 0;
+      transition-property: transform, opacity;
+      transition-duration: .4s;
+    }
+    h2{
+      transition-delay: .1s;
+    }
+    p{
+      transition-delay: .3s;
+    }
+  }
+  &.fancybox-slide--current{
+    .animated-modal, h2, p{
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+.modal-customization{
+  .title{
+    p{
+      font-weight: 400;
+      font-size: 14px;
+      color: gray;
+    }
+    h6{
+      color: $dark-black;
+    }
+  }
+  .choose-crust{
+    background: #f03f3708;
+    padding: 1rem;
+    @media (max-width: 767px){
+      margin-top: 15px;
+    }
+  }
+  .choose-toppings{
+    padding: 1rem 0;
+  }
+}
+.setunit{
+  width: 100%;
+  @media (max-width: 767px){
+    max-width: 100px;
+  }
+}
+.btn-block {
+  display: flex;
+  justify-content: space-between;
+}
+.btn-txt {
+  color: #fff;
+}
+
+
+.nb-theme-default nb-checkbox.status-basic .custom-checkbox {
+  background-color: rgba(143, 155, 179, 0.08);
+  border-color: #8f9bb3;
+}
+button:disabled:hover {
+  cursor: not-allowed;
+}
+button:disabled {
+  background: gray;
+  border: unset;
+}
+
+
+.fixed-body{
+  max-height: 250px;
+  overflow: auto;
+}
+nb-radio, .chk{
+  display: inline-block;
+  width: 33.33%;
+}
+nb-radio.order-price {
+  width: 100% !important;
+}
+.extra-options {
+  display: block;
+  ul.ks-cboxtags {
+    list-style: none;
+    padding: 0px;
+    li {
+      display: inline;
+      label {
+        display: inline-block;
+        border: 2px dashed $purple;
+        color: $purple;
+        border-radius: 25px;
+        white-space: nowrap;
+        margin: 3px 0px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: all .2s;
+        padding: 0px 5px;
+        font-size: 12px;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+        &::before {
+          display: inline-block;
+          font-style: normal;
+          font-variant: normal;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          font-family: "FontAwesome";
+          font-weight: 900;
+          font-size: 12px;
+          padding: 2px 6px 2px 2px;
+          content: "\f067";
+          transition: transform .3s ease-in-out;
+        }
+      }
+      input[type="radio"]:checked + label::before {
+        content: "\f00c";
+        transform: rotate(-360deg);
+        transition: transform .3s ease-in-out;
+      }
+      input[type="radio"]:checked + label {
+        border: 2px dashed $purple;
+        background-color: $purple;
+        color: #fff;
+        transition: all .2s;
+      }
+      input[type="radio"] {
+        display: absolute;
+        opacity: 0;
+        display: none;
+      }
+      input[type="radio"]:focus + label {
+        border: 2px dashed $purple;
+      }
+    }
+    &.ks-size{
+      li{
+        label{
+          border-color: $orange;
+          color: $orange;
+        }
+        input[type="radio"]:checked + label{
+          border-color: $orange;
+          background-color: $orange;
+        }
+        input[type="radio"]:focus + label{
+          border-color: $orange;
+        }
+      }
+    }
+  }
+}
+
+
+nb-checkbox.check-size::ng-deep
+.nb-theme-corporate nb-checkbox.status-basic .native-input:disabled + .custom-checkbox{
+  background-color: rgba(143, 155, 179, 0.08);
+  border-color: #8f9bb3;
+  position: absolute !important;
+  top: 0 !important;
+
+}
+::ng-deep nb-checkbox.check-size .custom-checkbox {
+  position: absolute !important;
+  top: 0 !important;
+}
+::ng-deep nb-checkbox.check-size .text {
+  margin-left: 20px !important;
+}
+::ng-deep nb-radio-group nb-radio.cust-radio-chk .text {
+  line-height: 1;
+}
+.custom-checkbox .custom-control-label::before {
+  border-radius: .25rem;
+  // border-color: #8f9bb3;
+  width: 1.25rem;
+  height: 1.25rem;
+  top: 0;
+}
+.custom-control-label::after {
+  width: 1.25rem;
+  height: 1.25rem;
+  top: 0;
+}
+li.chk-size{
+  label{
+    border-color: purple !important;
+    color: purple !important;
+  }
+  input[type="radio"]:checked + label{
+    border-color: purple !important;
+    background-color: purple !important;
+    color: #ffffff !important;
+  }
+  input[type="radio"]:focus + label{
+    border-color: purple;
+  }
+}
+.custom-control-label.custom-add-on-chk::before {
+  top: 0.07rem;
+  left: -1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.noSelected{
+  background-color: gray;
+  border: 0;
+}
+.btn-site{
+  border: 0;
+}
+.btn-site.focus, .btn-site:focus{
+
+  box-shadow:unset
+}
+.minicon {
+  position: relative;
+  margin-right: 9px;
+}
+.minicon:before {
+  content: "";
+  display: inline-block;
+  height: 3px;
+  width: 12px;
+  background-color: #bebfc5;
+  position: absolute;
+  top: -1px;
+}
+@media (max-width:575px){
+  .choosesize .col-sm-4{
+    width: 33.33%;
+  }
+  .btnrow .col-sm-6{
+    width: 50%;
+  }
+}
+@media (max-width:375px){
+  .choosesize .col-xs-6{
+    width: 50%;
+  }
+}
+.units-pos{
+  display: flex;
+  justify-content: flex-end;
+  @media (max-width:767px){
+    justify-content: flex-start;
+  }
+}
+button.fancybox-close-small {
+  padding: 10px;
+  right: -7px;
+  top: -7px;
+}

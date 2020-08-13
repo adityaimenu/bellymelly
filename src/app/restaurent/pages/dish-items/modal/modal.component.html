@@ -1,0 +1,162 @@
+<div style="display: none;" id="animatedModal" class="animated-modal" >
+  <div class="modal-customization">
+    <div class="title">
+      <div class="row">
+        <div class="col-md-8">
+          <h5 class="title-heading">
+            Customize "{{itemName?itemName.Name:''}}"
+          </h5>
+        </div>
+        <div class="col-md-4 units-pos">
+          <figure class="m-0 setunit" fxLayout="row" fxLayoutAlign="space-around center">
+            <a href="javascript:void(0);" class="unit decrement" (click)="updateQuantity(false)">
+              <div class="minicon"></div>
+            </a>
+            <span>{{quantity}}</span>
+            <a href="javascript:void(0);" class="unit increment" (click)="updateQuantity(true)">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </a>
+          </figure>
+        </div>
+      </div>
+      <div class="title my-2">
+        <h5 class="title-heading">
+          <span>Choose a size  <small class="text-danger">Required</small></span>
+        </h5>
+
+        <!-- <div class="row choosesize">
+
+            <div *ngIf="item && (item.CatType == 'Special')" class="col-md-4 col-sm-4 col-xs-6">
+                <nb-radio class="order-price" (click)="onChangePrice('p1', itemName.P1)" [checked]="prices.p1">{{itemName.SpecialOffer.Name}} {{currency}}{{itemName.SpecialOffer.Amt1}}</nb-radio>
+              </div>
+        </div> -->
+
+        <div class="row choosesize">
+        <div *ngIf="item && (item.P1 && itemName.P1 >= 0)" class="col-md-4 col-sm-4 col-xs-6">
+          <nb-radio class="order-price" (click)="onChangePrice('p1', itemName.P1)" id="clickFirstSizeP1" [checked]="prices.p1">{{item.P1.Name}} {{currency}}{{itemName.P1}}</nb-radio>
+          <!-- <input type="radio" name="size"  class="order-price" (click)="onChangePrice('p1', itemName.P1)" id="clickFirstSizeP1" [checked]="prices.p1">{{item.P1.Name}} {{currency}}{{itemName.P1}} -->
+        </div>
+        <div *ngIf="item && (item.P2 && itemName.P2 > 0)" class="col-md-4 col-sm-4 col-xs-6">
+          <nb-radio class="order-price" (click)="onChangePrice('p2', itemName.P2)" id="clickFirstSizeP2" [checked]="prices.p2" >{{item.P2.Name}} {{currency}}{{itemName.P2}}</nb-radio>
+          <!-- <input type="radio" name="size" class="order-price" (click)="onChangePrice('p2', itemName.P2)" id="clickFirstSizeP2" [checked]="prices.p2" >{{item.P2.Name}} {{currency}}{{itemName.P2}} -->
+        </div>
+        <div *ngIf="item && (item.P3 && itemName.P3 > 0)" class="col-md-4 col-sm-4 col-xs-6">
+          <nb-radio class="order-price" (click)="onChangePrice('p3', itemName.P3)" id="clickFirstSizeP3" [checked]="prices.p3" >{{item.P3.Name}} {{currency}}{{itemName.P3}}</nb-radio>
+          <!-- <input type="radio" name="size"  class="order-price" (click)="onChangePrice('p3', itemName.P3)" id="clickFirstSizeP3" [checked]="prices.p3" >{{item.P3.Name}} {{currency}}{{itemName.P3}} -->
+        </div>
+        <div *ngIf="item && (item.P4 && itemName.P4 > 0)" class="col-md-4  col-sm-4 col-xs-6">
+          <nb-radio class="order-price" (click)="onChangePrice('p4', itemName.P4)" id="clickFirstSizeP4" [checked]="prices.p4" >{{item.P4.Name}} {{currency}}{{itemName.P4}}</nb-radio>
+          <!-- <input type="radio" name="size" class="order-price" (click)="onChangePrice('p4', itemName.P4)" id="clickFirstSizeP4" [checked]="prices.p4" >{{item.P4.Name}} {{currency}}{{itemName.P4}} -->
+        </div>
+        <div *ngIf="item && (item.P5 && itemName.P5 > 0)" class="col-md-4 col-sm-4 col-xs-6">
+          <nb-radio class="order-price" (click)="onChangePrice('p5', itemName.P5)" id="clickFirstSizeP5" [checked]="prices.p5" >{{item.P5.Name}} {{currency}}{{itemName.P5}}</nb-radio>
+          <!-- <input type="radio" name="size" class="order-price" (click)="onChangePrice('p5', itemName.P5)" id="clickFirstSizeP5" [checked]="prices.p5" >{{item.P5.Name}} {{currency}}{{itemName.P5}} -->
+        </div>
+        <div *ngIf="item && (item.P6 && itemName.P6 > 0)" class="col-md-4 col-sm-4 col-xs-6">
+          <nb-radio class="order-price" (click)="onChangePrice('p6', itemName.P6)" id="clickFirstSizeP6" [checked]="prices.p6" >{{item.P6.Name}} {{currency}}{{itemName.P6}}</nb-radio>
+          <!-- <input type="radio" name="size" class="order-price" (click)="onChangePrice('p6', itemName.P6)" id="clickFirstSizeP6" [checked]="prices.p6" >{{item.P6.Name}} {{currency}}{{itemName.P6}} -->
+        </div>
+      </div>
+      </div>
+
+    </div>
+    <div class="fixed-body">
+      <div *ngFor="let item of addOnList; let i = index" class="choose-crust">
+        <div class="title">
+          <!-- <h6 class="mb-0">{{item.Name}} <small *ngIf="item.Reqd == 'T'" class="text-danger" ><span style="text-transform: none; font-size: 14px;">Required - Choose (Minimum {{item.Min > 0?item.Min:1}} and Maximum {{item.Max > 0?item.Max:1}})</span> </small></h6> -->
+          <h6 class="mb-0">{{item.Name}} <small *ngIf="item.Reqd == 'T'" class="text-danger" ><span style="text-transform: none; font-size: 14px;">Required - Choose {{item.DispType == 'S'?'1':item.Max}}</span> </small></h6>
+          <p>{{item.Desc}}</p>
+        </div>
+        <div *ngIf="item.DispType == 'S'" class="row btnrow">
+          <div *ngFor="let data of item.AddOnOptions;" class="col-md-4 col-sm-6 mb-2 custom-check-addOn">
+            <div class="custom-control custom-radio">
+
+              <input type="radio" class="custom-control-input" id="customRadio-{{data.Id}}" name="add-on-radio-{{item.Id}}" [disabled]="prices.p1 == false && prices.p2 == false && prices.p3 == false && prices.p4 == false && prices.p5 == false && prices.p6 == false" (click)="onSelectAddOnByCheck(item, data)">
+              <label class="custom-control-label custom-add-on-chk" for="customRadio-{{data.Id}}">
+                {{data.Name}}
+                <span *ngIf="prices.p1 && data.P1 > 0">{{currency}}{{data.P1}}</span>
+                <span *ngIf="prices.p2 && data.P2 > 0">{{currency}}{{data.P2}}</span>
+                <span *ngIf="prices.p3 && data.P3 > 0">{{currency}}{{data.P3}}</span>
+                <span *ngIf="prices.p4 && data.P4 > 0">{{currency}}{{data.P4}}</span>
+                <span *ngIf="prices.p5 && data.P5 > 0">{{currency}}{{data.P5}}</span>
+                <span *ngIf="prices.p5 && data.P6 > 0">{{currency}}{{data.P6}}</span>
+              </label>
+              <div *ngIf="(country.toUpperCase()  == 'US' || country.toUpperCase()  == 'AU') && (data.P1 > 0 || data.P2 > 0 || data.P3 > 0 || data.P4 > 0 || data.P5 > 0 || data.P6 > 0) && data.isSelected && (item.AddOnOptionModifier1 || item.AddOnOptionModifier2)" class="extra-options">
+               
+                <ul *ngIf="item.AddOnOptionModifier1" class="ks-cboxtags mb-0" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5px">
+                  <li *ngIf="item.AddOnOptionModifier1.Label1" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="radioOne1{{i}}"  checked><label for="radioOne1{{i}}">{{item.AddOnOptionModifier1.Label1}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier1.Label2" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="radioOne2{{i}}"><label for="radioOne2{{i}}">{{item.AddOnOptionModifier1.Label2}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier1.Label3" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="radioOne3{{i}}"><label for="radioOne3{{i}}">{{item.AddOnOptionModifier1.Label3}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier1.Label4" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="radioOne4{{i}}"><label for="radioOne4{{i}}">{{item.AddOnOptionModifier1.Label4}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier1.Label5" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="radioOne5{{i}}"><label for="radioOne5{{i}}">{{item.AddOnOptionModifier1.Label5}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier1.Label6" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="radioOne6{{i}}"><label for="radioOne6{{i}}">{{item.AddOnOptionModifier1.Label6}}</label></li>
+                </ul>
+                <ul *ngIf="item.AddOnOptionModifier2" class="ks-cboxtags ks-size" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5px">
+                  <li *ngIf="item.AddOnOptionModifier2.Label1" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="radioTwo1{{i}}"  checked><label for="radioTwo1{{i}}">{{item.AddOnOptionModifier2.Label1}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier2.Label2" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="radioTwo2{{i}}"><label for="radioTwo2{{i}}">{{item.AddOnOptionModifier2.Label2}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier2.Label3" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="radioTwo3{{i}}"><label for="radioTwo3{{i}}">{{item.AddOnOptionModifier2.Label3}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier2.Label4" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="radioTwo4{{i}}"><label for="radioTwo4{{i}}">{{item.AddOnOptionModifier2.Label4}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier2.Label5" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="radioTwo5{{i}}"><label for="radioTwo5{{i}}">{{item.AddOnOptionModifier2.Label5}}</label></li>
+                  <li *ngIf="item.AddOnOptionModifier2.Label6" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="radioTwo6{{i}}"><label for="radioTwo6{{i}}">{{item.AddOnOptionModifier2.Label6}}</label></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="addOnCheck" *ngIf="item.DispType == 'M'">
+          <div class="row btnrow">
+            <div *ngFor="let option of item.AddOnOptions; let i = index" class="col-md-4 col-sm-6 mb-2 custom-check-addOn">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [disabled]="prices.p1 == false && prices.p2 == false && prices.p3 == false && prices.p4 == false && prices.p5 == false && prices.p6 == false" (change)="onSelectAddOn(item, option, $event.target.checked)" id="{{option.Id}}-{{i}}" name="example1">
+                <label class="custom-control-label" for="{{option.Id}}-{{i}}">
+                  {{option.Name}}
+                  <span *ngIf="prices.p1 && option.P1 > 0">{{currency}}{{option.P1}}</span>
+                  <span *ngIf="prices.p2 && option.P2 > 0">{{currency}}{{option.P2}}</span>
+                  <span *ngIf="prices.p3 && option.P3 > 0">{{currency}}{{option.P3}}</span>
+                  <span *ngIf="prices.p4 && option.P4 > 0">{{currency}}{{option.P4}}</span>
+                  <span *ngIf="prices.p5 && option.P5 > 0">{{currency}}{{option.P5}}</span>
+                  <span *ngIf="prices.p5 && option.P6 > 0">{{currency}}{{option.P6}}</span>
+                </label>
+
+                <!-- <div *ngIf="(country.toUpperCase()  == 'US' || country.toUpperCase()  == 'AU') && option.isSelected && (item.AddOnOptionModifier1 || item.AddOnOptionModifier2) && (option.P1 > 0 || option.P2 > 0 || option.P3 > 0 || option.P4 > 0 || option.P5 > 0 || option.P6 > 0)" class="extra-options"> -->
+                    <div *ngIf="(country.toUpperCase()  == 'US' || country.toUpperCase()  == 'AU') && option.isSelected && (item.AddOnOptionModifier1 || item.AddOnOptionModifier2)" class="extra-options">
+                  <ul *ngIf="item.AddOnOptionModifier1" class="ks-cboxtags mb-0" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5px">
+                    <li *ngIf="item.AddOnOptionModifier1.Label1" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="one1-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier1.Label1, item.AddOnOptionModifier1.Id, item.AddOnOptionModifier1.Factor1, item.AddOnOptionModifier1.Id == 10?'true':'false')" checked><label for="one1-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier1.Label1}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier1.Label2" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="one2-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier1.Label2, item.AddOnOptionModifier1.Id, item.AddOnOptionModifier1.Factor2, item.AddOnOptionModifier1.Id == 10?'true':'false')"><label for="one2-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier1.Label2}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier1.Label3" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="one3-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier1.Label3, item.AddOnOptionModifier1.Id, item.AddOnOptionModifier1.Factor3, item.AddOnOptionModifier1.Id == 10?'true':'false')"><label for="one3-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier1.Label3}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier1.Label4" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="one4-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier1.Label4, item.AddOnOptionModifier1.Id, item.AddOnOptionModifier1.Factor4, item.AddOnOptionModifier1.Id == 10?'true':'false')"><label for="one4-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier1.Label4}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier1.Label5" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="one5-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier1.Label5, item.AddOnOptionModifier1.Id, item.AddOnOptionModifier1.Factor5, item.AddOnOptionModifier1.Id == 10?'true':'false')"><label for="one5-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier1.Label5}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier1.Label6" [ngClass]="{'chk-size': item.AddOnOptionModifier1.Id == 11}"><input type="radio" name="modifierOne{{i}}" id="one6-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier1.Label6, item.AddOnOptionModifier1.Id, item.AddOnOptionModifier1.Factor6, item.AddOnOptionModifier1.Id == 10?'true':'false')"><label for="one6-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier1.Label6}}</label></li>
+                  </ul>
+                  <ul *ngIf="item.AddOnOptionModifier2" class="ks-cboxtags ks-size" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5px">
+                    <li *ngIf="item.AddOnOptionModifier2.Label1" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="two1-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier2.Label1, item.AddOnOptionModifier2.Id, item.AddOnOptionModifier2.Factor1, item.AddOnOptionModifier2.Id == 10?'true':'false')" checked><label for="two1-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier2.Label1}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier2.Label2" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="two2-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier2.Label2, item.AddOnOptionModifier2.Id, item.AddOnOptionModifier2.Factor2, item.AddOnOptionModifier2.Id == 10?'true':'false')"><label for="two2-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier2.Label2}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier2.Label3" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="two3-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier2.Label3, item.AddOnOptionModifier2.Id, item.AddOnOptionModifier2.Factor3, item.AddOnOptionModifier2.Id == 10?'true':'false')"><label for="two3-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier2.Label3}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier2.Label4" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="two4-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier2.Label4, item.AddOnOptionModifier2.Id, item.AddOnOptionModifier2.Factor4, item.AddOnOptionModifier2.Id == 10?'true':'false')"><label for="two4-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier2.Label4}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier2.Label5" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="two5-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier2.Label5, item.AddOnOptionModifier2.Id, item.AddOnOptionModifier2.Factor5, item.AddOnOptionModifier2.Id == 10?'true':'false')"><label for="two5-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier2.Label5}}</label></li>
+                    <li *ngIf="item.AddOnOptionModifier2.Label6" [ngClass]="{'chk-size': item.AddOnOptionModifier2.Id == 11}"><input type="radio" name="modifierTwo{{i}}" id="two6-{{item.Id}}-{{i}}" (click)="onChangeModifier(item, option, item.AddOnOptionModifier2.Label6, item.AddOnOptionModifier2.Id, item.AddOnOptionModifier2.Factor6, item.AddOnOptionModifier2.Id == 10?'true':'false')"><label for="two6-{{item.Id}}-{{i}}">{{item.AddOnOptionModifier2.Label6}}</label></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group special-row">
+        <input placeholder="Special Instructions: i.e. Make it spicy" class="form-control" name="specialInstr" [(ngModel)]="specialInstr">
+      </div>
+    </div>
+    <div class="link text-right">
+      <div class="row">
+      </div>
+   <!-- {{flags.isSizeSelected}}, {{requiredAddOn.length}}, {{flags.validateArray.length}} -->
+        <button class="btn btn-site btn-block rounded-0" [ngClass]="flags.isSizeSelected == false || requiredAddOn.length != flags.validateArray.length ? 'noSelected':''"   (click)="addToBag()">
+        <p class="m-0 btn-txt">{{currency}}{{Math.round((displayAmount*quantity) * 100) / 100}}</p>
+        <p class="m-0 btn-txt">Add Item</p>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+

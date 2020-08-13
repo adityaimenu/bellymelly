@@ -1,0 +1,197 @@
+@import "../../../../../assets/css/variables";
+.modal{
+  .modal-dialog{
+    position: fixed;
+    margin: auto;
+    width: 400px;
+    height: 100%;
+    border-radius: 0;
+    background: $white;
+    -webkit-transform: translate3d(0%, 0, 0);
+    -ms-transform: translate3d(0%, 0, 0);
+    -o-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+    @media (max-width: 767px){
+      width: 320px;
+    }
+    .modal-content{
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: transparent;
+      .modal-header{
+        border: none;
+        padding: 0;
+      }
+      .modal-body{
+        padding: 0;
+      }
+    }
+  }
+  /*Left*/
+  &.left{
+    .modal-dialog{
+      left: -320px;
+      -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+      -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+      -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+      transition: opacity 0.3s linear, left 0.3s ease-out;
+    }
+  }
+  &.show{
+    .modal-dialog{
+      left: 0;
+    }
+  }
+  .dismiss{
+    // font-size: 42px;
+    margin-bottom: 1rem;
+  }
+  .form-group{
+    .form-control{
+      background: transparent;
+      border-radius: 0;
+      font-size: 12px;
+      min-height: 50px;
+      font-weight: 500;
+    }
+  }
+  .title{
+    h6{
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+  .add-new{
+    form{
+      input, textarea{
+        &.form-control{
+          border-radius: 0;
+          border-color: $border-color;
+          // min-height: 55px;
+        }
+      }
+      textarea{
+        &.form-control{
+          border-top: 0;
+          min-height: 100px;
+        }
+      }
+      ul{
+        list-style: none;
+        padding: 0;
+        li{
+          display: inline-block;
+          width: calc(100%/3);
+          input[type=radio] {
+            position: absolute;
+            visibility: hidden;
+            display: none;
+          }
+          label {
+            color: $dark-black;
+            display: inline-block;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 9px 0;
+            text-align: center;
+            margin: 0;
+            width: 100%;
+            font-size: 14px;
+          }
+
+          input[type=radio]:checked + label{
+            color: $white;
+            background: #000;
+          }
+
+          label + input[type=radio] + label {
+            border-left: 1px solid #000;
+          }
+          .radio-group {
+            border: 1px solid $border-color;
+            display: inline-block;
+            border-radius: 0px;
+            overflow: hidden;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+agm-map {
+  height: 300px;
+  width: 100%;
+}
+//
+//#map .centerMarker{
+//  position:absolute;
+//  /*url of the marker*/
+//  background:url(http://maps.gstatic.com/mapfiles/markers2/marker.png) no-repeat;
+//  /*center the marker*/
+//  top:50%;left:50%;
+//  z-index:1;
+//  /*fix offset when needed*/
+//  margin-left:-10px;
+//  margin-top:-34px;
+//  /*size of the image*/
+//  height:34px;
+//  width:20px;
+//  cursor:pointer;
+//}
+// .close-btn{
+//   position: absolute;
+//   top: 0;
+//   right: 10px;
+//   width: 35px;
+//   height: 35px;
+//   background: #f03f37;
+//   border-radius: 100px;
+//   z-index: 999;
+// }
+.add-new input
+{
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #e9e9eb !important;
+  font-size: 15px;
+  color: #282c3f;
+  font-weight: 600;
+}
+.add-new input::placeholder{
+  font-weight: 500  ;
+}
+
+@media (max-width: 575px){
+  .modal .modal-dialog{
+    width: 100%;
+}
+.add-new input
+{
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #e9e9eb !important;
+  font-size: 14px;
+  color: #282c3f;
+  font-weight: 600;
+}
+
+}
+// .close-btn i{
+//   font-size: 27px;
+//   padding: 4px;
+// }
+
+textarea{
+  min-height: 25px !important;
+}
+.form-control {
+  min-height: unset;
+}

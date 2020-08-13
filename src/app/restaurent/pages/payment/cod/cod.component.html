@@ -1,0 +1,14 @@
+<div class="col-sm-12">
+
+  <figure class="mb-4 scooter">
+    <img src="assets/images/delivery-boy.svg" alt="paytm-logo" width="70px">
+  </figure>
+  <div class="title mb-4">
+    <h6>Cash</h6>
+    <p>Please keep exact change handy to help us serve you better</p>
+  </div>
+  <div class="link">
+    <button class="btn btn-site btn-block rounded-0" (click)="onPlaceOrder.emit()" [disabled]="isOrderPlaced">{{isOrderPlaced?'Please Wait...':'Place Order'}}</button>
+
+  </div>
+</div>

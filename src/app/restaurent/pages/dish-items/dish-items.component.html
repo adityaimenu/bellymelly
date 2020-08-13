@@ -1,0 +1,123 @@
+  <div class="all-dish-items">
+  <div *ngFor="let item of itemList; let i = index" class="dish-items" id="{{item.customId}}">
+    <div class="title d-flex align-items-center justify-content-between">
+      <h5 class="title-heading">{{item.CatName}}</h5>
+      <a class="view-description text-dark" href="javascript:void(0);" [nbPopover]="itemDescription" nbPopoverPlacement="left">
+        <nb-icon icon="info"></nb-icon>
+      </a>
+      <ng-template #itemDescription>
+        <span class="pop-description">{{item.Desc}}</span>
+      </ng-template>
+    </div>
+    <ul class="list-item">
+      <p *ngIf="!item.ItemList.length">No items available yet.</p>
+      <li class="" *ngFor="let data of item.ItemList; let index = index">
+
+          <div *ngIf="data.Img && data.showTOday" class="grid-view" fxLayout="row wrap" fxLayoutAlign="start stretch">
+            <div class="card">
+              <div class="card-image d-flex align-items-center justify-content-center">
+                <a *ngIf="data.Desc" href="javascript:void(0);" class="view-description text-light" [nbPopover]="description" nbPopoverPlacement="left">
+                  <nb-icon icon="info"></nb-icon>
+                </a>
+                <img src="{{imageUrl}}images/menuitemimages/{{data.Img}}" alt="Card image">
+              </div>
+              <div class="card-body">
+                <div class="">
+                  <div class="card-title" title="{{data.Name}}">
+                    {{data.Name}}
+                    <span *ngIf="data.Icon1"><img  src="{{data.Icon1}}"></span>
+                    <span *ngIf="data.Icon2"><img  src="{{data.Icon2}}"></span>
+                    <span *ngIf="data.Icon3"><img  src="{{data.Icon3}}"></span>
+                    <span *ngIf="data.Icon4"><img  src="{{data.Icon4}}"></span>
+                  </div>
+                </div>
+
+                <!-- <div class="description">
+                  <p class="text-gray m-0" title="{{correctDesc(data.Desc)}}"> {{correctDesc(data.Desc)}} </p>
+                </div> -->
+                <ng-template #description>
+                  <span class="pop-description">{{correctDesc(data.Desc)}}</span>
+                </ng-template>
+                <div class="price" fxLayout="row wrap" fxLayout.sm="row wrap" fxLayoutAlign="space-between center"
+                     fxLayoutAlign.sm="center center">
+                  <p class="m-0">
+
+                    <span *ngIf="item.P1 && data.P1 > 0" class="text-success">{{currency}} {{(data.P1).toFixed(2)}}</span>
+                    <span *ngIf="item.P2 && (data.P2 > 0 && (!data.P1 || data.P1 <= 0))" class="text-success">{{currency}} {{(data.P2).toFixed(2)}}</span>
+                    <span *ngIf="item.P3 && (data.P3 > 0 && ((!data.P1 || data.P1 <= 0) && (!data.P2 || data.P2 <= 0)))" class="text-success">{{currency}} {{(data.P3).toFixed(2)}}</span>
+                    <span *ngIf="item.P4 && (data.P4 > 0 && ((!data.P1 || data.P1 <= 0) && (!data.P2 || data.P2 <= 0) && (!data.P3 || data.P3 <= 0)))" class="text-success">{{currency}} {{(data.P4).toFixed(2)}}</span>
+                    <span *ngIf="item.P5 && (data.P5 > 0 && ((!data.P1 || data.P1 <= 0) && (!data.P2 || data.P2 <= 0) && (!data.P3 || data.P3 <= 0) && (!data.P4 || data.P4 <= 0)))" class="text-success">{{currency}} {{(data.P5).toFixed(2)}}</span>
+                    <span *ngIf="item.P6 && (data.P6 > 0 && ((!data.P1 || data.P1 <= 0) && (!data.P2 || data.P2 <= 0) && (!data.P3 || data.P3 <= 0) && (!data.P4 || data.P4 <= 0) && (!data.P5 || data.P5 <= 0)))" class="text-success">{{currency}} {{(data.P6).toFixed(2)}}</span>
+                  </p>
+                  <span class="customize">
+                    <button *ngIf="data.addQuantity <= 0 && (data.AddOnList.length || (item.P2 || item.P3 || item.P4 || item.P5 || item.P6))" class="setunit"  (click)="onAddItem(data, item)">Add Item</button>
+                    <button *ngIf="data.addQuantity > 0 && (data.AddOnList.length || (item.P2 || item.P3 || item.P4 || item.P5 || item.P6)) " class="setunit"  (click)="onAddItem(data, item)">{{data.addedItems}} Added <i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <button *ngIf="data.addQuantity <= 0 && (!data.AddOnList.length && !item.P2 && !item.P3 && !item.P4 && !item.P5 && !item.P6) " class="setunit" (click)="addQuantity(data, i)">Add Item</button>
+                    <figure *ngIf="data.addQuantity > 0 && (!data.AddOnList.length && data.addedItems < 1)" class="m-0 setunit" fxLayout="row" fxLayoutAlign="space-around center">
+                      <a href="javascript:void(0);" (click)="removeQuantity(data,i)" class="unit decrement">
+                        <i class="fa fa-minus-square"></i>
+                      </a>
+                      <span>{{data.addQuantity}}</span>
+                      <a href="javascript:void(0);" class="unit increment" (click)="addQuantity(data, i)">
+                        <i class="fa fa-plus-square"></i>
+                      </a>
+                    </figure>
+
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div *ngIf="!data.Img && data.showTOday" class="list-view" fxLayout="row wrap" fxLayout.xs="row" fxLayoutAlign="space-between stretch">
+          <div class="left">
+            <div class="" fxflex.xs="50" fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.sm="center end">
+              <div>
+                <h6>{{data.Name}}</h6>
+                <p class="text-gray assign-width">{{correctDesc(data.Desc)}}</p>
+                <p *ngIf="item.P1 && data.P1 > 0" class="text-success mb-0 price">{{currency}} {{(data.P1).toFixed(2)}}</p>
+                <p *ngIf="item.P2 && (data.P2 > 0 && (!data.P1 || data.P1 <= 0))" class="text-success mb-0 price">{{currency}} {{(data.P2).toFixed(2)}}</p>
+                <p *ngIf="item.P3 && (data.P3 > 0 && ((!data.P1 || data.P1 <= 0) && (!data.P2 || data.P2 <= 0)))" class="text-success mb-0 price">{{currency}} {{(data.P3).toFixed(2)}}</p>
+                <p *ngIf="item.P4 && (data.P4 > 0 && ((!data.P1 || data.P1 <= 0) && (!data.P2 || data.P2 <= 0) && (!data.P3 || data.P3 <= 0)))" class="text-success mb-0 price">{{currency}} {{(data.P4).toFixed(2)}}</p>
+                <p *ngIf="item.P5 && (data.P5 > 0 && ((!data.P1 || data.P1 <= 0) && (!data.P2 || data.P2 <= 0) && (!data.P3 || data.P3 <= 0) && (!data.P4 || data.P4 <= 0)))" class="text-success mb-0 price">{{currency}} {{(data.P5).toFixed(2)}}</p>
+                <p *ngIf="item.P6 && (data.P6 > 0 && ((!data.P1 || data.P1 <= 0) && (!data.P2 || data.P2 <= 0) && (!data.P3 || data.P3 <= 0) && (!data.P4 || data.P4 <= 0) && (!data.P5 || data.P5 <= 0)))" class="text-success mb-0 price">{{currency}} {{(data.P6).toFixed(2)}}</p>
+
+              </div>
+            </div>
+          </div>
+          <div fxflex.xs="50" *ngIf="data.addQuantity <= 0 && (data.AddOnList.length || (item.P2 || item.P3 || item.P4 || item.P5 || item.P6))" class="right">
+                <button  class="setunit fancyboxModal"  (click)="onAddItem(data, item)">Add Item</button>
+          </div>
+          <div *ngIf="data.addQuantity > 0 && (data.AddOnList.length || (item.P2 || item.P3 || item.P4 || item.P5 || item.P6))" class="right">
+            <button class="setunit"  (click)="onAddItem(data, item)">{{data.addedItems}} Added <i class="fa fa-plus" aria-hidden="true"></i></button>
+          </div>
+          <div *ngIf="data.addQuantity <= 0 && (!data.AddOnList.length && !item.P2 && !item.P3 && !item.P4 && !item.P5 && !item.P6)" class="right">
+                <button  class="setunit" (click)="addQuantity(data, i)">Add Item</button>
+
+          </div>
+          <div *ngIf="data.addQuantity > 0 && (!data.AddOnList.length && data.addedItems < 1)">
+            <figure class="m-0 setunit" fxLayout="row" fxLayoutAlign="space-around center">
+              <a href="javascript:void(0);" (click)="removeQuantity(data,i)" class="unit decrement">
+                <i class="fa fa-minus-square"></i>
+              </a>
+              <span>{{data.addQuantity}}</span>
+              <a href="javascript:void(0);" class="unit increment" (click)="addQuantity(data, i)">
+                <i class="fa fa-plus-square"></i>
+              </a>
+            </figure>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<app-modal [addOnList]="addOnList" [itemName]="itemName" [item]="selectedItem" [addOnItemList]="addOnItemList" (getAddOnItems)="getAddOns($event)" [type]="type" [country]="country"></app-modal>
+<section class="dummsection">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12" style="min-height: 750px;">
+
+      </div>
+    </div>
+  </div>
+</section>

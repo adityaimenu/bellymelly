@@ -1,0 +1,27 @@
+
+
+<div class="modal fade" data-backdrop="static" id="orderSuccessModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body"> 
+        <div class="thank-you-pop">
+          <img src="assets/images/Green-Round-Tick.png" alt="">
+          <h3>Congratulations!</h3>
+          <p>Your Order has been placed successfully !</p>
+          <h3 class="cupon-pop">Order No: <span>{{orderId || 'Not Come'}}</span></h3>
+          <span id="successOrderId" style="display: none;">{{orderId}}</span>
+          <h3>{{locationDetail?locationDetail.Name:''}}</h3>
+          <h3 class="cupon-pop">Order Amount: <span>{{currency}}{{(orderData?orderData.TotalAmt:0).toFixed(2)}}</span></h3>
+          <span id="successtotalAmount" style="display: none;">{{orderData.TotalAmt}}</span>
+          <h6>
+            With your help our platform improves the well being of your community. You can enjoy ordering food online and help the community as well. Thank you for choosing Organization {{orderData.NGOName?orderData.NGOName:''}}, {{locationDetail?locationDetail.Name:''}} will contribute {{orderData.DonateValue?orderData.DonateValue:''}}$ towards Organization {{orderData.NGOName?orderData.NGOName:''}}</h6>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-primary mr-3" data-dismiss="modal" routerLink="/{{mobUrl}}/profile">Order History</button>
+        <a href="{{host}}">  <button class="btn btn-site"  >Start New Order</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" data-toggle="modal" data-target="#orderSuccessModal" id="openOrderSuccess">

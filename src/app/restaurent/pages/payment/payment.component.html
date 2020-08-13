@@ -1,0 +1,26 @@
+<div class="payment-wrapper" fxLayout="row" fxLayoutAlign="start stretch">
+  <div class="tabs" fxFlex="40">
+    <ul id="paymentMethods">
+      <li *ngIf="country.toUpperCase() == 'AU' &&  PaymentTypes == true" (click)="updatePlaceOrder(2)" class="payment-links"  [class.nav-active]="selectedType == 2">
+        <span class="icon mr-2"><img src="assets/images/card.svg"></span> Debit/Credit Card
+      </li>
+      <li *ngIf="country.toUpperCase() == 'US' && PaymentTypes == true" (click)="updatePlaceOrder(2)" class="payment-links"  [class.nav-active]="selectedType == 2">
+          <span class="icon mr-2"><img src="assets/images/card.svg"></span> Debit/Credit Card
+        </li>
+      <li *ngIf="country.toUpperCase() == 'IN' && locationDetails.PaymentProviderPaytm == 'T'" (click)="updatePlaceOrder(4)" class="payment-links" [class.nav-active]="selectedType == 4">
+        <span class="icon mr-2"><img src="assets/images/paytm.svg"></span> PAYTM
+      </li>
+      <li *ngIf="PaymentTypesCOD == true" (click)="updatePlaceOrder(3)" class="payment-links" [class.nav-active]="selectedType == 3">
+        <span class="icon mr-2"><img src="assets/images/cod.svg"></span> Cash
+      </li>
+    </ul>
+  </div>
+  <div class="pills" fxFlex="60">
+    <app-cards *ngIf="(country.toUpperCase()  == 'US' || country.toUpperCase()  == 'AU') && placeOrderBody.data.orderData.PaymentTypeId == 2" (onPlaceOrder)="placeOrder($event)"></app-cards>
+    <app-paytm *ngIf="country.toUpperCase()  == 'IN' && placeOrderBody.data.orderData.PaymentTypeId == 4 && locationDetails.PaymentProviderPaytm == 'T'" [amount]="placeOrderBody.data.orderData.TotalAmt" (pay)="orderByPaytm()" [isOrderByPaytm]="isOrderByPaytm"></app-paytm>
+    <app-cod *ngIf="placeOrderBody.data.orderData.PaymentTypeId == 3" (onPlaceOrder)="placeOrder($event)" ></app-cod>
+  </div>
+</div>
+
+
+

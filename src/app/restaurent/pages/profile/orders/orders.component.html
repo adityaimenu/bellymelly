@@ -1,0 +1,57 @@
+<ul class="orders mt-3" fxLayout="row wrap" fxLayoutAlign="space-between start">
+  <li *ngIf="!orderHistory.length" style="max-width: 100%">
+    <div class="text-center no-address">
+      <img src="assets/images/sad-face.png" alt="" width="10%">
+      <h5 >No orders yet.</h5>
+    </div>
+  </li>
+  <li *ngFor="let item of orderHistory; let i = index">
+    <div class="card">
+      <div class="card-header">
+        <div class="restaurant-info" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+          <figure class="mb-0">
+            <!-- <img *ngIf="locationDetails.LogoImg"  src="{{imageUrl}}{{locationDetails.LogoImg}}" width="60px">
+            <img *ngIf="!locationDetails.LogoImg" src="assets/images/dish-items/item-1.jpg" class="img-fluid"> -->
+          </figure>
+          <div class="info">
+            <h6 class="text-purple">{{item.LocationName}}</h6>
+            <!--<p class="text-gray">BB.Q, Beef Roast, Doughnut & Prawns</p>-->
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="items mb-2">
+          <div class="row orders-col">
+            <div class="col-md-6 col-xs-6">
+              <p class="text-gray mb-0">Order Number</p>
+              <h6>{{item.OrderNumber}}</h6>
+            </div>
+            <div class="col-md-6 col-xs-6 text-right">
+              <p class="text-gray mb-0">Order Amount</p>
+              <h6>{{currency}}{{Math.round(item.TotalAmt * 100) / 100}}</h6>
+            </div>
+          </div>
+        </div>
+        <div class="items">
+          <p class="text-gray mb-0">Ordered On</p>
+          <h6>{{item.CreatedOn}}</h6>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="links row">
+          <div class="col-md-6 mb-2">
+            <!-- <a href="javascript:void(0);" class="text-danger" [ngClass]="{'text-success': item.status == 'Delivered', 'text-danger': item.status != 'Delivered'}">{{item.Status}}</a> -->
+            <button  *ngIf="item.Status == 'Open'" class="btn btn-site" >Active Order</button>
+            <button  *ngIf="item.Status == 'Canceled'" class="btn btn-danger" >{{item.Status}}</button>
+            <button  *ngIf="item.Status == 'Delivered'" class="btn btn-secondary" >{{item.Status}}</button>
+            <button  *ngIf="item.Status == 'Delivered' && item.Status == 'Canceled' && item.Status == 'Open'" class="btn btn-site" >{{item.Status}}</button>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:void(0);" class="text-gray" (click)="getOrderInfo.emit(item.OrderId)"><nb-icon icon="refresh-outline"></nb-icon> Repeat Order</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+  
+</ul>

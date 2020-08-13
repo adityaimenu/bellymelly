@@ -1,0 +1,211 @@
+<div style="display: none;" id="loginModal" class="animated-modal">
+  <div class="modal-customization">
+    <div class="login-box" fxLayout="row" fxLayoutAlign="start center">
+        <div class="left text-center">
+          <!-- <img *ngIf="countryNew == 'au'" src="assets/img/imageAU.png" class="img-fluid" width="100px"> -->
+            <img  src="assets/images/logo.png" class="img-fluid" width="160px">
+          <!-- <h2 class="text-center my-2">BellyMelly</h2> -->
+
+          <p *ngIf="countryNew == 'au'" class="mb-0 msg">Keep yourself & Your Hunger Saviour safe with social distancing.</p>
+          <p *ngIf="countryNew == 'us'" class="mb-0 msg">Your existing username and password will work if you have ordered from the restaurant's website before.</p>
+ 
+          <img *ngIf="countryNew == 'au'" src="assets/images/safe.gif" class="img-fluid" width="220px">
+          <img *ngIf="countryNew == 'us'" src="assets/images/usa-2.jpg" class="img-fluid" width="250px">
+          
+        </div>
+      <div class="right">
+        <div class="login-form-box">
+          <div class="title">
+            <h6 class="title-heading">
+              Sign In
+            </h6>
+          </div>
+
+          <form #loginForm="ngForm" *ngIf="!loginUserData">
+            <div class="form-group">
+              <label class="text-dark">Enter Email</label>
+              <input type="email" class="form-control" name="email" autocomplete="off" [(ngModel)]="loginBody.data.username" required />
+            </div>
+            <div class="form-group">
+              <label class="text-dark">Enter Password</label>
+              <input type="password" class="form-control" name="password" id="typepass" [(ngModel)]="loginBody.data.password" required />
+              <input type="checkbox" class="mt-2" (click)="toggle()"> <b class="ml-2 text-dark">Show Password</b> 
+            </div>
+            <a href="javascript:void(0)" (click)="sendOtpForgotModalOpen()">Forgot Password?</a>
+            <button class="btn btn-default btn-block rounded-0 mt-3" [disabled]="!loginForm.valid || flags.isLogin" (click)="login()" type="submit">{{flags.isLogin?'Hold On...':'Sign In'}}</button>
+          </form>
+          <p  class="mt-2">Don't have an account, <a href="javascript:void(0)" (click)="signUp()">CREATE NOW</a></p>
+        </div>
+        <p class="text-center my-3   or-separator">New & Old Users Please Login With</p>
+        <ul class="social-login">
+          <li>
+            <a href="javascript:void(0)" (click)="socialFbSignIn(1)"><img  src="assets/img/fb.png" width="55px"></a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" (click)="socialGoogleSignIn(2)"><img  src="assets/img/google.png" width="55px"></a>  
+          </li>
+        </ul>
+        <!-- <ul class="social-login">
+          <li (click)="socialFbSignIn(1)">
+            <a href="javascript:void(0);" >
+              <span class="fb">
+                <nb-icon icon="facebook"></nb-icon>
+              </span>
+            </a>
+          </li>
+          <li (click)="socialGoogleSignIn(2)">
+            <a href="javascript:void(0);"  >
+              <span class="google">
+                <nb-icon icon="google"></nb-icon>
+              </span>
+            </a>
+          </li>
+        </ul> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal" id="sendOtpForgotModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Reset Your Password</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form #forgotSendForm="ngForm">
+          <div class="form-group">
+            <label class="text-dark"> <span *ngIf="findCountry">Phone Number</span><span *ngIf="!findCountry">Email </span> </label>
+            <input *ngIf="findCountry" type="text" class="form-control" name="email" [(ngModel)]="usernameForgot" placeholder="Enter Phone Number" required />
+            <input *ngIf="!findCountry" type="text" class="form-control" name="email" [(ngModel)]="usernameForgot" placeholder="Enter Email" required />
+          </div>
+
+          <button class="btn btn-site" [disabled]="!forgotSendForm.valid || flags.isLogin" (click)="sendOtpForgot()">Send OTP</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="enterOtpForgotModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+
+      <div class="modal-header">
+        <h4 class="modal-title">Reset Your Password</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- <h6>Enter OTP sent to your phone and Enter New Password.</h6> -->
+        <form #EnterforgotSendForm="ngForm">
+          <div class="form-group">
+            <label class="text-dark" *ngIf="findCountry" >Phone Number</label>
+            <label class="text-dark" *ngIf="!findCountry" >Email</label>
+            <input type="text" class="form-control" name="email" [(ngModel)]="usernameForgot" disabled  required />
+          </div>
+          <div class="form-group">
+              <label class="text-dark">Enter one time password sent to {{usernameForgot}} </label>
+              <input type="text" class="form-control" name="OTP" [(ngModel)]="OTP" placeholder="One Time Password" required />
+          </div>
+          <div class="form-group">
+              <label class="text-dark">Password</label>
+              <input type="password" class="form-control" name="password" [(ngModel)]="password" placeholder="Enter A New Password" required />
+          </div>
+          <button class="btn btn-site mr-2" [disabled]="!EnterforgotSendForm.valid || flags.isLogin" (click)="resetPassword()">Reset Password</button>
+          <button class="btn btn-primary" (click)="ResendsendOtp()">Resend Otp</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal" id="sendOtpSignupModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <h4 class="modal-title">Signup</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div> -->
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="row no-gutters">
+            <div class="col-md-8 mobile-form">
+              <div class="">
+                <div class="title">
+                  <h1>Enter Mobile Number</h1>
+                  <p>Please enter mobile no. to confirm</p>
+                </div>
+                <form #forgotSendFormSignup="ngForm">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="tel" maxlength="10" [(ngModel)]="tel" placeholder="Enter Phone" required />
+                  </div>
+      
+                  <button *ngIf="findCountry"  class="btn btn-site btn-block rounded-0" [disabled]="!forgotSendFormSignup.valid || flags.isLogin" (click)="signupSocial()">Send OTP</button>
+                  <button *ngIf="!findCountry"  class="btn btn-site btn-block rounded-0" [disabled]="!forgotSendFormSignup.valid || flags.isLogin" (click)="signupSocial()">Confirm</button>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-4 text-right" fxHide.xs>
+              <img src="assets/img/login-right.svg" class="img-fluid right-img">
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <div class="modal" id="enterOtpSigupModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Signup</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <h6 *ngIf="findCountry" >Enter OTP sent to your phone.</h6>
+            <h6 *ngIf="!findCountry" >Enter OTP sent to your Email.</h6>
+            <form #EnterforgotSendForm="ngForm">
+                <div class="form-group">
+                    <label class="text-dark">First Name</label>
+                    <input type="text" class="form-control" name="FName" [(ngModel)]="FName" disabled  required />
+                  </div>
+                  <div class="form-group">
+                      <label class="text-dark">Last Name</label>
+                      <input type="text" class="form-control" name="LName" [(ngModel)]="LName" disabled  required />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-dark">Email</label>
+                        <input type="text" class="form-control" name="fbemail" [(ngModel)]="fbemail" disabled  required />
+                      </div>
+                <div class="form-group">
+                  <label class="text-dark">Phone Number</label>
+                  <input type="text" class="form-control" name="tel" [(ngModel)]="tel" disabled  required />
+                </div>
+              <div class="form-group">
+                <label class="text-dark">Enter 4 digit Password Sent to your email {{fbemail}}</label>
+                <input type="text" class="form-control" name="OTP" [(ngModel)]="OTP" placeholder="One Time Password" required />
+              </div>
+              <button class="btn btn-site mr-2" [disabled]="!EnterforgotSendForm.valid || flags.isLogin" (click)="signupSocial()">Signup</button>
+              <button   class="btn btn-site"  (click)="sendOtpSignup()">Resend OTP</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  

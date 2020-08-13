@@ -1,0 +1,184 @@
+@import "../../../../assets/css/variables";
+.container {
+  .left {
+    span {
+      display: inline-block;
+
+      &.address {
+        max-width: 180px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        // overflow: hidden;
+
+        a {
+          color: $dark-black;
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  .right {
+    .Login-user{
+      .dropdown-toggle{
+        display: inline-block;
+        color: $dark-black;
+        border: none;
+        background: transparent;
+        min-height: 66px;
+        display: flex;
+        align-items: center;
+        padding-right: 0;
+        @media (max-width: 767px){
+          min-height: 1px;
+        }
+        span{
+          //height: 50px;
+          //width: 50px;
+          //border-radius: 50px;
+          //overflow: hidden;
+          display: inline-block;
+          margin-left: 7px;
+        }
+        &:focus{
+          outline: none;
+          box-shadow: none;
+        }
+        &::after{
+          display: none;
+        }
+      }
+      .dropdown-menu{
+        font-size: 12px;
+        padding: 0;
+        border-radius: 0;
+        a{
+          padding: 10px;
+          font-size: .9rem;
+          span{
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+    .search-bar {
+      position: relative;
+      .search {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        -webkit-transform: translateX(-100%) translateY(-124%);
+        transform: translateX(-100%) translateY(-124%);
+
+        * {
+          outline: none;
+          box-sizing: border-box;
+        }
+
+        .search__wrapper {
+          position: relative;
+
+          .search__field {
+            width: 50px;
+            height: 50px;
+            color: transparent;
+            font-family: Lato, sans-serif;
+            font-size: 12px;
+            padding: 0.35em 50px 0.35em 0;
+            border: 1px solid transparent;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            &:focus {
+              border-bottom-color: #ccc;
+              width: 250px;
+              color: #2b2b2b;
+              cursor: default;
+
+              .search__icon {
+                background-color: transparent;
+                cursor: pointer;
+                pointer-events: auto;
+              }
+            }
+
+            &::-webkit-input-placeholder, &:-moz-placeholder, &:-ms-input-placeholder {
+              position: relative;
+              top: 0;
+              left: 0;
+              transition-property: top, color;
+              transition-duration: .1s;
+              -webkit-transform: translateZ(0);
+              transform: translateZ(0);
+              -webkit-backface-visibility: hidden;
+              backface-visibility: hidden;
+              -webkit-perspective: 1000;
+              perspective: 1000;
+            }
+
+            &::-webkit-input-placeholder[style*=hidden], &:-moz-placeholder[style*=hidden], &::-moz-placeholder[style*=hidden], &:-ms-input-placeholder[style*=hidden] {
+              color: #83b0c1;
+              font-size: .65em;
+              font-weight: normal;
+              top: -20px;
+              opacity: 1;
+              visibility: visible !important;
+            }
+          }
+
+          .search__icon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #e9f1f4;
+            width: 50px;
+            height: 50px;
+            font-size: 1.35em;
+            text-align: center;
+            border-color: transparent;
+            border-radius: 50%;
+            pointer-events: none;
+            display: inline-block;
+            transition: background-color 0.2s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 991px){
+    .left {
+      span {
+        &.address {
+          max-width: 95px;
+        }
+        a {
+          font-size: 12px;
+        }
+      }
+    }
+    .right{
+      .Login-user{
+        .dropdown{
+          .btn{
+            text-transform: capitalize;
+            aside{
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.location-sidebar{
+  position: fixed;
+  left: 0;
+  width: 0;
+  overflow: hidden;
+  min-height: 100%;
+  background: #030e1b;
+  top: 0;
+  z-index: 1050;
+  transition: width ease-in-out 0.5s;
+}

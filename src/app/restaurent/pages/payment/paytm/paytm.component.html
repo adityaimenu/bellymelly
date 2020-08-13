@@ -1,0 +1,12 @@
+<div class="col-sm-12">
+  <figure class="mb-4">
+    <img src="assets/images/paytm.svg" alt="paytm-logo" width="120px">
+  </figure>
+  <div class="title mb-4">
+    <h6>Payment</h6>
+    <p>You can done a payment through your paytm. Just click on below button</p>
+  </div>
+  <div class="link">
+    <button class="btn btn-site btn-block rounded-0" (click)="pay.emit()" [disabled]="isOrderByPaytm">{{isOrderByPaytm?'Please Wait...':'Pay & Submit Order'}}</button>
+  </div>
+</div>

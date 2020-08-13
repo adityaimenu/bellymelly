@@ -1,0 +1,56 @@
+@import "../../../../../assets/css/variables";
+ul{
+  list-style: none;
+  padding: 0;
+  li{
+    max-width: 49%;
+    flex: 1 1 100%;
+    margin-bottom: 2%;
+    .card{
+      border-color: $border-color;
+      border-radius: 0;
+      .card-header{
+        background: #fff;
+        border: none;
+        p{
+          font-size: 12px;
+          margin-bottom: 0;
+        }
+        .restaurant-info{
+          figure{
+            max-width: 55px;
+          }
+        }
+      }
+      .card-body{
+        padding-top: 0;
+        padding-bottom: 0;
+        .items{
+          p{
+            font-size: 12px;
+          }
+          h6{
+            font-size: .9rem;
+          }
+        }
+      }
+      .card-footer{
+        background: #fff;
+        border: none;
+        a{
+          font-size: .9rem;
+        }
+      }
+    }
+  }
+  @media (max-width: 767px){
+    li{
+      max-width: 100%;
+    }
+  }
+}
+.no-address {
+  padding: 5px;
+  border: 1px solid #cccccc;
+  border-style: dashed;
+}

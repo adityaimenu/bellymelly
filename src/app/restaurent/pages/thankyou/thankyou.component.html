@@ -1,0 +1,60 @@
+
+<div class="modal fade" data-backdrop="static" id="orderSuccessModal1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body"> 
+          <div class="thank-you-pop">
+            <h3 class="text-white" >{{locationDetails?locationDetails.Name:''}}</h3>
+            <span id="transactionSuccessfull"></span>
+            <ul class="d-flex align-item-center justify-content-between">
+              <li>Order No: <span>{{orderId || 'Not Come'}}</span></li>
+              <li>|</li>
+              <li>Status - Open</li>
+              <!-- {{orderData.TimeSelection == 0?'Open':'Close'}} -->
+            </ul>
+            <h2 class="py-3 text-center big-check">
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </h2>
+            <h5>Order Amount</h5>
+            <h6>{{currency}}{{(orderData?orderData.TotalAmt:0).toFixed(2)}}</h6>
+            <p class="text-white m-0">
+              <span>Please Contact 02-6492-2807 for further assistance <i class="fa fa-phone" aria-hidden="true"></i></span>
+            </p>
+            <!-- <span id="successOrderId" style="display: none;">{{orderId}}</span> -->
+            <ul class="list-unstyled px-0 py-3 border-bottom d-flex align-items-center justify-content-around mb-3">
+              <li class="text-center">
+                <img *ngIf="orderData.ServiceId == 1" class="" src="assets/images/foodbag.svg" height="36px">
+                <img *ngIf="orderData.ServiceId == 2" class="" src="assets/images/delivery-boy.svg" height="36px">
+                <img *ngIf="orderData.ServiceId == 3" class="" src="assets/images/car.svg" height="36px">
+                <img *ngIf="orderData.ServiceId == 5" class="" src="assets/images/dinein.png" height="36px">
+                <p class="text-white m-0"> 
+                  <span *ngIf="orderData.ServiceId == 1">Pickup Order</span>
+                  <span *ngIf="orderData.ServiceId == 2">Delivery Order</span>
+                  <span *ngIf="orderData.ServiceId == 3">Curbside Order</span>
+                  <span *ngIf="orderData.ServiceId == 5">Dine In Order</span>
+                </p>
+              </li>
+              <li class="text-center">
+                <img *ngIf="orderData.PaymentTypeId == 2" class="" src="assets/img/ic-payment.svg" height="36px">
+                <img *ngIf="orderData.PaymentTypeId == 3" class="" src="assets/images/cod.svg" height="36px">
+                <p class="text-white m-0" >
+                  <span *ngIf="orderData.PaymentTypeId == 2"> Debit/Credit Card</span>
+                  <span *ngIf="orderData.PaymentTypeId == 3"> Cash Payment</span>
+                </p>
+              </li>
+            </ul>
+            <h6 *ngIf="orderData.ServiceId != 5 text-white">
+              With your help our platform improves the well being of your community. You can enjoy ordering food online and help the community as well.
+              <span *ngIf="orderData.NGOName"> Thank you for choosing Organization {{orderData.NGOName?orderData.NGOName:''}}, {{locationDetails?locationDetails.Name:''}} will contribute {{orderData.DonateValue?orderData.DonateValue:''}}$ towards Organization {{orderData.NGOName?orderData.NGOName:''}}</span></h6>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary mr-3" data-dismiss="modal" routerLink="/{{mobUrl}}/profile">Order History</button>
+          <a *ngIf="orderData.ServiceId != 5" href="{{host}}">  <button class="btn btn-site"  >Start New Order</button></a>
+          <a *ngIf="orderData.ServiceId == 5" href="{{host}}/{{country}}/{{mobUrl}}#dinein">  <button class="btn btn-site"  >Start New Order</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" data-toggle="modal" data-target="#orderSuccessModal1" id="openOrderSuccess">
+  

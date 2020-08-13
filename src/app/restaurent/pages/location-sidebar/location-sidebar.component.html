@@ -1,0 +1,119 @@
+<!-- Modal -->
+<div class="modal left fade" id="changelocation" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" id="closeSideLocationModal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="dismiss">
+            <i class="material-icons">
+              close
+            </i>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12 py-3">
+          <div class="form-group">
+
+            <input ngx-google-places-autocomplete class="form-control shadow-sm" [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)">
+          </div>
+          <div class="current-location mb-4">
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+              <span>
+                <i class="material-icons">
+                  gps_fixed
+                </i>
+              </span>
+              <span style="cursor: pointer;" (click)="getCurrentPosition()">
+                <h6>Get Current Location</h6>
+                <p>Using GPS</p>
+              </span>
+            </div>
+          </div>
+          <div class="title">
+            <h6>Saved Address</h6>
+            <hr style="background: #fff;">
+          </div>
+          <ul class="saved-addresses">
+            <li *ngFor="let item of addressList; let i = index" (click)="changeYourLoc(item)">
+              <div class="have-details home" style="cursor: pointer;" >
+                <div class="detail-head mb-2" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+                  <span *ngIf="item.CustAddressName == 'Home'">
+                    <img src="assets/images/home-address.svg">
+                  </span>
+                  <span *ngIf="item.CustAddressName == 'Office'">
+                    <img src="assets/images/office-address.svg">
+                  </span>
+                  <span *ngIf="item.CustAddressName == 'Others'">
+                    <img src="assets/images/other-address.svg">
+                  </span>
+                  <span>
+                    <strong class="heading">{{item.FName?item.FName:item.fName}} | {{item.Telephone?item.Telephone:item.tel}}</strong>
+                    <p>{{item.CustAddressName?item.CustAddressName:item.addrName}}</p>
+                  </span>
+                </div>
+                <span>
+                  <p>{{item.Addr}}</p>
+                </span>
+              </div>
+              <hr>
+            </li>
+       
+          </ul>
+        </div>
+      </div>
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->
+<!-- Modal -->
+<div class="modal left fade" id="mobilechangelocation" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" id="closeChangeLocationResp" aria-label="Close">
+          <span aria-hidden="true" class="dismiss">
+            <i class="material-icons">
+              close
+            </i>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12 py-3">
+          <div class="current-location mb-4">
+            <button class="btn btn-outline-default btn-block text-white" data-toggle="modal" data-target="#addlocation" data-dismiss="modal">
+              <nb-icon icon="pin-outline"></nb-icon> Add New Address
+            </button>
+          </div>
+          <div class="title">
+            <h6>Saved Address</h6>
+          </div>
+          <ul class="saved-addresses">
+            <li *ngFor="let item of addressList; let i = index" style="cursor: pointer;" (click)="onSelectAddressResp(item, i)">
+              <div class="have-details home" >
+                <div class="detail-head mb-2" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+                  <span *ngIf="item.CustAddressName == 'Home'">
+                    <img src="assets/images/home-address.svg">
+                  </span>
+                  <span *ngIf="item.CustAddressName == 'Office'">
+                    <img src="assets/images/office-address.svg">
+                  </span>
+                  <span *ngIf="item.CustAddressName == 'Others'">
+                    <img src="assets/images/other-address.svg">
+                  </span>
+                  <span>
+                    <strong class="heading">{{item.FName?item.FName:item.fName}} | {{item.Telephone?item.Telephone:item.tel}}</strong>
+                    <p>{{item.CustAddressName?item.CustAddressName:item.addrName}}</p>
+                  </span>
+                </div>
+                <span>
+                  <p>{{item.Addr1}}</p>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->

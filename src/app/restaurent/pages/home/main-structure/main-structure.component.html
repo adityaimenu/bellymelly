@@ -1,0 +1,29 @@
+<div class="wrapper" id="wrapper">
+  <div class="top-banner">
+    <app-restaurent-info [locationDetails]="getLocationDetail"></app-restaurent-info>
+  </div>
+  <div class="wrapper-content">
+    <div class="container-fluid p-sm-0">
+      <div class="row no-gutters">
+        <div class="col-sm-12"
+             fxLayout
+             fxLayout.sm="row wrap"
+             fxLayout.xs="row wrap"
+             fxLayout.md="row wrap"
+             fxLayoutAlign="start stretch"
+             >
+          <div class="sidebar" fxFlex="20" fxFlex.sm="100" fxFlex.md="100" fxFlex.xs="100">
+            <app-sidebar [catListNew]="catList"></app-sidebar>
+          </div>
+          <div class="main-view" fxFlex="52" fxFlex.sm="100" fxFlex.xs="100">
+            <app-dish-items   [itemList]="catList" (getCartList)="getCartListData($event)"></app-dish-items>
+            
+          </div>
+          <div class="cart-view" fxFlex="28" fxFlex.sm="100" fxFlex.xs="100">
+            <app-cart [cartList]="cartList" (cartTotalCount)="cartTotalCount($event)" [locationDetail]="getLocationDetail"  [Services]="Services" [tId]="tId" (updateCartList)="updateCartList($event)"></app-cart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

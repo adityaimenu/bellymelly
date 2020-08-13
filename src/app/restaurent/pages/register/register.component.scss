@@ -1,0 +1,108 @@
+@import "../../../../assets/css/variables";
+.fancybox-slide{
+  .animated-modal {
+    max-width: 550px;
+    border-radius: 4px;
+    overflow: hidden;
+    transform: translateY(-50px);
+    transition: all .7s;
+    h2, p{
+      transform: translateY(-50px);
+      opacity: 0;
+      transition-property: transform, opacity;
+      transition-duration: .4s;
+    }
+    h2{
+      transition-delay: .1s;
+    }
+    p{
+      transition-delay: .3s;
+    }
+  }
+  &.fancybox-slide--current{
+    .animated-modal, h2, p{
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+.modal-customization{
+  .left{
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
+  .right{
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+    .login-form-box{
+      padding: 0;
+      min-width: 350px;
+      @media (max-width: 767px) {
+        min-width: 1px;
+      }
+      .title{
+        h6.title-heading{
+          &::before{
+            background: #ffffff;
+          }
+        }
+        h6{
+          color: $dark-black;
+        }
+      }
+      button{
+        background: white;
+        color: #f03f37;
+        border: 2px solid #f03f37;
+      }
+    }
+    .social-login{
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      li{
+        margin-right: 10px;
+        &:last-child{
+          margin-right: 0px;
+        }
+        a{
+          span{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            width: 50px;
+            border: 1px solid $border-color;
+            border-radius: 50px;
+            color: $gray;
+            transition: all ease-in-out .3s;
+            &.fb:hover{
+              background: #3E48BF;
+              color: white;
+              border-color: #3E48BF;
+            }
+            &.google:hover{
+              background: #DC4E41;
+              color: white;
+              border-color: #DC4E41;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 767px) {
+  .fancybox-content{
+    min-width: 95%;
+  }
+}
+
+.errormsg{
+  color: red;
+}

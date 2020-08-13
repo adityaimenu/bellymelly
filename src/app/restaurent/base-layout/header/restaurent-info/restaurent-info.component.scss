@@ -1,0 +1,202 @@
+@import "../../../../../assets/css/variables";
+.top-restaurent-banner {
+  //background: url("../../../../../assets/images/restaurent-cover.jpg") no-repeat center center;
+  background-size: cover;
+  background-repeat: no-repeat!important;
+  padding: .4rem 0;
+  transition: padding .2s ease-in-out;
+  float: left;
+  @media (max-width: 767px){
+    padding: 0;
+    margin-bottom: 4px;
+  }
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    opacity: .7;
+  }
+  .web-view{
+    .left {
+      .brand-info {
+        .brand {
+          img {
+            max-height: 180px;
+          }
+        }
+
+        .title-heading {
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          color: $white;
+        }
+
+        p {
+          color: rgba($white, .7);
+          margin-bottom: 5px;
+          i{
+            color: $white;
+          }
+        }
+      }
+    }
+    .right {
+      h6 {
+        border-bottom: 1px solid $white;
+        padding: 10px;
+        margin-bottom: 0;
+      }
+
+      .info-part {
+        transform: translateZ(0);
+        transition: transform .2s ease-in-out;
+        border: 1px solid #bec0c8;
+        position: relative;
+        float: left;
+
+        .brand-timing {
+          div {
+            padding: 5px 20px;
+            border-right: 1px solid $white;
+
+            &:last-child {
+              border-right: none;
+            }
+
+            p {
+              margin-bottom: 0;
+              color: $white;
+
+              &.h4 {
+                margin-bottom: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .mobile-view{
+    display: none;
+  }
+  @media (max-width: 767px) {
+    background: none;
+    p{
+      color: #B7AEC3;
+    }
+    .web-view{
+      display: none;
+    }
+    .mobile-view{
+      display: block;
+      float: left;
+      width: 100%;
+      overflow: hidden;
+      background: #fff;
+      color: #B7AEC3;
+      .top-banner{
+        //background: url("../../../../../assets/images/restaurent-cover.jpg") no-repeat ce nter center;
+        padding: 1rem;
+        transition: padding .2s ease-in-out;
+        max-height: 120px;
+        min-height: 120px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        position: relative;
+        .discount{
+          position: absolute;
+          //width: 65px;
+          //height: 55px;
+          right: 0;
+          bottom: 0;
+          background: #f03f37;
+          border-radius: 10px 0px 0px 0px;
+        
+        }
+      }
+      .brandinfo{
+        padding: 0 1rem 0;
+        display: block;
+        float: left;
+        width: 100%;
+        flex-wrap: wrap;
+        .btm-details{
+          float: left;
+          width: 100%;
+          margin: 10px 0;
+          border-top: 1px dashed;
+          padding: 10px 10px 0;
+          ul{
+            list-style: none;
+            li{
+              p{
+                font-size: 12px;
+              }
+            }
+          }
+          
+        }
+        .offer{
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+    .overlay{
+      display: none;
+    }
+  }
+}
+@media (max-width: 767px) {
+  .top-restaurent-banner {
+    background-image: none !important;
+  }
+}
+
+figure{
+  background: url("../../../../../assets/images/offerlogo.png")no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  small{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.3;
+    color: $white;
+  }
+  span{
+    font-weight: 600;
+    font-size: 22px;
+  }
+}
+
+@media (max-width:991px){
+  .left{
+    max-width: 100% !important;
+  }
+  .right{
+    max-width: 75%;
+    margin: auto;
+    padding-top: 10px;
+  }
+}
+@media (max-width:375px){
+  figure p{
+    font-size: 14px;
+    margin-right: 0px !important;
+    margin-top: 5px;
+  }
+}
+.offer-no{
+  padding: 6px 8px;
+}
+.web-icon i{
+  color: rgba(255, 255, 255, 0.7);
+}
+.web-icon{
+  color: rgba(255, 255, 255, 0.7);
+}

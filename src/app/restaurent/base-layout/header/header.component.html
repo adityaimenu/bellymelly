@@ -1,0 +1,55 @@
+<div class="container mobile-view">
+  <div class="row no-gutters">
+    <div class="col-sm-12">
+      <nav class="p-0" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="left">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span fxLayout fxLayoutAlign="start center" fxLayoutGap="10px">
+              <nb-icon icon="arrow-back-outline" fxHide.lg="" (click)="history.back()"></nb-icon>
+              <a class="navbar-brand" href="{{host}}">
+                <!-- <img *ngIf="country == 'au'" src="assets/img/logoAU.png" height="28px" alt="Logo" class="brand-logo" > -->
+                <img  src="assets/images/logo.png" alt="Logo" class="brand-logo" >
+                <img *ngIf="logoImage" src="{{logoImage}}" alt="Restaurant Logo" height="60px" class="restaurant-logo" >
+                <img *ngIf="!logoImage" src="assets/images/restaurent-logo.png" alt="Restaurant Logo" height="28px" class="restaurant-logo" >
+              </a>
+            </span>
+            <span *ngIf="currentAddr" fxHide.xs>
+              <small class="text-gray">Your Current Location</small>
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <div class="address">
+                  <a class="" href="javascript:void(0)" data-toggle="tooltip" data-html="true" title="{{currentAddr}}">{{currentAddr}}</a>
+                </div>
+                <span class="ml-2"><a href="javascript:void(0);" data-toggle="modal" data-target="#changelocation"> (Change)</a></span>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div class="right">
+          <div class="Login-user">
+            <div *ngIf="isLogin" class="dropdown">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span><img src="assets/images/default-user.jpg" class="user-pic" width="18px" alt="user-pic"></span><aside class="mt-1 ml-1">Hi <b class="usermob">{{user.FName}}</b></aside> 
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="javascript:void(0);" routerLink="/{{mobUrl}}/profile"><span><nb-icon icon="person-outline"></nb-icon></span> Profile</a> 
+                <!-- <a class="dropdown-item" href="javascript:void(0);" routerLink="/{{country}}/{{mobUrl}}/profile"><span><nb-icon icon="person-outline"></nb-icon></span> Profile</a>  -->
+                <a class="dropdown-item" href="javascript:void(0);" (click)="logout()"><span><nb-icon icon="log-out-outline"></nb-icon></span> Logout</a>
+              </div>
+            </div>
+            <div *ngIf="!isLogin">
+              <button type="button" class="btn btn-primary dropdown-toggle">
+                <aside data-fancybox data-src="#loginModal" id="openLoginModalBtn"><b class="ml-1">Login</b></aside>
+              </button>
+            </div>
+          </div>
+       
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<app-location-sidebar (currentAddress)="getCurrentAddr($event)"></app-location-sidebar>
+<!--<app-add-address></app-add-address>-->
+<app-login></app-login>
+<app-register></app-register>

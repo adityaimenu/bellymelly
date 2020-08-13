@@ -1,0 +1,151 @@
+<!-- Modal -->
+<div class="modal left fade" id="addlocation" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header my-2">
+        <button type="button" class="close m-0 p-0" id="closeAddAdressModal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="dismiss">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25px"  viewBox="0 0 24 24" class="eva eva-arrow-back-outline" fill="currentColor"><g data-name="Layer 2"><g data-name="arrow-back"><rect width="24" height="24" transform="rotate(90 12 12)" opacity="0"></rect><path d="M19 11H7.14l3.63-4.36a1 1 0 1 0-1.54-1.28l-5 6a1.19 1.19 0 0 0-.09.15c0 .05 0 .08-.07.13A1 1 0 0 0 4 12a1 1 0 0 0 .07.36c0 .05 0 .08.07.13a1.19 1.19 0 0 0 .09.15l5 6A1 1 0 0 0 10 19a1 1 0 0 0 .64-.23 1 1 0 0 0 .13-1.41L7.14 13H19a1 1 0 0 0 0-2z"></path></g></g></svg>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12 m-0 p-0">
+
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="16" (mapClick)="onMapClick($event, true)" [styles]="myStyle" [disableDefaultUI]="true" [zoomControl]="true">
+            <button id="Settings" class="toggle-button controls button">
+              <span class="fa fa-crosshairs"></span>
+            </button>
+            <agm-marker class="agm-marker" [latitude]="lat" [longitude]="lng" (drag)="testRun($event)" [markerDraggable]="false"></agm-marker>
+          </agm-map>
+        </div>
+        <div class="col-sm-12 bg-light py-2">
+
+          <div class="form-group mb-0">
+            <div class="input-group">
+                <input ngx-google-places-autocomplete class="form-control shadow-sm bg-white" name="addAddress4545" [(ngModel)]="addAddressString" [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" >
+
+              <div class="input-group-prepend" style="cursor:pointer;" (click)="getCurrentPosition(true)">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-crosshairs fa-2x"></i></span>
+              </div>
+            </div>
+          
+          </div>
+        </div>   
+        <div class="col-sm-12 mt-2">      
+        <div class="title">
+            <h6 class="text-dark mb-1">Add New Address</h6>
+          </div>
+          <div class="add-new">
+            <form>
+                <input type="text" class="form-control"  name="fName" placeholder="Enter your name" [(ngModel)]="addDetails.fName">
+                <input type="text" class="form-control"  name="tel"  placeholder="Enter your phone number" maxlength="10" [(ngModel)]="addDetails.tel">
+
+              <input *ngIf="findCountry" type="text" class="form-control" placeholder="Door/Flat/House No." name="add1" [(ngModel)]="addDetails.Addr2">
+              <input *ngIf="!findCountry" type="text" class="form-control" placeholder="Apartment, suite, unit, building, floor, etc." name="add1" [(ngModel)]="addDetails.Addr2">
+              <input type="text" class="form-control" placeholder="ZIP" name="zip" [(ngModel)]="addDetails.zip">
+              
+              <textarea class="form-control my-2" placeholder="Special Instructions.." name="intr" [(ngModel)]="addDetails.instr"></textarea>
+              <ul>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="add1Name" name="selector" (click)="addDetails.addrName = 'Home'" [checked]="addDetails.addrName == 'Home'">
+                    <label for="add1Name"><nb-icon icon="home-outline"></nb-icon> Home</label>
+                  </div>
+                </li>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="add2Name" name="selector" (click)="addDetails.addrName = 'Office'" [checked]="addDetails.addrName == 'Office'">
+                    <label for="add2Name"><nb-icon icon="briefcase-outline"></nb-icon> Office</label>
+                  </div>
+                </li>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="add3Name" name="selector" (click)="addDetails.addrName = 'Others'" [checked]="addDetails.addrName == 'Others'">
+                    <label for="add3Name"><nb-icon icon="pin-outline"></nb-icon> Others</label>
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+          <div class="link">
+            <button class="btn btn-primary btn-site btn-block rounded-0" [disabled]="flags.isAdded" (click)="addAddress()">{{flags.isAdded?'Please Wait...':'Save & Proceed'}}</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+
+<!-- Modal -->
+<div class="modal left fade" id="editLocation" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close closeupdateAdressModal" data-dismiss="modal" aria-label="Close" (click)="onEditClose()">
+          <span aria-hidden="true" class="dismiss">
+            <i class="material-icons">
+              close
+            </i>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12 py-2">
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="16" (mapClick)="onMapClick($event, false)" [styles]="myStyle" [disableDefaultUI]="true" [zoomControl]="true">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+          </agm-map>
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <input ngx-google-places-autocomplete class="form-control shadow-sm" [options]='options' #placesRef="ngx-places" name="add65343" [(ngModel)]="updateAdd" (onAddressChange)="handleAddressChangeForEdit($event)" />
+              <div class="input-group-prepend" style="cursor:pointer;" (click)="getCurrentPosition(false)">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-crosshairs fa-2x"></i></span>
+              </div>
+            </div>
+    
+          </div>
+          <div class="title">
+            <h6 class="mb-1">Add New Address</h6>
+            
+          </div>
+          <div class="add-new">
+            <form>
+                <input type="text" class="form-control"  name="fName"  placeholder="Enter your name" [(ngModel)]="updateAddDetails.fName">
+                <input type="text" class="form-control"  name="tel" placeholder="Enter your phone number" maxlength="10"[(ngModel)]="updateAddDetails.tel">
+              <input *ngIf="findCountry"  type="text" class="form-control" placeholder="Door/Flat/House No." name="add1" [(ngModel)]="updateAddDetails.Addr2">
+              <input *ngIf="!findCountry" type="text" class="form-control" placeholder="Apartment, suite, unit, building, floor, etc." name="add1" [(ngModel)]="updateAddDetails.Addr2">
+              <input type="text" class="form-control" placeholder="ZIP" name="zip" [(ngModel)]="updateAddDetails.zip">
+              
+              <textarea class="form-control" placeholder="Special Instructions.." name="intr"  [(ngModel)]="updateAddDetails.instr"></textarea>
+              <ul>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="edit1Name" name="selector" (click)="updateAddDetails.addrName = 'Home'" [checked]="updateAddDetails.addrName == 'Home'">
+                    <label for="edit1Name"><nb-icon icon="home-outline"></nb-icon> Home</label>
+                  </div>
+                </li>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="edit2Name" name="selector" (click)="updateAddDetails.addrName = 'Office'" [checked]="updateAddDetails.addrName == 'Office'">
+                    <label for="edit2Name"><nb-icon icon="briefcase-outline"></nb-icon> Office</label>
+                  </div>
+                </li>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="edit3Name" name="selector" (click)="updateAddDetails.addrName = 'Others'" [checked]="updateAddDetails.addrName == 'Others'">
+                    <label for="edit3Name"><nb-icon icon="pin-outline"></nb-icon> Others</label>
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+          <div class="link">
+            <button class="btn btn-primary btn-site btn-block rounded-0" [disabled]="flags.isUpdate" (click)="updateAddress()">{{flags.isUpdate?'Please Wait...':'Update & Proceed'}}</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->

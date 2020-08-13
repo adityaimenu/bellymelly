@@ -1,0 +1,254 @@
+<header>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light py-3" id="mainNav">
+      <div class="container-fluid">
+        <a class="navbar-brand js-scroll-trigger" href="{{host}}">
+
+          <img *ngIf="country == 'au'" src="assets/img/logoAU.png" class="img-fluid" width="150px" >
+          <img *ngIf="country == 'us'" src="assets/images/logo.png" class="img-fluid" width="150px" >
+        </a>
+        <span>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </span>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto my-2 my-lg-0">
+            <!-- <li *ngIf="aboutUs" class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="{{aboutUs}}" target="_blank">About Us</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="{{host}}/join-now.html" target="_blank">Suggest A Restaurant</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="{{host}}/us/restaurants" target="_blank">Explore BellyMelly</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="btn btn-primary" href="#">Sign in</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="row bg-white shadow-sm no-gutters">
+        <div class="col-sm-6">
+          <div class="row no-gutters">
+            <div class="col-md-12">
+              <img  src="{{ngoImage}}" class="img-fluid w-100">
+            </div>
+          </div>
+          <div class="row mt-2 text-center">
+            <div class="col-md-12">
+              <a *ngIf="aboutUs" class="btn btn-primary btn-block btn-site rounded-0 aboutUs" href="{{aboutUs}}" target="_blank">About Us</a>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-sm-6 text-center pt-5">
+          <h4>{{NgoName}}  {{AmountExist == true?'is':''}}<span *ngIf="AmountExist == true"><br>Raising ${{Amount}}</span></h4> 
+           <!-- <div class="donut-widget" data-chart-size="large" data-chart-max="100" data-chart-value="50" data-chart-primary="rgba(255,0,0,1)" data-chart-background="#eee" data-chart-text="50%"></div> -->
+          <!-- <div class="progressbar" data-animate="false">
+            <input type="hidden" class="precentVal" value="{{presentageValue}}">
+            <div class="circle" >
+                <div></div>
+            </div> 
+        </div>  -->
+<!-- 
+        <div class="row">
+          <div class="col-sm-12 d-flex justify-content-center">
+            <div class="thirdDiv">
+              <div id="circle1">
+                <span class="rate">{{presentageValueF(presentageValue)}}%</span>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        
+            <div class="row" id="circleBar">
+              <div class="col-md-12">		
+                <div class="round" id="mydivPresent" data-value="0.0" data-size="200" data-thickness="6"><span class="completeCircel" *ngIf="AmountExist == true" style="color: #000; font-size: 22px; font-weight: bold;">Completed</span>   <strong></strong>
+                </div>
+                
+              </div>
+            </div>	
+
+        
+
+          <div class="col-md-12 pt-4">
+            <div class="row">
+              <div class="col-md-6 text-left mb-4">
+                <div class="bg-light p-3">
+                  <h2>$ {{moneyRaisedData}} </h2>
+                  <p class="count-text m-0">Raised</p>
+                </div>
+              </div>
+              <div class="col-md-6 text-left mb-4">
+                <div class="bg-light p-3">
+                  <h2  >{{daysLeft}} Days</h2>
+                  <p class="count-text m-0"> Left</p>
+                </div>
+              </div>
+              <div class="col-md-6 text-left mb-4">
+                <div class="bg-light p-3">
+                  <h2>{{Locationlist.length}} Partner</h2>
+                  <p class="count-text m-0"> Restaurants</p>
+                </div>
+              </div>
+              <div class="col-md-6 text-left mb-4">
+                <div class="bg-light p-3">
+                  <h2 >{{Orderlist.length}} Active</h2>
+                  <p class="count-text m-0"> Donors</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="py-5 response-show">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="nav nav-pills">
+            <li><a data-toggle="pill" href="#partners" class="active">Partner Restaurants</a></li>
+            <li><a data-toggle="pill" href="#donors">Contribution Details</a></li>
+          </ul>
+          <div class="tab-content ">
+            <div id="partners" class="tab-pane in active py-3">
+              <div class="row">
+                <div class="col-md-4 my-2" *ngFor="let val of Locationlist;let i = index;">
+                  <div class="card">
+                    <div class="restaurantImageDiv">
+                    <img *ngIf="val.LogoImg"  src="{{imageUrl}}{{val.LogoImg}}" class="restaurantImage" alt="Card image" >
+                  </div>
+                    <img *ngIf="!val.LogoImg" class="card-img-top" src="assets/images/usa-2.jpg" alt="Card image" style="width:100%">
+                    <div class="card-body p-0">
+                      <div class="col-md-12 py-2">
+                        <div class="addressData">
+                        <h5 class="card-title">{{val.Name}}</h5>
+                    
+                        <p class="card-text mb-0"><span><i class="fas fa-map-marker-alt"></i></span> {{val.Addr}}, {{val.City}}, {{val.State}},{{val.Country}}</p>
+                        <p class="card-text mb-0"><span><i class="fas fa-phone-alt"></i></span> {{val.Telephone}}</p>
+                      </div>
+                      </div>
+                      <a href="{{val.OrderLink}}" target="_blank" class="btn btn-primary btn-block btn-site rounded-0">Order Online</a>
+                    </div>
+                  </div>
+                </div>
+              
+              </div>
+
+            </div>
+            <div id="donors" class="tab-pane fade py-3">
+              <div class="row">
+                <div class="col-md-6" *ngFor="let val of Orderlist;let i = index;">
+                  <div class="card mb-2" >
+                    <div class="card-body p-2">
+                      <div class="row ">
+                        <div class="col-md-8">
+                          <h5 class="card-title font-weight-bold">{{val.RestName}}</h5>
+                          <!-- <p class="card-text mb-0"><span class="text-secondary font-weight-bold">Donated By:</span> {{val.CustName}}</p> -->
+                        </div>
+                        <div class="col-md-4 py-2 text-center d-flex justify-content-end align-items-center">
+                          <!-- <a href="#" class="btn btn-primary btn-site rounded-0">Donate Us</a> -->
+                          <p class="card-text mb-0"><span class="text-secondary font-weight-bold">Donated Amount:</span> $ {{val.OrderDonateValue}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <footer class="bg-dark pt-5">
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-lg-4">
+          <div class="title mb-3">
+            <h6 class="text-white">Get to know us</h6>
+          </div>
+          <ul class="list-unstyled">
+            <li>
+              <a href="#" class="text-white"><small>About BellyMelly</small></a>
+            </li>
+            <li>
+              <a href="#" class="text-white"><small>Our apps</small></a>
+            </li>
+            <li>
+              <a href="#" class="text-white"><small>Our blog</small></a>
+            </li>
+            <li>
+              <a href="#" class="text-white"><small>Careers</small></a>
+            </li>
+            <li>
+              <a href="#" class="text-white"><small>Investor relations</small></a>
+            </li>
+            <li>
+              <a href="#" class="text-white"><small>News</small></a>
+            </li>
+          </ul>
+        </div> -->
+        <!-- <div class="col-lg-6">
+          <div class="title mb-3">
+            <h6 class="text-white">Connect with us</h6>
+          </div>
+          <ul class="list-unstyled">
+            <li>
+              <a href="https://www.facebook.com/bellymelly002/" target="_blank" class="text-white"><small>Facebook</small></a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/bellymelly_/?utm_source=ig_profile_share&igshid=9g4ahptwhudf" target="_blank" class="text-white"><small>Instagram</small></a>
+            </li>
+            <li>
+              <a href="https://chat.whatsapp.com/invite/LtKNMpH3Lyz7juBS5lV4ZC" target="_blank" class="text-white"><small>Whatsapp</small></a>
+            </li>
+            
+          </ul>
+        </div> -->
+        <div class="col-lg-6">
+          <div class="title mb-3">
+            <h6 class="text-white">Partner with Us</h6>
+          </div>
+          <ul class="list-unstyled">
+            <li>
+              <a href="{{host}}/join-now.html" target="_blank" class="text-white"><small>For restaurants</small></a>
+            </li>
+            <li>
+              <a href="{{host}}/register-organization.html" target="_blank" class="text-white"><small>For organization</small></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr class="white-line">
+      <div class="row text-white pb-3">
+        <div class="col-lg-6">
+          <span class="text-white">Copyright © 2020 <b>BellyMelly</b> All Right Reserved.</span>
+        </div>
+        <div class="col-lg-6 text-right">
+          <ul class="list-inline m-0 p-0">
+            <li class="list-inline-item">
+              <a href="#" class="text-white">Terms of Use</a>
+            </li>
+            <li class="list-inline-item">
+              |
+            </li>
+            <li class="list-inline-item">
+              <a href="#" class="text-white">Privacy Policy</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>

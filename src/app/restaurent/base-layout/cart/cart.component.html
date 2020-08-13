@@ -1,0 +1,293 @@
+<div class="cart-wrapper">
+  <div class="web-view" fxHide.xs>
+    <div class="cart bg-white">
+      <div class="title">
+        <h6 class="title-heading"><span>
+            <nb-icon icon="shopping-cart-outline"></nb-icon> Cart
+          </span></h6>
+      </div>
+      <p class="text-gray text-uppercase">{{getCartItem()}} item</p>
+      <div *ngIf="locationDetail" class="delivery-options">
+        <form class="form mb-2" fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <div class="col-md-12 px-0">
+            <div *ngFor="let item of locationDetail.Services; let i = index" class="col-half m-0">
+              <div *ngIf="item.Id == 1 && item.showTOday == true && !dineinExist" class="inputGroup">
+                <input id="radio{{i + 1}}" name="radio" (click)="onSelectService(item)" type="radio" />
+                <label for="radio{{i + 1}}">
+                  Pickup
+                </label>
+              </div>
+               <div *ngIf="item.Id == 2 && item.showTOday == true && !dineinExist" class="inputGroup">
+                <input id="radio{{i + 1}}" name="radio" (click)="onSelectService(item)" type="radio" />
+                <label for="radio{{i + 1}}">
+                  Delivery
+                </label>
+              </div>
+              <div *ngIf="item.Id == 3 && item.showTOday == true && !dineinExist" class="inputGroup">
+                <input id="radio{{i + 1}}" name="radio" (click)="onSelectService(item)" type="radio" />
+                <label for="radio{{i + 1}}">
+                  Curbside
+                </label>
+              </div>
+              <div *ngIf="item.Id == 5 && item.showTOday == true" class="inputGroup">
+                <input id="radio{{i + 1}}" name="radio" (click)="onSelectService(item)" type="radio" />
+                <label for="radio{{i + 1}}">
+                  Dine In
+                </label>
+              </div> 
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row mb-2">
+        <div class="col-sm-12">
+          <div class="">
+            <div>
+              <!-- <span> 
+                <span *ngIf="orderData.ServiceId == 1">Pickup my food • </span>
+                <span *ngIf="orderData.ServiceId == 2">Deliver my food • </span>
+                <span *ngIf="orderData.ServiceId == 3">Curbside my food • </span>
+                </span>  -->
+                Schedule My Food •  <a href="javascript:void(0)" (click)="shecdule()">
+                <span *ngIf="TimeSelection == 0" class="text-link">Today, ASAP</span>
+                <span *ngIf="TimeSelection == 1" class="text-link">Today, {{selectedTime | date:'hh:mm a'}} </span>
+                <span *ngIf="TimeSelection == 2" class="text-link">{{laterDate | date:'MMM dd '}} at {{selectedTime | date:'hh:mm a'}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="items-shown">
+        <ul class="items list-unstyled p-0">
+          <li *ngFor="let item of cartList; let i = index">
+            <div class="" fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="item-name">
+                {{item.Name}}
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <figure class="setunit" fxLayout="row" fxLayoutAlign="space-around center">
+                  <a href="javascript:void(0);" class="unit decrement" (click)="removeQuantity(item, i)">
+                    <i class="fa fa-minus-square"></i>
+                  </a>
+                  <span>{{item.addQuantity}}</span>
+                  <a href="javascript:void(0);" class="unit increment" (click)="addQuantity(item, i)">
+                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                  </a>
+                </figure>
+                <!-- <div class="item-price text-right">{{currency}} {{(item.P1).toFixed(2)}}</div> -->
+                <div class="item-price text-right">{{currency}}<span *ngIf="item.P1 != '-99'"> {{(item.P1).toFixed(2)}}</span> <span *ngIf="item.P1 == '-99'">0</span>  </div>
+              </div>
+            </div>
+          </li>
+          <li *ngIf="!cartList.length">
+            <div class="text-center">
+              <img src="assets/images/empty-cart1-png.png" alt="" width="50%">
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="calculateTotal() > 0" class="sub-total mb-4" fxLayout="row" fxLayoutAlign="space-between center">
+        <h5>Sub Total</h5>
+        <h5>{{currency}}{{(calculateTotal().toFixed(2))}}</h5>
+      </div>
+
+      <button class="btn btn-lg btn-site btn-block rounded-0 checkout-btn" (click)="checkout()">Checkout <span
+          class="fa fa-long-arrow-right"></span></button>
+
+    </div>
+  </div>
+  <div class="mobile-view" fxHide fxShow.sm fxShow.xs>
+    <div [hidden]="getCartItem() < 1" class="cart" fxFlex="row" fxLayoutAlign="space-between center">
+      <div class="left">
+        <ul class="list-unstyled p-0 m-0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <li>{{getCartItem()}} Item</li>
+          <li>|</li>
+          <li>
+            <h6>{{currency}} {{(calculateTotal()).toFixed(2)}}</h6>
+          </li>
+          <li><small>
+              <p>Plus</p>
+              <p>Taxes</p>
+            </small></li>
+        </ul>
+      </div>
+      <div class="right">
+        <h6 class="text-white m-0 viewck" (click)="openMobService()" style="font-size: 16px;"> View Checkout <nb-icon
+            icon="arrow-forward-outline"></nb-icon>
+        </h6>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="serviceModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+
+
+          <div class="row mb-2">
+              <div class="col-sm-12">
+                <div class="">
+                  <div>
+                    <!-- <span> 
+                       <span *ngIf="orderData.ServiceId == 1">Schedule My Food• </span>
+                    <span *ngIf="orderData.ServiceId == 2">Schedule My Food• </span>
+                    <span *ngIf="orderData.ServiceId == 3">Schedule My Food • </span>
+                  </span> -->
+                   Schedule My Food • <a href="javascript:void(0)" id="selectshecdule" (click)="shecdule()">
+                      <span *ngIf="TimeSelection == 0" class="text-link">Today, ASAP</span>
+                      <span *ngIf="TimeSelection == 1" class="text-link">Today, {{selectedTime | date:'hh:mm a'}} </span>
+                      <span *ngIf="TimeSelection == 2" class="text-link">{{laterDate | date:'MMM dd '}} at {{selectedTime | date:'hh:mm a'}}</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+        <div class="col-sm-12 py-2 bg-light delivery-options">
+          <ul *ngIf="locationDetail" class="ks-cboxtags mb-0" fxLayout="row wrap" fxLayoutGap="10" fxLayoutAlign="space-between center">
+            <li *ngFor="let item of locationDetail.Services; let i = index" fxFlex="49">
+              <input type="radio" name="options" id="{{item.Name.toLowerCase()}}" (click)="onSelectServiceResp(item)"
+                value="Full">
+              <label *ngIf="item.Id == 1 && item.showTOday == true && !dineinExist" for="pickup">
+                <img src="assets/images/foodbag.svg" alt="Pickup" class="img-fluid" height="36px">
+                <h6>Pickup</h6>
+              </label>
+            
+              <label *ngIf="item.Id == 2 && item.showTOday == true  && !dineinExist" for="delivery">
+                <img src="assets/images/delivery-boy.svg" alt="Delivery" class="img-fluid" height="36px">
+                <h6>Delivery</h6>
+              </label>
+            
+              <label *ngIf="item.Id == 3 && item.showTOday == true  && !dineinExist" for="curbside">
+                <img src="assets/images/car.svg" alt="Curbside" class="img-fluid" height="36px">
+                <h6>Curbside</h6>
+              </label>
+            
+              <label *ngIf="item.Id == 5 && item.showTOday == true" for="dine in">
+                <img src="assets/images/dinein.png" alt="Dinein" class="img-fluid" height="36px">
+                <h6>Dine In</h6>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer d-none">
+        <button type="button" class="btn btn-default" id="closeServiceModal" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Button to Open the Modal -->
+  <!-- The Modal -->
+  <div class="modal" id="shecdule" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header border-0">
+          <div class="close-btn">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body pt-0">
+          <div class="">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <h2>Schedule My Order</h2>
+                <p>Select a time up to 7 days in advance.</p>
+              </div>
+              <div class="col-sm-12">
+                  <div class="row">
+                      <div class="col-sm-12 ">
+                        <nav>
+                          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+
+                            <a *ngIf="ASAPOnOFf == 'T' && todayOpenClose == false" [ngClass]="todayOpenClose == false?'active':''" class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" >ASAP</a>
+                            <a *ngIf="LTOnOff == 'T'"  [ngClass]="todayOpenClose == true?'active':''" class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" (click)="clearTime()">Today</a>
+                            <a *ngIf="FOOnOff == 'T'"  class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false" (click)="clearTime()">Later</a>
+                          </div>
+                        </nav>
+                      </div>
+                  </div>
+                  <div class="row mt-3">
+                      <div class="col-sm-12">            
+                          <div class="tab-content py-3" id="nav-tabContent">
+                            <div *ngIf="ASAPOnOFf == 'T' && todayOpenClose == false" [ngClass]="todayOpenClose == false?'show active':''" class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                  <button type="button" class="asap-btn btn" (click)="timesection(0)">ASAP</button>
+                              </div>
+                              <div  *ngIf="LTOnOff == 'T'" [ngClass]="todayOpenClose == true?'show active':''" class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                               <div class="slctbtn">
+                                 <select class="shecdule-control" (change)="selectTime($event.target.value)">
+                                   <option class="selectOptionSelected" selected disabled>Select Time</option>
+                                   <option class="selectOption" *ngFor="let val of timeData" value="{{todayDate}} {{val}}" > {{dateTime(todayDate,val)}} </option>
+                                  </select><i class="fa fa-angle-down downi"></i></div>
+                                  <button type="button" class="asap-btn btn mt-4" (click)="timesection(1)">   Selected Time Today at {{selectedTime?selectedTimeF(selectedTime):''}}</button>
+                              </div>
+                              <div  *ngIf="FOOnOff == 'T'" class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                  <div class="content">
+                                     
+                                      <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                            <bs-datepicker-inline [bsConfig]="{showWeekNumbers:false, dateInputFormat: 'DD/MM/YYYY'}"  [minDate]="min" [maxDate]="maxDate"    (bsValueChange)="laterDateDate($event)"></bs-datepicker-inline>
+                                            <p class="pt-3"><a href="javascript:void(0);" class="text-dark font-weight-bold">
+                                           {{laterDate | date:'dd MMM'}} at {{selectedTime?selectedTimeF(selectedTime):''}}
+                                            </a></p>
+                                        </div>
+                                        <div class="col-sm-12 form-group">
+                                            <div class="slctbtn">
+                                              <select class="shecdule-control" (change)="selectTime($event.target.value)">
+                                                  <option class="selectOptionSelected" selected disabled>Select Time</option>
+                                                <option class="selectOption"  *ngFor="let val of timeData1;let i=index;" value="{{laterDate}} {{val}}"> {{dateTime(laterDate,val)}}  </option>           
+                                               </select><i class="fa fa-angle-down downi"></i></div>
+                                               <button type="button" class="asap-btn btn mt-4" (click)="timesection(2)">Selected Date and Time {{laterDate | date:'dd MMM'}},  {{selectedTime?selectedTimeF(selectedTime):''}}</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                              </div>
+                             
+                            </div>
+                        </div>
+                  </div>   
+              </div>
+            </div>
+            </div>
+          </div>
+  
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" data-toggle="modal" id="dineinModalButton" data-target="#dineinModal">
+  <div class="modal" id="dineinModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <p >Download the app to Get the Best Dine-In Experience</p>
+          <div class="row ">
+              <div class="col-md-6 text-center col-half">
+                <a href="https://play.google.com/store/apps/details?id=com.bellymelly.user&hl=en_IN"><img class="img-fluid" src="assets/images/googleplay.png"></a>
+              </div>
+              <div class="col-md-6 text-center col-half">
+                <a href="https://apps.apple.com/us/app/bellymelly-order-local/id1481383437"><img class="img-fluid" src="assets/images/applestore.png"></a>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link" data-dismiss="modal">No, I will continue here</button>
+        </div>
+      </div>
+    </div>
+  </div>

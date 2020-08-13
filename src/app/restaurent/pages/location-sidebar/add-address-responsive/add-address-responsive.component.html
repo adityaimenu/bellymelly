@@ -1,0 +1,58 @@
+<!-- Modal -->
+<div class="modal left fade" id="addLocationResp" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" id="closeAddAdressModal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="dismiss">
+            <i class="material-icons">
+              close
+            </i>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12 py-3">
+      
+          <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13718.366604863537!2d76.76827699999998!3d30.72987825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1568610415246!5m2!1sen!2sin" width="100%" height="250" frameborder="0" style="border:0;" allowfullscreen=""></iframe> -->
+          <div class="form-group">
+
+            <input type="text" class="form-control shadow-sm" placeholder="Search for Area, Street....">
+          </div>
+          <div class="title">
+            <h6>Add New Address</h6>
+          </div>
+          <div class="add-new">
+            <form>
+              <input type="text" class="form-control" placeholder="Door/Flat No." name="add1">
+              <textarea class="form-control" placeholder="Special Instructions.." name="intr"></textarea>
+              <ul>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="add1Name" name="selector" >
+                    <label for="add1Name"><nb-icon icon="home-outline"></nb-icon> Home</label>
+                  </div>
+                </li>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="add2Name" name="selector" >
+                    <label for="add2Name"><nb-icon icon="briefcase-outline"></nb-icon> Office</label>
+                  </div>
+                </li>
+                <li>
+                  <div class="radio-group">
+                    <input type="radio" id="add3Name" name="selector" >
+                    <label for="add3Name"><nb-icon icon="pin-outline"></nb-icon> Others</label>
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+          <div class="link">
+            <button class="btn btn-primary btn-site btn-block rounded-0" >Save & Proceed</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->

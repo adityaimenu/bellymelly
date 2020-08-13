@@ -1,0 +1,81 @@
+<!-- Modal -->
+<div class="modal right fade" id="coupon" tabindex="-1" data-backdrop="false" role="dialog"
+     aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" id="closeCouponModal" aria-label="Close">
+          <span aria-hidden="true" class="dismiss">
+            <i class="material-icons">
+              close
+            </i>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12 py-3">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter Promo Code">
+            <div class="input-group-append">
+              <button class="btn btn-site btn-transparent" type="submit"><span class="text-success">Apply</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 title">
+          <h6>Available Coupons</h6>
+        </div>
+        <div class="separator"></div>
+        <div class="col-sm-12 coupon-list">
+          <div *ngFor="let item of couponList; let i = index" class="coupon">
+            <div class="coupon-head mb-2">
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="left">
+                  <h6 class="coupon-title"> <span>{{item.CouponCode}}</span></h6>
+                </div>
+                <div class="right">
+                  <a href="javascript:void(0)" class="text-success"  (click)="applyCoupon(item, 0)">APPLY</a>
+                </div>
+              </div>
+            </div>
+            <div class="coupon-body">
+              <p class="font-weight-bold mb-0">{{item.Type == '%'?(item.Discount * 100).toFixed(2) + '%':currency + item.Discount.toFixed(2)}} off<span *ngIf="item.MaxCap > 0"> up to {{item.MaxCap}}</span>.</p>
+              <p *ngIf="item.MinOrderAmt > 0" class="font-weight-bold mb-0">On orders of {{currency}}{{item.MinOrderAmt}} and above.</p>
+              <p class="text-gray mb-0"><small>{{item.Description}}</small></p>
+              <!-- <p class="text-gray mb-0"><a href="javascript:void(0);" class="text-orange">View More <nb-icon icon="arrow-forward-outline"></nb-icon></a></p> -->
+            </div>
+          </div>
+       
+        </div>
+        <div class="separator"></div>
+        <div class="col-sm-12 title">
+          <h6>Available Discounts</h6>
+        </div>
+        <div class="separator"></div>
+        <div *ngIf="getLocation" class="col-sm-12 coupon-list">
+       
+          <div *ngIf="!getLocation.Discounts.length" class="coupon">
+            <p>No discount available currently.</p>
+          </div>
+          <div *ngFor="let item of Discounts" class="coupon">
+            <div class="coupon-head mb-2" *ngIf="item.Service">
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="left">
+                  <h6 class="coupon-title" > ({{item.Lookup.LookupName}}) <span>{{item.Service.ServiceName}}</span></h6>
+                </div>
+                <div class="right">
+                  <a href="javascript:void(0)" class="text-success" id="applyCoupon" (click)="applyCoupon(item, 1)">APPLY</a>
+                </div>
+              </div>
+            </div>
+            <div class="coupon-body">
+              <p class="font-weight-bold mb-0">{{item.Type == '%'?(item.Disc * 100).toFixed(2) + '%':currency + item.Disc}} off<span *ngIf="item.MaxCap > 0"> up to {{item.MaxCap}}</span>.</p>
+              <p *ngIf="item.MinAmt > 0" class="text-gray mb-0"><small>On orders of {{currency}}{{item.MinAmt}} or above</small></p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->

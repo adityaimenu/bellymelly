@@ -1,0 +1,1583 @@
+<div class="wrapper" id="wrapper">
+
+
+  <div class="wrapper-content">
+    <div class="web-view" fxHide.sm fxHide.xs>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12" fxLayout fxLayoutAlign="start start" fxLayoutGap="15px">
+            <div class="">
+              <nb-icon icon="arrow-back-outline" fxHide.lg="" class="web-back" (click)="history.back()"></nb-icon>
+            </div>
+            <div class="main-view" fxFlex="65" fxLayout.md="65">
+
+              <ol class="steps">
+                <li class="step1 active" >
+                  <div class="item">
+                    <div class="section-title">
+                      <div class="head" fxLayout="row" fxLayoutAlign="space-between start">
+                        <div class="row w-100 align-items-center m-auto mb-4">
+                            <div class="col-sm-12" *ngIf="placeOrderBody.data.orderData.ServiceId != 5">
+                                <div>
+
+                                  <div (click)="shecdule1()" class="rounded border-0 clickShecdule"><span>
+                                   
+                                      <span *ngIf="orderData.ServiceId == 1">Schedule My Food • </span>
+                                      <span *ngIf="orderData.ServiceId == 2">Schedule My Food • </span>
+                                      <span *ngIf="orderData.ServiceId == 3">Schedule My Food • </span> </span> 
+                                    <span *ngIf="placeOrderBody.data.orderData.TimeSelection == 0" class="text-primary">Today, ASAP</span>
+                                    <span *ngIf="placeOrderBody.data.orderData.TimeSelection == 1" class="text-primary">Today,
+                                      {{placeOrderBody.data.orderData.DueOn | date:'hh:mm a'}}</span>
+                                    <span
+                                      *ngIf="placeOrderBody.data.orderData.TimeSelection == 2" class="text-primary">{{placeOrderBody.data.orderData.DueOn | date:'MMM dd '}}
+                                      at {{placeOrderBody.data.orderData.DueOn | date:'hh:mm a'}}</span></div>
+
+                                      <hr class="my-2">
+                                </div>
+                              </div>
+                          <div class="col-sm-12">
+                            <h4 *ngIf="placeOrderBody.data.orderData.ServiceId == 2">Delivery Address</h4>
+                            <h4 *ngIf="placeOrderBody.data.orderData.ServiceId == 1">Pickup Address</h4>
+                            <h4 *ngIf="placeOrderBody.data.orderData.ServiceId == 3">Curbside</h4>
+                            <!-- <h4 *ngIf="placeOrderBody.data.orderData.ServiceId == 5">Dine In</h4> -->
+                            <div class="web-down-arrow"><i class="fa fa-angle-down" (click)="openstepe1()"></i></div>
+                            <div class="web-up-arrow"><i class="fa fa-angle-up" (click)="closestepe1()"></i></div>
+                          </div>
+                          <div class="col-sm-7">
+                            <p *ngIf="placeOrderBody.data.orderData.ServiceId == 2">
+                              <span *ngIf="selectedAddress" class="mr-1 text-orange">
+                                <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+                              </span>
+                              {{selectedAddress?selectedAddress.Addr1:'No address selected.'}}</p>
+                            <p *ngIf="placeOrderBody.data.orderData.ServiceId == 1 &&  locationDetails">
+                              <span class="mr-1 text-orange">
+                                <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+                              </span>
+                              {{locationDetails.Address.AddressLine1}}, {{locationDetails.Address.City}}</p>
+                          </div>
+                          <div class="col-sm-5 text-right">
+
+                            <button *ngIf="placeOrderBody.data.orderData.ServiceId == 2" data-toggle="modal"
+                              data-target="#addlocation" id="addAddModal" class="add-new">
+                              <img src="assets/images/add-address.svg"> Add New Address
+                            </button>
+                          </div>
+                        </div>
+                        <span>
+                        </span>
+
+                      </div>
+                    </div>
+                    <div *ngIf="placeOrderBody.data.orderData.ServiceId == 2" class="section-content1 ">
+                      <div class="shipping-box" fxLayout="row wrap" fxLayoutAlign="space-between start">
+                        <div *ngFor="let item of addressList; let i = index" class="have-details home">
+
+                          <a href="javascript:void(0)" data-toggle="modal" data-target="#editLocation"
+                            (click)="onEditAddress(item, i)" class="edit-option">(Edit)</a>
+                          <div class="detail-head mb-2" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+                            <span *ngIf="item.CustAddressName == 'Home'">
+                              <img src="assets/images/home-address.svg">
+                            </span>
+                            <span *ngIf="item.CustAddressName == 'Office'">
+                              <img src="assets/images/office-address.svg">
+                            </span>
+                            <span *ngIf="item.CustAddressName == 'Others'">
+                              <img src="assets/images/other-address.svg">
+                            </span>
+                            <span class="user-name">
+                              <strong class="heading">{{item.FName?item.FName:item.fName}} | {{item.Telephone?item.Telephone:item.tel}}</strong>
+                              <p>{{item.CustAddressName?item.CustAddressName:item.addrName}}</p>
+                            </span>
+                          </div>
+                          <span>
+                            <p>{{item.Addr1}}</p>
+                            <button class="btn btn-delivery my-2" id="deliveryHere"
+                              (click)="onSelectAddress(item, i)">Deliver Here</button>
+                            <div class="separator"></div>
+                            <h6 class="title-heading m-0">Special Instruction</h6>
+                            <p>{{item.Instructions?item.Instructions:item.instr}}</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="placeOrderBody.data.orderData.ServiceId == 3" class="section-content1 ">
+                      <div class="row">
+
+                          <div class="col-md-4">
+                            <label>Make of car: </label>
+                            <input type="text" class="form-control" name="carmake" (keyup)="carmakeF($event.target.value)" >
+                          </div>
+                          <div class="col-md-4">
+                            <label>Model of car: </label>
+                            <input type="text" class="form-control" name="carmodel" (keyup)="carmodelF($event.target.value)" >
+                          </div>
+                          <div class="col-md-4">
+                            <label>Color of car: </label>
+                            <input type="text" class="form-control" name="carcolor" (keyup)="carcolorF($event.target.value)">
+                          </div>
+                          <div class="col-md-4">
+                            <label>License of car: </label>
+                            <input type="text" class="form-control" name="carplatenumber" (keyup)="carplatenumberF($event.target.value)" >
+                          </div>
+
+                      </div>
+                    </div>
+                    <div *ngIf="placeOrderBody.data.orderData.ServiceId == 5" class="section-content1 ">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>Please Enter Your Table Number: </label>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <input type="text" class="form-control" name="table" [(ngModel)]="DineInTableNum">
+                            </div>
+                            <div class="col-md-6">
+                              <button class="btn btn-success" (click)="dineinsend()">Submit</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="onNext ngoSection" disabled="" *ngIf="ngoData.length > 0 && placeOrderBody.data.orderData.ServiceId != 5" [ngClass]="placeOrderBody.data.orderData.ServiceId == 1?'active':''">
+                  <div class="item">
+                    <div class="section-title">
+                      <div class="row head w-100">
+
+                        <div class="openwebdonation">
+                          <i class="fa fa-angle-down" aria-hidden="true" (click)="openwebdonation()"></i>
+                        </div>
+                        <div class="closewebdonation">
+                          <i class="fa fa-angle-up" aria-hidden="true" (click)="closewebdonation()"></i>
+                        </div>
+                        <div class="col-sm-6">
+
+                          <h4>Choose Your Organization:</h4>
+                          <p class="mb-3 cost text-dark">It Cost you Nothing</p>
+                        </div>
+                        <div class="col-sm-6 text-right m-0 p-0 d-flex align-items-center codesubmit"
+                          style="justify-content: flex-end;">
+
+                          <input type="text" class="donate websearch mr-3" name="search" (click)="opendonate()"
+                            [(ngModel)]="queryString" (keyup)="queryStringF($event.target.value)"
+                            placeholder="Enter Organzations Code">
+
+                        </div>
+                        <div class="col-sm-12">
+                          <p class="my-2 congo1" *ngIf="placeOrderBody.data.orderData.DonateCode">Thank you for choosing
+                            <b class="text-dark">{{placeOrderBody.data.orderData.NGOName}}</b>.
+                            {{placeOrderBody.data.orderData.ngoSelectedVal}}% of the net sales of this order will
+                            be sent to {{placeOrderBody.data.orderData.NGOName}} from {{locationDetails.Name}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="donate-content mt-3">
+                      <div class="donation-row">
+                        <div class="swiper-container charity-swiper">
+                          <div class="swiper-wrapper">
+                            <div *ngFor="let list of ngoData| filter: queryString" class="swiper-slide web-donate">
+                              <div class="card" (click)="ngoSelect(list)">
+                                <div class="card-body">
+                                  <img *ngIf="!list.Photo" class="img-fluid" src="assets/images/donate1.jpg">
+                                  <img *ngIf="list.Photo" class="img-fluid" src="{{list.Photo}}">
+                                </div>
+                                <div class="p-2">
+                                  <p class="text-dark ngo-name">{{list.Name}}</p>
+                                  <div class="code-row">
+                                    <div class="code mb-2">
+                                      <p  [ngClass]="placeOrderBody.data.orderData.NGOId == list.RecId?'active':'unactive'" class="">{{list.DonateCode}}</p>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                        </div>
+                        <div class="slide-btn">
+                          <div class="swiper-button-next"><i class="fa fa-chevron-right"></i></div>
+                          <div class="swiper-button-prev"><i class="fa fa-chevron-left"></i></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="onNext tip-part" disabled="" *ngIf="placeOrderBody.data.orderData.ServiceId == 2 || placeOrderBody.data.orderData.ServiceId == 5">
+                  <div class="item tipweb">
+                    <div class="section-title">
+                      <div class="row mb-4 w-100 head">
+                        <div class="col-sm-12">
+                          <h4>Add The Tip</h4>
+                        </div>
+                        <div class="web-skip">
+                          <p (click)="skiptip()" class="text-primary">(Skip)</p>
+                        </div>
+                        <div class="openwebtip">
+                          <i class="fa fa-angle-down" aria-hidden="true" (click)="openwebdtip()"></i>
+                        </div>
+                        <div class="col-sm-12">
+                          <p class="my-2 congo1" *ngIf="placeOrderBody.data.orderData.TipAmt">Tip Added
+                            {{placeOrderBody.data.orderData.tipvalueSelected}}% </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <div class="">
+                        <div class="add-tip">
+                          <div class="main-border">
+                            <div class="border-line" *ngIf="placeOrderBody.data.orderData.tipvalueSelected == 0"
+                              (click)="onChangeTip(0, true)"> <i class="fa fa-check"></i> 0%</div>
+                            <span (click)="closetip()">
+                              <div class="border-line1" *ngIf="placeOrderBody.data.orderData.tipvalueSelected != 0"
+                                (click)="onChangeTip(0, true)"> <i class="fa fa-plus"></i> 0%</div>
+                            </span>
+                            <div class="border-line" *ngIf="placeOrderBody.data.orderData.tipvalueSelected == 10"
+                              (click)="onChangeTip(10, true)"> <i class="fa fa-check"></i> 10%</div>
+                            <span (click)="closetip()">
+                              <div class="border-line1" *ngIf="placeOrderBody.data.orderData.tipvalueSelected != 10"
+                                (click)="onChangeTip(10, true)"> <i class="fa fa-plus"></i> 10%</div>
+                            </span>
+                            <div class="border-line" *ngIf="placeOrderBody.data.orderData.tipvalueSelected == 15"
+                              (click)="onChangeTip(15, true)"> <i class="fa fa-check"></i> 15%</div>
+                            <span (click)="closetip()">
+                              <div class="border-line1" *ngIf="placeOrderBody.data.orderData.tipvalueSelected != 15"
+                                (click)="onChangeTip(15, true)"> <i class="fa fa-plus"></i> 15%</div>
+                            </span>
+                            <div class="border-line" *ngIf="placeOrderBody.data.orderData.tipvalueSelected == 20"
+                            (click)="closetip()"> <i class="fa fa-check"></i> 20%</div>
+                            
+                            <span (click)="closetip()">
+                              <div class="border-line1" *ngIf="placeOrderBody.data.orderData.tipvalueSelected != 20"
+                                (click)="onChangeTip(20, true)"> <i class="fa fa-plus"></i> 20%</div>
+                            </span>
+                            <div class="border-line" *ngIf="placeOrderBody.data.orderData.tipvalueSelected == 25"
+                              (click)="onChangeTip(25, true)"> <i class="fa fa-check"></i> 25%</div>
+                            <span (click)="closetip()">
+                              <div class="border-line1" *ngIf="placeOrderBody.data.orderData.tipvalueSelected != 25"
+                                (click)="onChangeTip(25, true)"> <i class="fa fa-plus"></i> 25%</div>
+                            </span>
+                            <div class="border-line" *ngIf="placeOrderBody.data.orderData.tipvalueSelected == 30"
+                              (click)="onChangeTip(30, true)"> <i class="fa fa-check"></i> 30%</div>
+                            <span (click)="closetip()">
+                              <div class="border-line1" *ngIf="placeOrderBody.data.orderData.tipvalueSelected != 30"
+                                (click)="onChangeTip(30, true)"> <i class="fa fa-plus"></i> 30%</div>
+                            </span>
+                          </div>
+                          <!-- <div class="title">
+                    <div class="ks-cboxtags tipp mb-0 d-flex">
+                        <div (click)="closetip()"><input type="radio" [ngClass]="placeOrderBody.data.orderData.tipvalueSelected == 0 ? 'checked':''" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 0" name="options" class="chk" id="chk0" [disabled]="itemList.length == 0"
+                          (click)="onChangeTip($event.target.value, $event.target.checked)" value="0"><label
+                          for="chk0">0%</label></div>
+                      <div (click)="closetip()"><input type="radio" [ngClass]="placeOrderBody.data.orderData.tipvalueSelected == 10 ? 'checked':''" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 10" name="options" class="chk" id="chk2" [disabled]="itemList.length == 0"
+                          (click)="onChangeTip($event.target.value, $event.target.checked)" value="10"><label
+                          for="chk2">10%</label></div>
+                      <div (click)="closetip()"><input type="radio" [ngClass]="placeOrderBody.data.orderData.tipvalueSelected == 15 ? 'checked':''" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 15" name="options" class="chk" id="chk3" [disabled]="itemList.length == 0"
+                          (click)="onChangeTip($event.target.value, $event.target.checked)" value="15"><label
+                          for="chk3">15%</label></div>
+                      <div (click)="closetip()"><input type="radio" [ngClass]="placeOrderBody.data.orderData.tipvalueSelected == 20 ? 'checked':''" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 20" name="options" class="chk" id="chk4" [disabled]="itemList.length == 0"
+                          (click)="onChangeTip($event.target.value, $event.target.checked)" value="20"><label
+                          for="chk4">20%</label></div>
+                      <div (click)="closetip()"><input type="radio" [ngClass]="placeOrderBody.data.orderData.tipvalueSelected == 25 ? 'checked':''" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 25" name="options" class="chk" id="chk5" [disabled]="itemList.length == 0"
+                          (click)="onChangeTip($event.target.value, $event.target.checked)" value="25"><label
+                          for="chk5">25%</label></div>
+                      <div (click)="closetip()"><input type="radio" [ngClass]="placeOrderBody.data.orderData.tipvalueSelected == 30 ? 'checked':''" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 30" name="options" class="chk" id="chk6" [disabled]="itemList.length == 0"
+                          (click)="onChangeTip($event.target.value, $event.target.checked)" value="30"><label
+                          for="chk6">30%</label></div>
+                      </div>
+                  </div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+
+
+
+
+
+                <li class="onNext payment-sec">
+                  <div class="item">
+                    <div class="section-title">
+                      <h4>Payment</h4>
+                      <p>Please choose a payment option</p>
+                    </div>
+                    <div class="openwebpayment" (click)="openwebpayment()">
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </div>
+                    <div class="closewebpayment" (click)="closewebpayment()">
+                      <i class="fa fa-angle-up" aria-hidden="true"></i>
+                    </div>
+                    <div class="payment-sec-datail">
+                      <app-payment [placeorderData1]="placeorderData1" [mobUrl]="paymentUrl"
+                        [SpecialInstructions]="SpecialInstructions" (onOrderFailed)="onOrderFailed($event)"
+                        (onOrderByPaytm)="placeOrderByPaytm()" (onOrderSucess)="onOrderSuccess($event)"
+                        [isOrderByPaytm]="flags.isOrderByPaytm"></app-payment>
+                    </div>
+                  </div>
+                </li>
+
+              </ol>
+            </div>
+            <div class="cart-view " fxFlex="35" fxFlex.md="35">
+              <div class="bg-white col-sm-12 py-3 mb-2">
+                <div class="restaurant-info" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                  <span *ngIf="locationDetails && locationDetails.LogoImg"><img
+                      src="{{imageUrl}}{{locationDetails.LogoImg}}" class="img-fluid" width="60px"></span>
+                  <span *ngIf="locationDetails && !locationDetails.LogoImg"><img src="assets/images/defaultRest.png"
+                      class="img-fluid" width="60px"></span>
+                  <span>
+                    <h6>{{locationDetails?locationDetails.Name:''}}</h6>
+                    <p *ngIf="locationDetails" class="mb-0">{{locationDetails.Cuisines}}</p>
+                  </span>
+                </div>
+                <div *ngIf="!itemList.length" class="added-items py-4">
+                  <div class="text-center">
+                    <img src="assets/images/empty-cart1-png.png" alt="" width="50%">
+                  </div>
+                </div>
+                <div *ngFor="let item of itemList; let i = index" class="added-items" style="border-bottom: none;">
+                  <div class="item" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                    <span style="width: 45%;" class="cart-item">
+                      <p class="mb-0 ">{{item.Name}}</p>
+                      <!--<p class="mb-0">Pizza</p>-->
+                    </span>
+                    <span fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px"
+                      style="font-size: 13px; margin-right: 0px !important;">
+                      <figure class="m-0 setunit mr-3" fxLayout="row" fxLayoutAlign="space-around center">
+                        <a href="javascript:void(0);" class="unit decrement" (click)="onUpdateQty(i, false)">
+                          <i class="fa fa-minus-square"></i>
+                        </a>
+                        <span>{{item.Qty}}</span>
+                        <a href="javascript:void(0);" class="unit increment" (click)="onUpdateQty(i, true)">
+                          <i class="fa fa-plus-square"></i>
+                        </a>
+                      </figure>
+                      <span *ngIf="item.UnitPrice != '-99'" style="font-size: 13px; width: 68px; text-align: right;">
+                        {{currency}} {{(item.UnitPrice*item.Qty).toFixed(2)}}
+                      </span>
+                      <span *ngIf="item.UnitPrice == '-99'" style="font-size: 13px; width: 68px; text-align: right;">
+                        {{currency}} 0
+                      </span>
+                    </span>
+
+                  </div>
+                  <ul *ngFor="let addItems of item.ItemAddOnList;" class="addOnList">
+                    <li class="list-bullet"><strong>{{addItems.Name}}</strong></li>
+
+                    <li *ngFor="let addOptions of addItems.AddOnOptions;" class="iotnlist">
+                      <div class="row">
+                        <div class="col-md-7">
+                          <p class="mb-1">{{addOptions.Name}}
+                            <!-- <span *ngIf="addOptions.AddOnOptionModifier1 || addOptions.AddOnOptionModifier2">
+                                  ({{addOptions.AddOnOptionModifier1.Label || ''}}  {{addOptions.AddOnOptionModifier2.Label || ''}})</span> -->
+                            <span *ngIf="addOptions.AddOnOptionModifier1 != null">
+                              ({{addOptions.AddOnOptionModifier1.Label || ''}})</span>
+                            <span *ngIf="addOptions.AddOnOptionModifier2 != null">
+                              ({{addOptions.AddOnOptionModifier2.Label || ''}})</span>
+                          </p>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <div class="" style="font-size: 13px;">
+                            {{currency}}{{(Number(addOptions.Amt*item.Qty)).toFixed(2)}}
+                          </div>
+                          <!-- {{currency}}{{(Number(addOptions.Amt*item.Qty)).toFixed(2)}} -->
+                        </div>
+                      </div>
+
+                    </li>
+                  </ul>
+                  <hr>
+                </div>
+                <div class="added-items mb-2" style="border-bottom: none;">
+                  <div class="item" fxlayout="row" fxlayoutalign="space-between center" fxlayoutgap="10px"
+                    ng-reflect-fx-layout="row"
+                    style="flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-between; align-items: center;"
+                    ng-reflect-fx-layout-gap="10px" ng-reflect-fx-layout-align="space-between center">
+                    <textarea class="form-control" placeholder="Write suggestions to restaurants..." autocomplete="off"
+                      (keyup)="SpecialInstructionsF($event.target.value)"></textarea>
+                  </div>
+                </div>
+
+
+                <div class="similar-items m-0" *ngIf="locationDetails.likePrdoucts.length > 0">
+
+                  <h6>You may also like</h6>
+                  <!-- Swiper -->
+                  <div class="swiper-container similar-item">
+                    <div class="swiper-wrapper">
+                      <div *ngFor="let variation of locationDetails.likePrdoucts; let i = index" class="swiper-slide">
+                        <div class="item">
+                          <div class="dish-image text-center">
+
+                            <img *ngIf="!variation.Img" src="assets/images/dish-items/popular-food-img1.png"
+                              alt="dish-img" class="img-fluid" width="100px">
+
+                            <img *ngIf="variation.Img" src="{{imageUrl}}images/menuitemimages/{{variation.Img}}"
+                              alt="{{variation.Img}}" class="img-fluid" width="100px">
+                          </div>
+
+                          <div class="dish-info text-center">
+                            <div class="title-description">
+                              <p class="px-1 text-truncate" title="{{variation.Name}}">{{variation.Name}}</p>
+                            </div>
+                            <button
+                              *ngIf="variation.AddOnList.length || (variation.data.P2 || variation.data.P3 || variation.data.P4 || variation.data.P5 || variation.data.P6)"
+                              class="btn btn-block btn-site rounded-0"
+                              (click)="openAddOnPopup(variation, variation.data)">
+                              <span *ngIf="variation.data.P1 && variation.P1 > 0"
+                                class="mb-0 price">{{currency}}{{(variation.P1).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P2 && (variation.P2 > 0 && (!variation.P1 || variation.P1 <= 0))"
+                                class="mb-0 price">{{currency}}{{(variation.P2).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P3 && (variation.P3 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0)))"
+                                class="mb-0 price">{{currency}}{{(variation.P3).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P4 && (variation.P4 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0)))"
+                                class="mb-0 price">{{currency}}{{(variation.P4).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P5 && (variation.P5 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0) && (!variation.P4 || variation.P4 <= 0)))"
+                                class="mb-0 price">{{currency}}{{(variation.P5).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P6 && (variation.P6 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0) && (!variation.P4 || variation.P4 <= 0) && (!variation.P5 || variation.P5 <= 0)))"
+                                class="mb-0 price">{{currency}}{{(variation.P6).toFixed(2)}}</span>
+                              add item
+                            </button>
+                            <button
+                              *ngIf="!variation.AddOnList.length && !variation.data.P2 && !variation.data.P3 && !variation.data.P4 && !variation.data.P5 && !variation.data.P6"
+                              class="btn btn-block btn-site rounded-0"
+                              (click)="addVariationToCart(variation, variation.data)">
+                              <span *ngIf="variation.data.P1 && variation.P1 > 0"
+                                class="mb-0 price">{{currency}}{{(variation.P1).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P2 && (variation.P2 > 0 && (!variation.P1 || variation.P1 <= 0))"
+                                class="mb-0 price">{{currency}}{{(variation.P2).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P3 && (variation.P3 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0)))"
+                                class="mb-0 price">{{currency}}{{(variation.P3).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P4 && (variation.P4 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0)))"
+                                class="mb-0 price">{{currency}}{{(variation.P4).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P5 && (variation.P5 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0) && (!variation.P4 || variation.P4 <= 0)))"
+                                class="mb-0 price">{{currency}}{{(variation.P5).toFixed(2)}}</span>
+                              <span
+                                *ngIf="variation.data.P6 && (variation.P6 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0) && (!variation.P4 || variation.P4 <= 0) && (!variation.P5 || variation.P5 <= 0)))"
+                                class="mb-0 price">{{currency}}{{(variation.P6).toFixed(2)}}</span>
+                              add item
+                            </button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="piza-slide">
+                      <div class="swiper-button-next"><i class="fa fa-chevron-right"></i></div>
+                      <div class="swiper-button-prev"><i class="fa fa-chevron-left"></i></div>
+                    </div>
+
+
+                  </div>
+                </div>
+
+              <div  *ngIf="!flags.isPromoApplied" >
+                <div *ngIf="country.toUpperCase()  == 'AU' || (country.toUpperCase()  == 'US' && placeOrderBody.data.orderData.ServiceId == 5)"
+                class="coupon mb-3" role="button" data-toggle="modal" data-target="#coupon" style="cursor: pointer;">
+                <nb-icon icon="gift-outline" class="mr-3"></nb-icon>
+                Apply Coupon
+              </div>
+              </div>
+               
+                <div *ngIf="flags.isPromoApplied">
+                  <div *ngIf="country.toUpperCase()  == 'AU' || (country.toUpperCase()  == 'US' && placeOrderBody.data.orderData.ServiceId == 5)" class="coupon mb-3" role="button">
+                    <nb-icon icon="gift-outline" class="mr-3"></nb-icon>
+                    {{appliedPromoCode?appliedPromoCode.finalName:''}} ({{currency}}{{appliedPromoCode?appliedPromoCode.finalDiscount.toFixed(2):''}} OFF) &nbsp;<span
+                      class="fa fa-close" (click)="removePromo()" style="cursor: pointer;"></span>
+                  </div>
+                </div>
+              
+                <div class="bill-details">
+                  <h6>Bill Details</h6>
+                  <ul>
+                    <li>
+                      <p>Item Total</p>
+                      <p>{{currency}} {{(itemTotal()).toFixed(2)}}</p>
+                    </li>
+                    <li>
+                      <p *ngIf="country.toUpperCase() == 'AU' || country.toUpperCase() == 'IN'">GST Applied</p>
+                      <p *ngIf="country.toUpperCase() == 'US'">TAX Applied</p>
+                      <p>{{currency}} {{(itemList.length?placeOrderBody.data.orderData.TaxAmt:0).toFixed(2)}}</p>
+                    </li>
+                
+                    <li *ngIf="placeOrderBody.data.orderData.ServiceId == 2 || placeOrderBody.data.orderData.ServiceId == 5"> 
+                      <p>Tip Added</p>
+                      <p>{{currency}} {{(placeOrderBody.data.orderData.TipAmt.toFixed(2))}}</p>
+                    </li>
+                    <li >
+                      <p *ngIf="country.toUpperCase()  == 'AU' || (country.toUpperCase()  == 'US' && placeOrderBody.data.orderData.ServiceId == 5)" class="text-success">Coupon Discount</p>
+                      <p *ngIf="country.toUpperCase()  == 'AU' || (country.toUpperCase()  == 'US' && placeOrderBody.data.orderData.ServiceId == 5)" class="text-success"><span
+                          *ngIf="placeOrderBody.data.orderData.CouponAmt > 0 || placeOrderBody.data.orderData.DiscountAmt > 0">-
+                        </span> {{currency}}
+                        {{(placeOrderBody.data.orderData.CouponAmt || placeOrderBody.data.orderData.DiscountAmt || 0).toFixed(2)}}
+                      </p>
+                    </li>
+                    <li *ngIf="!isDeliveryFree && placeOrderBody.data.orderData.ServiceId == 2" >
+                      <p>Delivery Charges</p>
+                      <p>{{currency}} {{(placeOrderBody.data.orderData.SrvcFee || 0).toFixed(2)}}</p>
+                    </li>
+                    <li *ngIf="isDeliveryFree && placeOrderBody.data.orderData.ServiceId == 2">
+                      <p>Delivery Charges</p>
+                      <p>Free</p>
+                    </li>
+                    <li class="grandTotal">
+                      <p>Grand Total</p>
+                      <p>{{currency}}
+                        <!-- {{(itemList.length?Number(placeOrderBody.data.orderData.TotalAmt) + Number(selectedTip) + Number(placeOrderBody.data.orderData.SrvcFee): 0).toFixed(2)}} -->
+                        {{(itemList.length?itemTotal() + Number(selectedTip)  + Number(placeOrderBody.data.orderData.TaxAmt) + Number(placeOrderBody.data.orderData.SrvcFee) - (placeOrderBody.data.orderData.CouponAmt || placeOrderBody.data.orderData.DiscountAmt || 0).toFixed(2): 0).toFixed(2) }}
+                      </p>
+                    </li>
+                    <li class="contri" *ngIf="ngoData.length > 0 && placeOrderBody.data.orderData.ServiceId != 5">
+                      <p>Restaurant Contribution</p>
+                      <p>{{currency}}
+                        {{donateval().toFixed(2)}}
+
+                      </p>
+                    </li>
+
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- End of Web View-->
+    <div class="mobile-view" fxShow.sm fxShow.xs fxHide.lg fxHide.md fxHide.xl>
+      <div class="brand-info">
+        <div class="restaurant-info">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                <figure class="mb-0">
+                  <img *ngIf="locationDetails && locationDetails.LogoImg" src="{{imageUrl}}{{locationDetails.LogoImg}}"
+                    alt="Brand Logo" width="80px">
+                  <img *ngIf="locationDetails && !locationDetails.LogoImg" src="assets/images/defaultRest.png"
+                    alt="Brand Logo" width="80px">
+                </figure>
+                <div class="details">
+                  <h6 class="mb-0 text-purple">{{locationDetails?locationDetails.Name:''}}</h6>
+                  <p class="m-0">
+                    <small>
+                      <i class="fa fa-clock-o" aria-hidden="true"></i> Open Now -   
+                       <span *ngIf="locationDetails && locationDetails.Menus.length && !openCloseTime" [innerHTML]="locationDetails.OpenCloseTime" class="web-icon"></span>
+                      <span *ngIf="locationDetails && locationDetails.Menus.length && openCloseTime" class="web-icon">{{openCloseTime}}</span>
+                    </small>
+                  </p>
+                  <p class="m-0">
+                    <small *ngIf="locationDetails">{{locationDetails.Cuisines}}</small>
+                  </p>
+                </div>
+              </div>
+
+              <div *ngIf="!itemList.length" class="added-items py-4">
+                <div class="text-center">
+                  <img src="assets/images/empty-cart1-png.png" alt="" width="50%">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scheduled-food" *ngIf="placeOrderBody.data.orderData.ServiceId != 5">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12" >
+                <div id="accordion">
+                  <div class="card border-0 py-1">
+                    <div class="card-header p-0" id="headingOne1">
+                      <h6 class="mb-0 dlvrytym pl-2" (click)="shecdule()">
+                          <a class="text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            
+                          
+                        <span *ngIf="orderData.ServiceId == 1">Schedule My Food</span>
+                          <span *ngIf="orderData.ServiceId == 2">Schedule My Food</span>
+                          <span *ngIf="orderData.ServiceId == 3">Schedule My Food</span> 
+                        <span> <i class="fa fa-angle-down downi" (click)="shecdule()"></i></span>
+                        <div class="text-dark asap">
+                          <span *ngIf="placeOrderBody.data.orderData.TimeSelection == 0">Today, ASAP</span>
+                          <span *ngIf="placeOrderBody.data.orderData.TimeSelection == 1">Today,
+                            {{placeOrderBody.data.orderData.DueOn | date:'hh:mm a'}}</span>
+                          <span
+                            *ngIf="placeOrderBody.data.orderData.TimeSelection == 2">{{placeOrderBody.data.orderData.DueOn | date:'MMM dd '}}
+                            at {{placeOrderBody.data.orderData.DueOn | date:'hh:mm a'}}</span>
+                        </div>
+                      </a>
+                      </h6>
+                    </div>
+  
+                    <div id="collapseExample" class="collapse border-top"   
+                      data-parent="#accordion" (click)="shecdule2()">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-12 text-center">
+                            <h6>Schedule My Order</h6>
+                            <p>Select a delivery time up to 7 days in advance.</p>
+                          </div>
+                          <div class="col-sm-12 mt-3">
+                            <div class="row">
+                              <div class="col-sm-12 ">
+                                <nav>
+                                  <div class="nav nav-tabs nav-fill mb-3" id="nav-tab" role="tablist">
+                                    <a *ngIf="ASAPOnOFf == 'T'  && todayOpenClose == false" [ngClass]="todayOpenClose == false?'active':''" class="nav-item nav-link"  id="nav-home-tab" data-toggle="tab"
+                                      href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">ASAP</a>
+                                    <a *ngIf="LTOnOff == 'T'"  [ngClass]="todayOpenClose == true?'active':''" class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                      href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"
+                                      (click)="clearTime()">Today</a>
+                                    <a *ngIf="FOOnOff == 'T'" class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab"
+                                      href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"
+                                      (click)="clearTime()">Later</a>
+  
+                                  </div>
+                                </nav>
+                              </div>
+                            </div>
+                            <div class="row mt-3">
+                              <div class="col-sm-12">
+                                <div class="tab-content px-sm-0" id="nav-tabContent">
+                                  <div class="tab-pane fade"  [ngClass]="todayOpenClose == false?'show active':''" *ngIf="ASAPOnOFf == 'T'  && todayOpenClose == false" id="nav-home" role="tabpanel"
+                                    aria-labelledby="nav-home-tab">
+                                    <button type="button" class="asap-btn btn">Deliver ASAP</button>
+                                  </div>
+                                  <div class="tab-pane fade" *ngIf="LTOnOff == 'T'" [ngClass]="todayOpenClose == true?'show active':''" id="nav-profile" role="tabpanel"
+                                    aria-labelledby="nav-profile-tab">
+  
+                                    <div class="slctbtn">
+                                      <select class="shecdule-control" (change)="selectTime($event.target.value)">
+                                        <option class="selectOptionSelected" selected disabled>Select Time</option>
+                                        <option class="selectOption" *ngFor="let val of timeData"
+                                          value="{{todayDate}} {{val}}"> {{dateTime(todayDate,val)}}
+                                        </option>
+                                      </select><i class="fa fa-angle-down downi"></i></div>
+                                    <button type="button" class="asap-btn btn mt-4" (click)="timesection(1)">Deliver Today
+                                      at {{selectedTime?selectedTimeF(selectedTime):''}}</button>
+                                  </div>
+  
+                                  <div class="tab-pane fade" *ngIf="FOOnOff == 'T'" id="nav-contact" role="tabpanel"
+                                    aria-labelledby="nav-contact-tab">
+                                    <div class="content">
+  
+                                      <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                          <bs-datepicker-inline
+                                            [bsConfig]="{showWeekNumbers:false, dateInputFormat: 'DD/MM/YYYY'}"
+                                            [minDate]="min" (bsValueChange)="laterDateDate($event)">
+                                          </bs-datepicker-inline>
+                                          <p class=""><a href="javascript:void(0);" class="text-dark font-weight-bold">
+                                              <span *ngIf></span> {{laterDate | date:'dd MMM'}} at {{selectedTime?selectedTimeF(selectedTime):''}}
+                                            </a></p>
+                                        </div>
+                                        <div class="col-sm-12 form-group">
+                                          <div class="slctbtn">
+                                            <select class="shecdule-control" (change)="selectTime($event.target.value)">
+                                              <option class="selectOptionSelected" selected disabled>Select Time</option>
+                                              <option class="selectOption" *ngFor="let val of timeData1;let i=index;"
+                                                value="{{laterDate}} {{val}}">
+                                                {{dateTime(laterDate,val)}}</option>
+                                            </select><i class="fa fa-angle-down downi"></i></div>
+                                          <button type="button" class="asap-btn btn mt-4" (click)="timesection(2)">Selected Date and Time {{laterDate | date:'dd MMM'}}, {{selectedTime?selectedTimeF(selectedTime):''}}</button>
+                                        </div>
+                                      </div>
+  
+  
+                                    </div>
+                                  </div>
+  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="food-added-item py-2">
+          <div class="container">
+            <div class="row">
+              <div *ngFor="let item of itemList; let i = index" class="col-sm-12 item-view"
+              style="padding-bottom: 0 !important;">
+                <div class="added-item" fxLayout="row wrap" fxLayoutGap="10" fxLayoutAlign="start between">
+                  <div class="item-cart" fxFlex="50">
+                    <div class="title">
+                      <h6 class="text-dark mb-0">{{item.Name}}</h6>
+                    </div>
+                  </div>
+                  <div class="right inr-dec"  fxFlex="25">
+                    <figure class="m-0 setunit" fxLayout="row" fxLayoutAlign="space-around center">
+                      <a class="unit decrement" href="javascript:void(0);" (click)="onUpdateQty(i, false)"
+                        style="cursor: pointer;">
+                        <i class="fa fa-minus-square"></i>
+                      </a>
+                      <span>{{item.Qty}}</span>
+                      <a class="unit increment" href="javascript:void(0);" (click)="onUpdateQty(i, true)"
+                        style="cursor:pointer;">
+                        <i class="fa fa-plus-square"></i>
+                      </a>
+                    </figure>
+                  </div>
+                  <div class="" fxFlex="25"> 
+                    <div  class="text-right text-muted item-cart">{{currency}} <span *ngIf="item.UnitPrice != '-99'"> {{(item.UnitPrice*item.Qty).toFixed(2)}}</span> <span *ngIf="item.UnitPrice == '-99'">0</span>  </div>
+                  </div>
+                </div>
+                <ul *ngFor="let addItems of item.ItemAddOnList;" class="addOnList list-unstyled px-1 m-0">
+                  <li class="list-bullet"><strong>{{addItems.Name}}</strong></li>
+
+                  <li *ngFor="let addOptions of addItems.AddOnOptions;" class="">
+                    <div class="row">
+                      <div class="col-md-6 w-50">
+                        <p class="mb-1 text-dark mobiotnlis">{{addOptions.Name}}</p>
+                      </div>
+                      <div class="col-md-6 w-50 text-right">
+                        {{currency}}{{(Number(addOptions.Amt*item.Qty)).toFixed(2)}}</div>
+                    </div>
+                  </li>
+
+                </ul>
+                <div class="separator"></div>
+              </div>
+              <div class="item-view suggestion-box col-md-12">
+                <div class="item-total" fxLayout="row" fxLayoutAlign="space-between center">
+                  <div class="d-flex align-items-center w-100">
+                    <span class="mr-2"><nb-icon icon="file-text-outline"></nb-icon></span>
+                    <textarea class="form-control mob-text" name="SpecialInstructions"
+                    placeholder="Write suggestions to restaurants..." autocomplete="off"
+                    (keyup)="SpecialInstructionsF($event.target.value)" rows="1"></textarea>
+                  </div>
+                </div>
+              </div>
+            <!-- <div class="col-sm-12 item-view py-3" style="padding-top: 0 !important;">
+              <div class="item-total" fxLayout="row" fxLayoutAlign="space-between center">
+                <span>Item Total</span>
+                <span>{{currency}}{{(itemTotal()).toFixed(2)}}</span>
+              </div>
+            </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="similar-items">
+          <div class="container">
+            <div class="row">
+              <div class="similar-items col-md-12" *ngIf="locationDetails.likePrdoucts.length > 0">
+                <h6 class="mb-3">You may also like</h6>
+                <div class="swiper-container charity-swiperMobile">
+                  <div class="swiper-wrapper">
+                    <div *ngFor="let variation of locationDetails.likePrdoucts; let i = index" class="swiper-slide">
+                      <div class="item">
+                    
+      
+                        <div class="dish-image text-center">
+      
+                            <img *ngIf="!variation.Img" src="assets/images/dish-items/popular-food-img1.png"
+                              alt="dish-img" class="img-fluid" width="100px%">
+      
+                            <img *ngIf="variation.Img" src="{{imageUrl}}images/menuitemimages/{{variation.Img}}"
+                              alt="{{variation.Img}}" class="img-fluid" width="100%">
+                          </div>
+      
+                        <div class="dish-info text-center">
+                          <p class="px-1 m-0 text-truncate">{{variation.Name}}</p>
+                          <div>
+                            <p *ngIf="variation.data.P1 && variation.P1 > 0" class="text-success mb-0 price">{{currency}}
+                              {{(variation.P1).toFixed(2)}}</p>
+                            <p *ngIf="variation.data.P2 && (variation.P2 > 0 && (!variation.P1 || variation.P1 <= 0))"
+                              class="text-success mb-0 price">{{currency}} {{(variation.P2).toFixed(2)}}</p>
+                            <p *ngIf="variation.data.P3 && (variation.P3 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0)))"
+                              class="text-success mb-0 price">{{currency}} {{(variation.P3).toFixed(2)}}</p>
+                            <p *ngIf="variation.data.P4 && (variation.P4 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0)))"
+                              class="text-success mb-0 price">{{currency}} {{(variation.P4).toFixed(2)}}</p>
+                            <p *ngIf="variation.data.P5 && (variation.P5 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0) && (!variation.P4 || variation.P4 <= 0)))"
+                              class="text-success mb-0 price">{{currency}} {{(variation.P5).toFixed(2)}}</p>
+                            <p *ngIf="variation.data.P6 && (variation.P6 > 0 && ((!variation.P1 || variation.P1 <= 0) && (!variation.P2 || variation.P2 <= 0) && (!variation.P3 || variation.P3 <= 0) && (!variation.P4 || variation.P4 <= 0) && (!variation.P5 || variation.P5 <= 0)))"
+                              class="text-success mb-0 price">{{currency}} {{(variation.P6).toFixed(2)}}</p>
+                          </div>
+                          <button
+                            *ngIf="variation.AddOnList.length || (variation.data.P2 || variation.data.P3 || variation.data.P4 || variation.data.P5 || variation.data.P6)"
+                            class="btn btn-block btn-site rounded-0 swipbtn" (click)="openAddOnPopup(variation, variation.data)">
+                            add item
+                          </button>
+                          <button
+                            *ngIf="!variation.AddOnList.length && !variation.data.P2 && !variation.data.P3 && !variation.data.P4 && !variation.data.P5 && !variation.data.P6"
+                            class="btn btn-block btn-site rounded-0 swipbtn"
+                            (click)="addVariationToCart(variation, variation.data)">
+                            add item
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="piza-slide">
+                    <div class="swiper-button-next">
+                      <i class="fa fa-chevron-right"></i>
+                    </div>
+                    <div class="swiper-button-prev">
+                      <i class="fa fa-chevron-left"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="give-tip">
+          <div class="container">
+            <div class="row">
+              <div class="add-tip col-md-12" *ngIf="placeOrderBody.data.orderData.ServiceId == 2 || placeOrderBody.data.orderData.ServiceId == 5">
+                <div class="title">
+                  <h6 class="m-0" >Add The Tip</h6>
+        
+                  <ul class="ks-cboxtags mb-0">
+        
+        
+                    <li><input type="radio" name="options" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 0"
+                        class="chk" id="checkbox0" [disabled]="itemList.length == 0"
+                        (change)="onChangeTip($event.target.value, $event.target.checked)" value="0"><label
+                        for="checkbox0">0%</label></li>
+        
+                    <li><input type="radio" name="options" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 10"
+                        class="chk" id="checkboxTwo" [disabled]="itemList.length == 0"
+                        (change)="onChangeTip($event.target.value, $event.target.checked)" value="10"><label
+                        for="checkboxTwo">10%</label></li>
+                    <li><input type="radio" name="options" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 15"
+                        class="chk" id="checkboxThree" [disabled]="itemList.length == 0"
+                        (change)="onChangeTip($event.target.value, $event.target.checked)" value="15"><label
+                        for="checkboxThree">15%</label></li>
+                    <li><input type="radio" name="options" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 20"
+                        class="chk" id="checkboxFour" [disabled]="itemList.length == 0"
+                        (change)="onChangeTip($event.target.value, $event.target.checked)" value="20"><label
+                        for="checkboxFour">20%</label></li>
+                    <li><input type="radio" name="options" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 25"
+                        class="chk" id="checkboxFive" [disabled]="itemList.length == 0"
+                        (change)="onChangeTip($event.target.value, $event.target.checked)" value="25"><label
+                        for="checkboxFive">25%</label></li>
+                    <li><input type="radio" name="options" [checked]="placeOrderBody.data.orderData.tipvalueSelected == 30"
+                        class="chk" id="checkboxSix" [disabled]="itemList.length == 0"
+                        (change)="onChangeTip($event.target.value, $event.target.checked)" value="30"><label
+                        for="checkboxSix">30%</label></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="apply-coupon">
+          <div class="container">
+            <div class="row">
+              <div  *ngIf="!flags.isPromoApplied"  class="w-100">
+              <div *ngIf="country.toUpperCase()  == 'AU' || (country.toUpperCase()  == 'US' && placeOrderBody.data.orderData.ServiceId == 5)"  class="coupon" role="button" data-toggle="modal" data-target="#coupon">
+                <div fxLayout fxLayoutAlign="space-between center" fxFlex>
+                  <span *ngIf="country.toUpperCase()  == 'AU' || country.toUpperCase()  == 'US' || country.toUpperCase()  == 'IN'">
+                    <nb-icon icon="gift-outline" class="mr-3"></nb-icon>
+                    Apply Coupon
+                  </span>
+                  <span>
+                    <nb-icon icon="arrow-forward-outline"></nb-icon>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div  *ngIf="flags.isPromoApplied" class="w-100">
+              <div *ngIf="country.toUpperCase()  == 'AU' || (country.toUpperCase()  == 'US' && placeOrderBody.data.orderData.ServiceId == 5)" class="coupon" role="button">
+                <div fxLayout fxLayoutAlign="space-between center" fxFlex>
+                  <span>
+                    <nb-icon icon="gift-outline" class="mr-3"></nb-icon>
+                    {{appliedPromoCode?appliedPromoCode.finalName:''}} ({{currency}}{{appliedPromoCode?appliedPromoCode.finalDiscount:''}} OFF) &nbsp;<span
+                      class="fa fa-close" (click)="removePromo()" style="cursor: pointer;"></span>
+                  </span>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="bill-details py-2">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="">
+                <h6>Bill Details</h6>
+                <ul class="mb-0">
+                  <li>
+                    <p>Item Total</p>
+                    <p>{{currency}} {{(itemTotal()).toFixed(2)}}</p>
+                  </li>
+                  <li>
+                    <p *ngIf="checkCountry">GST Applied</p>
+                    <p *ngIf="!checkCountry">TAX Applied</p>
+                    <p>{{currency}} {{(placeOrderBody.data.orderData.TaxAmt).toFixed(2)}}</p>
+                  </li>
+            
+                  <li *ngIf="placeOrderBody.data.orderData.ServiceId == 2 || placeOrderBody.data.orderData.ServiceId == 5">
+                    <p>Tip Added</p>
+                    <p>{{currency}} {{(placeOrderBody.data.orderData.TipAmt).toFixed(2)}}</p>
+                  </li>
+                  <li >
+                    <p *ngIf="country.toUpperCase()  == 'AU' || (country.toUpperCase()  == 'US' && placeOrderBody.data.orderData.ServiceId == 5)" class="text-success">Coupon Discount</p>
+                    <p *ngIf="country.toUpperCase()  == 'AU' || (country.toUpperCase()  == 'US' && placeOrderBody.data.orderData.ServiceId == 5)" class="text-success"><span
+                        *ngIf="placeOrderBody.data.orderData.CouponAmt > 0 || placeOrderBody.data.orderData.DiscountAmt > 0">-
+                      </span> {{currency}}
+                      {{(placeOrderBody.data.orderData.CouponAmt || placeOrderBody.data.orderData.DiscountAmt || 0).toFixed(2)}}
+                    </p>
+                  </li>
+                  <li *ngIf="!isDeliveryFree && placeOrderBody.data.orderData.ServiceId == 2">
+                    <p>Delivery Charges</p>
+                    <p>{{currency}} {{(placeOrderBody.data.orderData.SrvcFee || 0).toFixed(2)}}</p>
+                  </li>
+                  <li *ngIf="isDeliveryFree && placeOrderBody.data.orderData.ServiceId == 2">
+                    <p>Delivery Charges</p>
+                    <p>Free</p>
+                  </li>
+                  <li class="grandTotal">
+                    <p>Grand Total</p>
+                    <p>{{currency}}
+                      {{(itemList.length?itemTotal() + Number(selectedTip) +Number(placeOrderBody.data.orderData.TaxAmt) + Number(placeOrderBody.data.orderData.SrvcFee) - (placeOrderBody.data.orderData.CouponAmt || placeOrderBody.data.orderData.DiscountAmt || 0).toFixed(2): 0).toFixed(2)}}
+                    </p>
+                  
+                  </li>
+                  <li class="contri" *ngIf="placeOrderBody.data.orderData.ServiceId != 5">
+                    <p>Restaurant Contribution</p>
+                    <p>{{currency}}
+                      {{donateval().toFixed(2)}}
+
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="delivery-address py-2" *ngIf="placeOrderBody.data.orderData.ServiceId != 5">
+        <div class="container">
+          <div class="row">
+            <div class=" col-md-12">
+              <div class="">
+                <p *ngIf="placeOrderBody.data.orderData.ServiceId != 5"><i class="material-icons text-success">
+                    near_me
+                  </i>
+                  <!-- {{placeOrderBody.data.orderData.ServiceId==2?'Delivering food to':'Pickup food from'}} -->
+                  <span *ngIf="placeOrderBody.data.orderData.ServiceId == 1">Pickup food from</span>
+                  <span *ngIf="placeOrderBody.data.orderData.ServiceId == 2">Delivering food to</span>
+                  <span *ngIf="placeOrderBody.data.orderData.ServiceId == 3">Curbside</span>
+                  <!-- <span *ngIf="placeOrderBody.data.orderData.ServiceId == 5">Dine In</span> -->
+                </p>
+                <div fxLayout="row" fxLayoutAlign="space-between start">
+                  <div class="d-flex align-items-start" *ngIf="placeOrderBody.data.orderData.ServiceId == 1">
+                    <span class="mr-1 text-orange">
+                      <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+                    </span>
+                    {{locationDetails.Address.AddressLine1}}, {{locationDetails.Address.City}}
+                  </div>
+                  <div class="d-flex align-items-start" *ngIf="placeOrderBody.data.orderData.ServiceId == 2">
+                    <span *ngIf="selectedAddress && selectedAddress.Addr1" class="mr-1 text-orange">
+                      <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+                    </span>
+                    {{selectedAddress?selectedAddress.Addr1?selectedAddress.Addr1:'No address selected.':'No address selected.'}}
+                  </div>
+                  <span *ngIf="placeOrderBody.data.orderData.ServiceId == 2">
+                    <a href="javascript:void(0);" class="text-orange" data-toggle="modal"
+                      data-target="#mobilechangelocation">Change</a>
+                  </span>
+                  <span *ngIf="placeOrderBody.data.orderData.ServiceId == 3">
+                    <div *ngIf="placeOrderBody.data.orderData.ServiceId == 3" class="section-content1 ">
+                      <div class="row">
+                  
+                          <div class="col-md-4">
+                            <label>Make of car: </label>
+                            <input type="text" class="form-control" name="carmake" (keyup)="carmakeF($event.target.value)" >
+                          </div>
+                          <div class="col-md-4">
+                            <label>Model of car: </label>
+                            <input type="text" class="form-control" name="carmodel" (keyup)="carmodelF($event.target.value)" >
+                          </div>
+                          <div class="col-md-4">
+                            <label>Color of car: </label>
+                            <input type="text" class="form-control" name="carcolor" (keyup)="carcolorF($event.target.value)">
+                          </div>
+                          <div class="col-md-4">
+                            <label>License of car: </label>
+                            <input type="text" class="form-control" name="carplatenumber" (keyup)="carplatenumberF($event.target.value)" >
+                          </div>
+                  
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-book py-2" *ngIf="placeOrderBody.data.orderData.ServiceId == 5">
+        <div class="container">
+          <div class="row">
+            <div  class="col-md-12">
+              <div class="section-content1 ">
+                <div class="d-flex align-items-center">
+                  <span class="mr-2"><nb-icon icon="layers-outline"></nb-icon></span>
+                  <input type="text" class="form-control" name="table" (keyup)="tableF($event.target.value)" placeholder="Please Enter Your Table Number:">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="choose-organization py-2" *ngIf="ngoData.length > 0 && placeOrderBody.data.orderData.ServiceId != 5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 p-0">
+              <div class="item">
+                <div class="section-title">
+                  <div class="head container">
+                    <div class="row mb-3 donatehead-row align-items-center">
+
+                      <div class="col-sm-12 title1">
+                        <div class="openmobiledonation">
+                          <i class="fa fa-angle-down" aria-hidden="true" (click)="openmobiledonation()"></i>
+                        </div>
+
+                        <h6 class="mb-0">Choose Your Organization:</h6>
+                      
+                      </div>
+                      <div class="col-sm-12 col-xs-12 mt-1  d-flex align-items-center" style="justify-content: space-between;">
+
+                          <p class="mb-0 cost">It Cost you Nothing</p>
+                        <input type="text" class="mobsearch" name="searchM" [(ngModel)]="queryStringM"
+                          placeholder="Enter Organzations Code" (click)="openmobiledonate()"
+                          (keyup)="queryStringF($event.target.value)">
+
+
+                      </div>
+
+                      <div class="col-sm-12 mt-1">
+                        <p class="my-2 congo" *ngIf="placeOrderBody.data.orderData.DonateCode">Thank you for choosing <b
+                            class="text-dark">{{placeOrderBody.data.orderData.NGOName}}</b>.
+                          {{this.placeOrderBody.data.orderData.ngoSelectedVal}}% of the net sales of this order will be sent
+                          to {{placeOrderBody.data.orderData.NGOName}} from {{locationDetails.Name}} </p>
+                      </div>
+                    </div>
+                    <div class="donation-row">
+
+                      <div *ngFor="let list of ngoData| filter: queryStringM" class="mobile-donation"
+                        (click)="closemobiledonation()">
+                        <div class="card" (click)="ngoSelect(list)">
+                          <div class="card-body">
+                            <img *ngIf="!list.Photo" class="img-fluid" src="assets/images/donate1.jpg">
+                            <img *ngIf="list.Photo" class="img-fluid" src="{{list.Photo}}">
+                          </div>
+                          <div class="p-2">
+                            <p class="text-dark ngo-name">{{list.Name}}</p>
+                            <div class="code-row">
+                              <div class="code mb-2">
+                                <p  [ngClass]="placeOrderBody.data.orderData.NGOId == list.RecId?'active':'unactive'" class="">{{list.DonateCode}}</p>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="payment-method py-2">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="">
+                <div class="title">
+                  <h6>Add Payment Method</h6>
+                </div>
+              <span class="col-md-12 d-block" *ngIf="country.toUpperCase()  == 'AU' && PaymentTypes == true" > <input  type="radio" name="paymentRadio" class="unchekRadioPayment mb-2 creditMobileClick" (click)="onSelectCcPayment()" > <span (click)="creditMobile()"> Debit/Credit Card </span></span> 
+              <span class="col-md-12 d-block" *ngIf="country.toUpperCase()  == 'US' && PaymentTypes == true" >   <input  type="radio" name="paymentRadio" class="unchekRadioPayment mb-2 creditMobileClick" (click)="onSelectCcPayment()" > <span (click)="creditMobile()"> Debit/Credit Card </span></span>
+                <span class="col-md-12 d-block" *ngIf="country.toUpperCase()  == 'IN' && locationDetails.PaymentProviderPaytm == 'T'">   <input  type="radio" name="paymentRadio" class="unchekRadioPayment" (click)="placeOrderBody.data.orderData.PaymentTypeId = 4"> PAYTM</span>
+                  <span class="col-md-12 d-block" *ngIf="PaymentTypesCOD == true" >   <input  type="radio" name="paymentRadio" class="unchekRadioPayment cashMobileClick" (click)="onSelectCODPayment()" ><span (click)="cashMobile()"> Cash</span>  </span>
+
+                <!-- <nb-radio-group>
+                  <nb-radio *ngIf="country.toUpperCase()  == 'AU' && PaymentTypes == true"
+                    [checked]="placeOrderBody.data.orderData.PaymentTypeId == 4" class="unchekRadioPayment" (click)="onSelectCcPayment()">Debit
+                    Card/Credit Card</nb-radio>
+                
+
+                  <nb-radio *ngIf="country.toUpperCase()  == 'US'  && PaymentTypes == true"
+                    [checked]="placeOrderBody.data.orderData.PaymentTypeId == 4" class="unchekRadioPayment"  (click)="onSelectCcPayment()">Debit
+                    Card/Credit Card</nb-radio>
+                  <nb-radio *ngIf="country.toUpperCase()  == 'IN' && locationDetails.PaymentProviderPaytm == 'T'"
+                    [checked]="placeOrderBody.data.orderData.PaymentTypeId == 4" class="unchekRadioPayment" 
+                    (click)="placeOrderBody.data.orderData.PaymentTypeId = 4">PAYTM</nb-radio>
+
+                  <nb-radio *ngIf="PaymentTypesCOD == true" [checked]="placeOrderBody.data.orderData.PaymentTypeId == 3"
+                    (click)="onSelectCODPayment()">Cash
+                  </nb-radio>
+                </nb-radio-group> -->
+                <div class="separator"></div>
+                <div class="submit-order" fxLayout="row" fxLayoutAlign="space-between center">
+                  <div class="left">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                      <figure *ngIf="placeOrderBody.data.orderData.ServiceId == 2" class="mb-0">
+                        <img src="assets/images/delivery-boy.svg" class="img-fluid">
+                      </figure>
+                      <figure *ngIf="placeOrderBody.data.orderData.ServiceId == 1" class="mb-0">
+                        <img src="assets/images/foodbag.svg" class="img-fluid" width="36px">
+                      </figure>
+                      <span *ngIf="placeOrderBody.data.orderData.ServiceId != 5">
+                        {{placeOrderBody.data.orderData.ServiceId == 1?'Pickup':'Delivered'}} in <br>
+                        {{selectedServiceDetail?selectedServiceDetail.ReadyIn:''}}
+                      </span>
+                      <span *ngIf="placeOrderBody.data.orderData.ServiceId == 5">
+                    <br>
+                  
+                      </span>
+
+                    </div>
+                  </div>
+                  <div *ngIf="placeOrderBody.data.orderData.PaymentTypeId == 4" class="right">
+                    <button class="submit-btn" (click)="placeOrderByPaytm()"
+                      [disabled]="flags.isOrderByPaytm">{{flags.isOrderPlaced?'Please Wait...':'Pay & Place Order'}}</button>
+                  </div>
+                  <div *ngIf="placeOrderBody.data.orderData.PaymentTypeId == 3" class="right">
+                    <button class="submit-btn" (click)="placeOrderResp(placeOrderBody.data.orderData.PaymentTypeId)"
+                      [disabled]="flags.isOrderPlaced">{{flags.isOrderPlaced?'Please Wait...':'Place Order'}}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-coupons [couponList]="couponList" (isPromoApplied)="isPromoApply($event)" [getLocation]="locationDetails" [Discounts]="Discounts">
+</app-coupons>
+<app-add-address [editDetail]="selectedAddressEdit" [status]="addressStatus"></app-add-address>
+<app-order-success [locationDetail]="locationDetails" [orderId]="orderId" [orderData]="orderData"></app-order-success>
+<app-modal [itemName]="fullItem" [addOnList]="addOnList" [item]="selectedAddOnObj"
+  (getAddOnItems)="getSelectedAddOn($event)"></app-modal>
+
+<div id="cc_payment_modal" data-backdrop="static" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Card Payments</h6>
+        <button type="button" class="btn btn-default clsbtn" data-dismiss="modal"
+        (click)="onCloseCcPaymentModal()"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+
+        <form  *ngIf="locationDetails.PaymentProviderMiMenu == 'T' && PaymentTypes == true"  #paymentFormUS="ngForm">
+          <div class="row no-gutters">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="ZIP" [(ngModel)]="cardBody.CCZIP" name="zip"
+                  required />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" id="cc_cardNumber" placeholder="Card Number" appOnlyNumber
+              name="cardNumber" [(ngModel)]="cardBody.CCNumber" required />
+          </div>
+          <div class="row no-gutters crdfrm">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="text" class="form-control" appOnlyNumber maxlength="2" placeholder="MM" name="month"
+                  [(ngModel)]="expDate.month" required />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="text" class="form-control" appOnlyNumber maxlength="2" minlength="2" placeholder="YY"
+                  name="year" [(ngModel)]="expDate.year" required />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="password" class="form-control" appOnlyNumber maxlength="3" placeholder="CVV" name="cvv"
+                  [(ngModel)]="cardBody.CCCVV" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="link pt-3">
+            <button class="btn btn-primary btn-site btn-block rounded-0" (click)="placeOrderCC()"
+              [disabled]="!paymentFormUS.valid">Place Order</button>
+          </div>
+        </form>
+
+        <form  *ngIf="locationDetails.PaymentProviderStripe == 'T' && PaymentTypes == true"
+          #paymentFormUS2="ngForm">
+          <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error1 = $event"></ngx-stripe-card>
+          <div class="error1">
+            {{error1?.message}}
+          </div>
+
+          <div class="link pt-3">
+            <button class="btn btn-primary btn-site btn-block rounded-0" (click)="getCardToken()"  [disabled]="flags.placeorderButton == true">Place Order</button>
+          </div>
+        </form>
+
+        <form *ngIf="locationDetails.PaymentProviderStripe == 'F' &&  locationDetails.PaymentProviderMiMenu == 'F' && PaymentTypes == true" #paymentFormAU="ngForm">
+         
+        <div class="row no-gutters crdfrm">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input class="form-control" type="text" placeholder="First Name" name="name"
+                  [(ngModel)]="cardBody.CCFName" required />
+
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Last Name" name="lastName"
+                  [(ngModel)]="cardBody.CCLName" required />
+              </div>
+            </div>
+          </div>
+          <div class="form-group crdform">
+            <input type="text" class="form-control mobtel" appOnlyNumber maxlength="15" name="phone"
+              [(ngModel)]="cardBody.Telephone" placeholder="Telephone" required />
+          </div>
+
+
+          <div class="form-group crdform">
+            <input type="text" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+              (onAddressChange)="handleAddressChange($event)" class="form-control mobtel" name="addLineTwo343432"
+              [(ngModel)]="cardBody.CCAddr1" autocomplete="off" required />
+          </div>
+          <div class="row no-gutters crdfrm">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="City" name="city" [(ngModel)]="cardBody.CCCity"
+                  required />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="State" name="state" [(ngModel)]="cardBody.CCState"
+                  required />
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="ZIP" [(ngModel)]="cardBody.CCZIP" name="zip"
+                  required />
+              </div>
+            </div>
+          </div> 
+
+          <div class="form-group crdform" >
+            <input class="form-control mobtel" type="text" id="cc_cardNumber" placeholder="Card Number" appOnlyNumber
+              name="cardNumber" [(ngModel)]="cardBody.CCNumber" required />
+          </div>
+          <div class="row no-gutters crdfrm" >
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="password" class="form-control" appOnlyNumber maxlength="3" placeholder="CVV" name="cvv"
+                  [(ngModel)]="cardBody.CCCVV" required />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="text" class="form-control" appOnlyNumber maxlength="2" placeholder="MM" name="month"
+                  [(ngModel)]="expDate.month" required />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="text" class="form-control" appOnlyNumber maxlength="2" minlength="2" placeholder="YY"
+                  name="year" [(ngModel)]="expDate.year" required />
+              </div>
+            </div>
+
+          </div>
+
+     
+
+          <div class="link pt-2">
+            <!-- <button  *ngIf="locationDetails.PaymentProviderStripe == 'T'" class="btn btn-primary btn-site btn-block rounded-0" (click)="getCardToken()" [disabled]="flags.placeorderButton == true">Place Order</button> -->
+            <button  *ngIf="locationDetails.PaymentProviderStripe == 'F'" class="btn btn-primary btn-site btn-block rounded-0" (click)="placeOrderCC()" [disabled]="!paymentFormAU.valid">Place Order</button>
+          </div>
+        </form>
+
+        <!-- <form *ngIf="country.toUpperCase()  == 'AU' && locationDetails.PaymentProviderStripe == 'F' && PaymentTypes == true" #paymentFormAU2="ngForm">
+
+
+           <div class="row no-gutters crdfrm">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input class="form-control" type="text" placeholder="First Name" name="name"
+                  [(ngModel)]="cardBody.CCFName" required />
+
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Last Name" name="lastName"
+                  [(ngModel)]="cardBody.CCLName" required />
+              </div>
+            </div>
+          </div>
+          <div class="form-group crdform">
+            <input type="text" class="form-control mobtel" appOnlyNumber maxlength="15" name="phone"
+              [(ngModel)]="cardBody.Telephone" placeholder="Telephone" required />
+          </div>
+
+
+          <div class="form-group crdform">
+            <input type="text" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+              (onAddressChange)="handleAddressChange($event)" class="form-control mobtel" name="addLineTwo2222223"
+              [(ngModel)]="cardBody.CCAddr1" autocomplete="off" required />
+          </div>
+          <div class="row no-gutters crdfrm">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="City" name="city" [(ngModel)]="cardBody.CCCity"
+                  required />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="State" name="state" [(ngModel)]="cardBody.CCState"
+                  required />
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="ZIP" [(ngModel)]="cardBody.CCZIP" name="zip"
+                  required />
+              </div>
+            </div>
+          </div> 
+
+          <div class="form-group" *ngIf="locationDetails.PaymentProviderStripe == 'T'"> 
+            <input class="form-control" type="text" id="cc_cardNumber" placeholder="Card Number" appOnlyNumber
+              name="cardNumber" [(ngModel)]="cardBody.CCNumber" required />
+          </div>
+          <div class="row no-gutters crdfrm" *ngIf="locationDetails.PaymentProviderStripe == 'T'">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="password" class="form-control" appOnlyNumber maxlength="3" placeholder="CVV" name="cvv"
+                  [(ngModel)]="cardBody.CCCVV" required />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="text" class="form-control" appOnlyNumber maxlength="2" placeholder="MM" name="month"
+                  [(ngModel)]="expDate.month" required />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <input type="text" class="form-control" appOnlyNumber maxlength="2" minlength="2" placeholder="YY"
+                  name="year" [(ngModel)]="expDate.year" required />
+              </div>
+            </div>
+
+          </div>
+
+          <span *ngIf="locationDetails.PaymentProviderStripe == 'T'">
+            <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error1 = $event"></ngx-stripe-card>
+            <div class="error1">
+              {{error1?.message}}
+            </div>
+          </span>
+
+          <div class="link pt-2">
+            <button  *ngIf="locationDetails.PaymentProviderStripe == 'T'" class="btn btn-primary btn-site btn-block rounded-0" (click)="getCardToken()"  [disabled]="flags.placeorderButton == true">Place Order</button>
+            <button  *ngIf="locationDetails.PaymentProviderStripe == 'F'" class="btn btn-primary btn-site btn-block rounded-0" (click)="placeOrderCC()"  [disabled]="!paymentFormAU2.valid">Place Order</button>
+          </div>
+        </form>
+
+        <form *ngIf="country.toUpperCase() == 'AU' && locationDetails.PaymentProviderStripe == 'T' &&  PaymentTypes == true" #paymentFormOne1="ngForm">
+
+
+          <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error1 = $event"></ngx-stripe-card>
+          <div class="error1">
+            {{error1?.message}}
+          </div>
+        
+        
+        <div class="link pt-3">
+        <button class="btn btn-primary btn-site btn-block rounded-0" (click)="getCardToken()"  [disabled]="flags.placeorderButton == true">Place Order</button>
+        </div>
+        </form> -->
+        
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-site w-100">SUBMIT</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<input type="hidden" id="open_cc_modal" data-toggle="modal" data-target="#cc_payment_modal">
+
+
+
+<div id="errorInfoModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Error Info</h4>
+      </div>
+      <div *ngIf="orderFailedResp" class="modal-body">
+        <table>
+          <tr *ngFor="let item of orderFailedResp.ErrorInfo; let i = index">
+            <!-- <td>{{i+1}}.</td> -->
+            <td>{{item.Text}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<input type="hidden" id="openErrorInfoModal" data-toggle="modal" data-target="#errorInfoModal">
+
+<form class="d-none" method="post" action="https://securegw.paytm.in/theia/processTransaction" id="paytmForm"
+  name="paytm">
+  <table border="1">
+    <tbody>
+      <input type="hidden" name="MID" value="{{paytmDetails?paytmDetails.MerchantInfo.MerchantId:null}}">
+      <input type="hidden" name="WEBSITE" value="DEFAULT">
+      <input type="hidden" name="ORDER_ID" value="{{paytmDetails?paytmDetails.paytmOId:null}}">
+      <input type="hidden" name="CUST_ID" value="{{paytmDetails?paytmDetails.paytmCustId:null}}">
+      <input type="hidden" name="MOBILE_NO" value="{{restUser?restUser.Tel:''}}">
+      <input type="hidden" name="EMAIL" value="{{restUser?restUser.username:''}}">
+      <input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail">
+      <input type="hidden" name="CHANNEL_ID" value="WAP">
+      <input type="hidden" name="TXN_AMOUNT" value="{{paytmDetails?paytmDetails.TotalAmt:null}}">
+      <input type="hidden" name="CALLBACK_URL" value="{{paytmDetails?paytmDetails.paytmCallbackURL:null}}">
+      <input type="hidden" name="CHECKSUMHASH" value="{{paytmDetails?paytmDetails.paytmChecksum:null}}">
+    </tbody>
+  </table>
+  <input type="submit" id="paytmSubmit">
+</form>
+
+
+
+
+
+<!-- Button to Open the Modal -->
+<!-- The Modal -->
+<div class="modal" id="shecdule1" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header border-0">
+        <div class="close-btn">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <h2>Schedule My Order</h2>
+              <p>Select a time up to 7 days in advance.</p>
+            </div>
+            <div class="col-sm-12 mt-4 mb-4">
+              <div class="row">
+                <div class="col-sm-12 ">
+                  <nav>
+                    <div class="nav nav-tabs nav-fill mb-3" id="nav-tab" role="tablist">
+                      <a *ngIf="ASAPOnOFf == 'T'  && todayOpenClose == false" [ngClass]="todayOpenClose == false?'active':''" class="nav-item nav-link" id="nav-home1-tab" data-toggle="tab" href="#nav-home1"
+                        role="tab" aria-controls="nav-home1" aria-selected="true">ASAP</a>
+                      <a *ngIf="LTOnOff == 'T'"  [ngClass]="todayOpenClose == true?'active':''" class="nav-item nav-link" id="nav-profile1-tab" data-toggle="tab" href="#nav-profile1"
+                        role="tab" aria-controls="nav-profile1" aria-selected="false" (click)="clearTime()">Today</a>
+                      <a class="nav-item nav-link" id="nav-contact1-tab" data-toggle="tab" href="#nav-contact1"
+                        role="tab" aria-controls="nav-contact1" aria-selected="false" (click)="clearTime()">Later</a>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-sm-12">
+                  <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                    <div  [ngClass]="todayOpenClose == false?'show active':''" *ngIf="ASAPOnOFf == 'T'  && todayOpenClose == false" class="tab-pane fade" id="nav-home1" role="tabpanel"
+                      aria-labelledby="nav-home1-tab">
+                      <button type="button" class="asap-btn btn" (click)="timesection(0)">ASAP</button>
+                    </div>
+                    <div class="tab-pane fade" *ngIf="LTOnOff == 'T'" [ngClass]="todayOpenClose == true?'show active':''" id="nav-profile1" role="tabpanel" aria-labelledby="nav-profile1-tab">
+
+                      <div class="slctbtn">
+                        <select class="shecdule-control" (change)="selectTime($event.target.value)">
+                          <option class="selectOptionSelected" selected disabled>Select Time</option>
+                          <option class="selectOption" *ngFor="let val of timeData" value="{{todayDate}} {{val}}">
+                            {{dateTime(todayDate,val)}}</option>
+                        </select><i class="fa fa-angle-down downi"></i></div>
+                      <button type="button" class="asap-btn btn mt-4" (click)="timesection(1)">Selected Time Today at
+                        {{selectedTime?selectedTimeF(selectedTime):''}}</button>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-contact1" role="tabpanel" aria-labelledby="nav-contact1-tab">
+                      <div class="content">
+
+                        <div class="row">
+                          <div class="col-sm-12 text-center">
+                            <bs-datepicker-inline [bsConfig]="{showWeekNumbers:false, dateInputFormat: 'DD/MM/YYYY'}"
+                              [minDate]="min" [maxDate]="maxDate" (bsValueChange)="laterDateDate($event)"></bs-datepicker-inline>
+                            <p class=""><a href="javascript:void(0);" class="text-dark font-weight-bold">
+                                {{laterDate | date:'dd MMM'}} at {{selectedTime?selectedTimeF(selectedTime):''}}
+                              </a></p>
+                          </div>
+                          <div class="col-sm-12 form-group">
+                            <div class="slctbtn">
+                              <select class="shecdule-control" (change)="selectTime($event.target.value)">
+                                <option class="selectOptionSelected" selected disabled>Select Time</option>
+                                <option class="selectOption" *ngFor="let val of timeData1;let i=index;"
+                                  value="{{laterDate}} {{val}}"> {{dateTime(laterDate,val)}} </option>
+                              </select><i class="fa fa-angle-down downi"></i></div>
+                            <button type="button" class="asap-btn btn mt-4" (click)="timesection(2)">Selected Date and Time {{laterDate | date:'dd MMM'}}, {{selectedTime?selectedTimeF(selectedTime):''}}</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

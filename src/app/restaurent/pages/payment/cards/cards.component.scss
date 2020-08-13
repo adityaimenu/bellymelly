@@ -1,0 +1,20 @@
+@import "../../../../../assets/css/variables";
+.form-group{
+  .form-control{
+    border-radius: 0;
+    min-height: 50px;
+    border-color: $border-color;
+  }
+}
+button:disabled {
+  background: gray;
+  border: none;
+}
+button:disabled:hover {
+  background: gray;
+  border: none;
+}
+.item-price{
+  font-size: 12px;
+}
+
