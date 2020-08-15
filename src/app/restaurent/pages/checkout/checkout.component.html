@@ -168,8 +168,9 @@
                         <div class="col-sm-12">
                           <p class="my-2 congo1" *ngIf="placeOrderBody.data.orderData.DonateCode">Thank you for choosing
                             <b class="text-dark">{{placeOrderBody.data.orderData.NGOName}}</b>.
-                            {{placeOrderBody.data.orderData.ngoSelectedVal}}% of the net sales of this order will
-                            be sent to {{placeOrderBody.data.orderData.NGOName}} from {{locationDetails.Name}}
+                            <!-- {{placeOrderBody.data.orderData.ngoSelectedVal}}$ of the net sales of this order will
+                            be sent to {{placeOrderBody.data.orderData.NGOName}} from {{locationDetails.Name}} -->
+                            For every order BellyMelly donates 1$ for your community development.
                           </p>
                         </div>
                       </div>
@@ -545,7 +546,7 @@
                       </p>
                     </li>
                     <li class="contri" *ngIf="ngoData.length > 0 && placeOrderBody.data.orderData.ServiceId != 5">
-                      <p>Restaurant Contribution</p>
+                      <p>BellyMelly Contribution</p>
                       <p>{{currency}}
                         {{donateval().toFixed(2)}}
 
@@ -958,7 +959,7 @@
                   
                   </li>
                   <li class="contri" *ngIf="placeOrderBody.data.orderData.ServiceId != 5">
-                    <p>Restaurant Contribution</p>
+                    <p>BellyMelly Contribution</p>
                     <p>{{currency}}
                       {{donateval().toFixed(2)}}
 
@@ -1075,8 +1076,10 @@
                       <div class="col-sm-12 mt-1">
                         <p class="my-2 congo" *ngIf="placeOrderBody.data.orderData.DonateCode">Thank you for choosing <b
                             class="text-dark">{{placeOrderBody.data.orderData.NGOName}}</b>.
-                          {{this.placeOrderBody.data.orderData.ngoSelectedVal}}% of the net sales of this order will be sent
-                          to {{placeOrderBody.data.orderData.NGOName}} from {{locationDetails.Name}} </p>
+                          <!-- {{this.placeOrderBody.data.orderData.ngoSelectedVal}}$ of the net sales of this order will be sent
+                          to {{placeOrderBody.data.orderData.NGOName}} from {{locationDetails.Name}}  -->
+                          For every order BellyMelly donates 1$ for your community development.
+                        </p>
                       </div>
                     </div>
                     <div class="donation-row">
