@@ -99,7 +99,7 @@ export class HeaderComponent implements OnInit {
         })
       });
     });
-    console.log('12',moment().format('MMMM DD, YYYY HH:mm:ss'))
+    console.log('15',moment().format('MMMM DD, YYYY HH:mm:ss'))
   }
   getCurrentAddr(addr) {
     this.currentAddr = addr;

@@ -1208,7 +1208,7 @@ export class CheckoutComponent implements OnInit {
     $('.donate-content').css("display", "block")
     $('.payment-sec-datail').css("display", "none")
     $('.web-down-arrow').css("display", "block")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
     $('.donate').css("display", "block")
     $('.web-up-arrow').css("display", "none")
     $('.web-down-arrow').css("display", "block")
@@ -1250,7 +1250,7 @@ export class CheckoutComponent implements OnInit {
     $('.openwebtip i').css("display", "block")
     $('.openwebpayment').css("display", "none")
     $('.donate').css("display", "none")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
     $('.closewebpayment').css("display", "block")
   }
   openwebdonation() {
@@ -1264,7 +1264,7 @@ export class CheckoutComponent implements OnInit {
     $('.step1').removeClass("active")
     $('.payment-sec').removeClass("active")
     $('.add-tip').css("display", "none")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
     $('.web-skip').css("display", "none")
     $('.openwebtip i').css("display", "block")
     $('.openwebdonation').css("display", "nobne")
@@ -1273,14 +1273,14 @@ export class CheckoutComponent implements OnInit {
     $('.web-down-arrow').css("display", "block")
     $('.openwebpayment').css("display", "block")
     $('.closewebpayment').css("display", "none")
-    $('.add-new').hide()
+  
   }
   closewebdonation() {
     $('.donate-content').hide()
     $('.openwebdonation').css("display", "block")
     $('.closewebdonation').css("display", "none")
     $('.donate').css("display", "none")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
   }
   openAddressclick() {
     $('.section-content1').css("display", "block")
@@ -1306,7 +1306,7 @@ export class CheckoutComponent implements OnInit {
     $('.openwebpayment').css("display", "none")
     $('.openwebtip i').css("display", "block")
     $('.donate').css("display", "none")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
     $('.closewebpayment').css("display", "block")
   }
   openwebpayment() {
@@ -1327,7 +1327,7 @@ export class CheckoutComponent implements OnInit {
     $('.web-up-arrow').css("display", "none")
     $('.web-down-arrow').css("display", "block")
     $('.donate').css("display", "none")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
     $('.openwebdonation').css("display", "block")
     $('.closewebdonation').css("display", "none")
   }
@@ -1338,7 +1338,7 @@ export class CheckoutComponent implements OnInit {
     $('.web-up-arrow').css("display", "none")
     $('.web-down-arrow').css("display", "block")
     $('.donate').css("display", "none")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
     $('.openwebdonation').css("display", "block")
     $('.closewebdonation').css("display", "none")
   }
@@ -1380,7 +1380,7 @@ export class CheckoutComponent implements OnInit {
     $('.payment-sec-datail').css("display", "none")
     $('.donate-content').css("display", "none")
     $('.section-content1').css("display", "block")
-    $('.add-new').show()
+    $('.add-newadrbtn').show()
     $('.web-skip').css("display", "none")
     $('.openwebtip i').css("display", "block")
     $('.web-down-arrow').css("display", "none")
@@ -1398,7 +1398,7 @@ export class CheckoutComponent implements OnInit {
     $('.web-down-arrow').css("display", "block")
     $('.openwebdonation').css("display", "block")
     $('.closewebdonation').css("display", "none")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
     $('.donate').css("display", "none")
   }
   openwebdtip() {
@@ -1413,7 +1413,7 @@ export class CheckoutComponent implements OnInit {
     $('.payment-sec-datail').css("display", "none")
     $('.donate-content').css("display", "none")
     $('.section-content1').css("display", "none")
-    $('.add-new').hide()
+    $('.add-newadrbtn').hide()
     $('.donate').css("display", "none")
     $('.web-up-arrow').css("display", "none")
     $('.web-down-arrow').css("display", "block")

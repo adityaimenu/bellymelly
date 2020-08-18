@@ -80,14 +80,17 @@ options= {
         this.newLoginBody.data.custId = this.user.id;
         // this.loginRest();
         this.addressList = this.user.AddressBook;
-
       }
     });
 
 
     this.observable.isAddressSelected().subscribe((address: any) => {
       if (address) {
+        const dataExist = _.find(this.addressList, function(o) { return o.Latitude == address.Latitude && o.Longitude == address.Longitude; })
+      if(!dataExist){
         this.addressList.push(address)
+
+      }
         // this.loginRest();
       }
     });

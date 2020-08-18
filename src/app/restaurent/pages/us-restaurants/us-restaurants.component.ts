@@ -333,20 +333,27 @@ export class UsRestaurantsComponent implements OnInit {
   }
 
   clearALl() {
-    this.servicetype = null
+    // this.servicetype = null
+    this.skipRows = 0;
+    this.Locations = [];
     this.foodtype = ['0'];
     $('.custom-control-input').prop('checked', false)
+    this.FoodTypes.forEach(element => {
+      element.status = false
+    });
     this.searchrRestaurantsBoth(this.servicetype)
   }
 
   selectService(val) {
     this.skipRows = 0;
     this.servicetype = val
+    this.Locations = []
     this.searchrRestaurantsBoth(val);
   }
   selectServiceMob(val) {
     this.skipRows = 0;
     this.servicetype = val
+    this.Locations = []
   }
 
   cleaResto() {

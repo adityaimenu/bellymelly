@@ -310,7 +310,7 @@
             
             </ul>
             <pagination [boundaryLinks]="showBoundaryLinks" [itemsPerPage]="20" class="pagination-sm" 
-            [totalItems]="totalCount"  [maxSize]="maxSize" 
+            [totalItems]="totalCount"   [maxSize]="maxSize" 
             (pageChanged)="pageChanged($event)"></pagination>
           </div>
           <div class=" border-right text-center web" [ngClass]="FoodTypes.length == 0?'col-lg-12':''" *ngIf="Locations.length == 0" id="section2"><!--comment-->
@@ -422,8 +422,9 @@
                 </li>
               </ul>
               <pagination [boundaryLinks]="showBoundaryLinks" [itemsPerPage]="20" class="pagination-sm"
-            [totalItems]="totalCount" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize"
+            [totalItems]="totalCount"  [maxSize]="maxSize"
             (pageChanged)="pageChanged($event)"></pagination>
+            
             </div>
             
             
